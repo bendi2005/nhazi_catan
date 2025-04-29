@@ -2,6 +2,7 @@
 #include "coord.h"
 #include "magic_const.h"
 #include <vector>
+#include <set>
 class Edge;
 class Node
 {
@@ -11,6 +12,9 @@ public: //TODO public
     
     Coordinate pos;
     
+    GameBoard* p_GB;
+
+
     std::set<char> resources;  //nyilvan nem char hanem Resource osztaly
     
     
@@ -22,7 +26,5 @@ public: //TODO public
 
     void AddResource(char); //nyilvan nem char hanem resource osztaly
 
-
-    
-    void CheckEdges();
+    std::vector<Node*> GetNeighbours();
 };

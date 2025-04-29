@@ -5,11 +5,11 @@ Node::Node()
 {
     printf("Node constructor default called, ezt se kene nagyon hivogatni");  
 }
-Node::Node(Coordinate in_coord,int in_i,GameBoard* in_p_GB)
+Node::Node(Coordinate in_coord,int in_i,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
 {
-    pos = in_coord;
     
-    //ha megis vektor kene (nem fog)
+    
+    //ha vektor lenne
     //resources.reserve(HOW_MANY_RESOURCES_DOES_A_NODE_HAVE_MAX);
     own_edges.reserve(SIDE_COUNT);
 
@@ -28,4 +28,34 @@ Node::Node(Coordinate in_coord,int in_i,GameBoard* in_p_GB)
 void Node::AddResource(char in_resource)
 {
     resources.insert(in_resource); 
+}
+
+std::vector<Node*> Node::GetNeighbours()
+{
+    auto& n_map = p_GB->nodemap;
+    for(int i =0;i<6;i++)
+    {
+        auto it = n_map.find(pos+Tile::NodePos[i]);
+        if(it != n_map.end())
+        {
+            //munka
+            // uj Edge(node1,node2)
+            // thisnek az edge
+            //hitnek az edge
+
+            
+            Edge* E = new Edge(pos,it->first);
+            p_GB->edgemap.emplace(pos+Tile::EdgePos[i],E);
+            
+
+            own_edges.push_back(E);
+            it->second->own_edges.push_back(E);
+
+
+            //nem lehet 1sor mert kell az uj edge :(((
+            //p_GB->edgemap.emplace(pos+Tile::EdgePos[i],new Edge(pos,it->first));
+            
+        }
+    }
+    
 }
