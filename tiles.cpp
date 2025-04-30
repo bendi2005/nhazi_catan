@@ -43,7 +43,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
 }
 void Tile::PutResourcesIntoNode(Node* in_Node) //ha referncia kell akkor sincs nagy ba
 {
-    for(const auto& tile_resource : tile_resources)
+    for(auto tile_resource : tile_resources)
     {
         in_Node->AddResource(tile_resource);   
     }

@@ -31,3 +31,11 @@ bool Coordinate::operator==(const Coordinate& other) const
 {
     return ((this->x==other.x) && (this->y == other.y));
 }
+bool Coordinate::operator<(const Coordinate& other) const 
+{
+    return (this->x < other.x);
+}
+Coordinate Coordinate::operator/(int divisor) const
+{
+    return Coordinate(x/divisor,y/divisor);
+}

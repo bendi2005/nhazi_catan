@@ -6,10 +6,14 @@ public: //TODO mi public mi privat
     int y;
     Coordinate(int,int);
     Coordinate();
-    bool Coordinate::operator!=(const Coordinate&) const;
+    bool operator!=(const Coordinate&) const;
     void GoRight();
     Coordinate BigToSmall(); 
-    // void SmallToBig(); Ilyen nem kene elv
+    // void SmallToBig(); Ilyen nem     kene elv
     Coordinate operator+(const Coordinate&);
     bool operator==(const Coordinate&) const;
+    bool operator<(const Coordinate&) const;
+    Coordinate operator/(int) const;
+
+    //operator>(const Coordinate&) const;
 };
