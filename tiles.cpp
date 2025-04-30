@@ -23,7 +23,8 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
     {
         //current node coord
        
-        Coordinate cur = EdgePos[i];
+        //Coordinate cur = EdgePos[i];
+        Coordinate cur(EdgePos[i]);
        
         //check if map contains current node
         auto it = n_map.find(cur);
@@ -39,6 +40,8 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         else {
             //ezt azert gondold at
             PutResourcesIntoNode((n_map.emplace(std::make_pair(cur,new Node(cur,i,in_p_GB))).first)->second);
+            
+           
         }
     }   
 }

@@ -7,8 +7,9 @@ GameBoard::GameBoard()
     //ez az 5 
     for(int i = 0;i < 2*SIDE_LENGTH-1;i++)
     {
+     
         GenerateLine(i);
-        printf("\n?\n")
+     
     }
 
 }
@@ -37,14 +38,19 @@ void GameBoard::GenerateLine(int in_line_num)
     Coordinate line_begin = CalcBegin(in_line_num);
     Coordinate line_end = CalcEnd(in_line_num);
     
+    printf("New beginnings: ");
+    line_begin.PrintCord();
     for(Coordinate cur = line_begin;cur != line_end;cur.y++)
     {
         //TODO delete this 
     
-        printf("?\n");
-        tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
-        printf("?\n");
+        printf("inserting tile to:");
         cur.PrintCord();
+        Tile* T = new Tile(this,cur.BigToSmall());
+        tilemap.emplace(std::make_pair(cur,T));
+        //tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
+        
+        
         
     }
     

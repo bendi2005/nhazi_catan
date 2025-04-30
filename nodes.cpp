@@ -8,6 +8,8 @@ Node::Node()
 Node::Node(Coordinate in_coord,int in_i,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
 {
     
+    //printf("\nNew Node Constructed");
+    
     in_i++; // ez csak azert van hogy kussoljon
     //ha vektor lenne
     //resources.reserve(HOW_MANY_RESOURCES_DOES_A_NODE_HAVE_MAX);

@@ -17,7 +17,9 @@ void Coordinate::GoRight()
 
 Coordinate Coordinate::BigToSmall()
 {
+    
     Coordinate ret_c((2 * x + 2 * y),(-2 * x + 4 * y));
+    ret_c.PrintCord();
     return ret_c;
 }
 
