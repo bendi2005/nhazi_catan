@@ -5,6 +5,6 @@ int main()
 {
     //Create GameBoard
     GameBoard g;
-    
+    printf("gyzotunk");
 
 }

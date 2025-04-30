@@ -8,7 +8,7 @@ Coordinate::Coordinate(int in_x,int in_y) : x(in_x), y(in_y) {}
 
 bool Coordinate::operator!=(const Coordinate& other) const
 {
-    return ((this->x != other.x )&&(this->y != other.y));
+    return ((this->x != other.x ) || (this->y != other.y));
 }
 void Coordinate::GoRight()
 {
@@ -38,4 +38,8 @@ bool Coordinate::operator<(const Coordinate& other) const
 Coordinate Coordinate::operator/(int divisor) const
 {
     return Coordinate(x/divisor,y/divisor);
+}
+void Coordinate::PrintCord() const
+{
+    printf("\n%d  %d\n",x,y);
 }

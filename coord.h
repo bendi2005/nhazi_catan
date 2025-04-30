@@ -14,6 +14,6 @@ public: //TODO mi public mi privat
     bool operator==(const Coordinate&) const;
     bool operator<(const Coordinate&) const;
     Coordinate operator/(int) const;
-
+    void PrintCord() const;
     //operator>(const Coordinate&) const;
 };

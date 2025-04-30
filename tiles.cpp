@@ -22,8 +22,9 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
     for(int i = 0;i<SIDE_COUNT;i++)
     {
         //current node coord
+       
         Coordinate cur = EdgePos[i];
-        
+       
         //check if map contains current node
         auto it = n_map.find(cur);
         

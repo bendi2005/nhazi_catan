@@ -5,6 +5,7 @@
 
 
 
+class Node;
 class GameBoard;
 class Tile
 {
