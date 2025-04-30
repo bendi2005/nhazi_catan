@@ -36,7 +36,7 @@ void GameBoard::GenerateLine(int in_line_num)
     for(Coordinate cur = line_begin;cur != line_end;cur.GoRight())
     {
         //TODO delete this 
-        tilemap.emplace(cur,new Tile(this,cur.BigToSmall()));
+        tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
     }
     
 

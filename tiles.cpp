@@ -37,7 +37,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         //not contain
         else {
             //ezt azert gondold at
-            PutResourcesIntoNode((n_map.emplace(cur,new Node(cur,i,in_p_GB)).first)->second);
+            PutResourcesIntoNode((n_map.emplace(std::make_pair(cur,new Node(cur,i,in_p_GB))).first)->second);
         }
     }   
 }

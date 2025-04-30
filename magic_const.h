@@ -1,6 +1,8 @@
 //idea: put this in coords.h since that is included in everything
 #pragma once
 #include <stdio.h>
+#include <vector>
+#include <set>
 constexpr int SIDE_LENGTH = 3;
 constexpr int SIDE_COUNT = 6;
 constexpr int HOW_MANY_SIDES_DOES_AN_EDGE_BORDER = 2;

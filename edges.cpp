@@ -1,5 +1,5 @@
 #include "edges.h"
-Coordinate Edge::GetPos() const 
+const Coordinate Edge::GetPos() const 
 {
     return edge_pos;
 }

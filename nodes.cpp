@@ -21,7 +21,7 @@ Node::Node(Coordinate in_coord,int in_i,GameBoard* in_p_GB) : pos(in_coord),p_GB
 
             
             Edge* E = new Edge(pos,node_element->pos);
-            p_GB->edgemap.emplace((E->GetPos(),E));
+            p_GB->edgemap.emplace(std::make_pair(E->GetPos(),E));
             
 
             own_edges.push_back(E);

@@ -14,7 +14,7 @@ public:
     Coordinate edge_pos;
     
     
-    Coordinate GetPos() const;
+    const Coordinate GetPos() const;
     
     Edge(Coordinate,Coordinate);
 
