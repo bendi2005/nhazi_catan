@@ -8,9 +8,9 @@ class Tile;
 class Edge
 {
 private:
-    
+Edge();    
 public:
-Edge()  ;
+
     Coordinate node_1_pos;
     Coordinate node_2_pos;
 

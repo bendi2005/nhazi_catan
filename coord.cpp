@@ -38,7 +38,8 @@ bool Coordinate::operator==(const Coordinate& other) const
 }
 bool Coordinate::operator<(const Coordinate& other) const 
 {
-    return (this->x < other.x || this->y < other.y);
+    return (x < other.x) || ((x == other.x) && (y<other.y));
+    
 }
 Coordinate Coordinate::operator/(int divisor) const
 {

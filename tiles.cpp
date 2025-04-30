@@ -46,7 +46,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         //not contain
         else {
             //ezt azert gondold at
-            
+            Tile::test++;
             PutResourcesIntoNode((in_p_GB->nodemap.emplace(std::make_pair(cur,new Node(cur,in_p_GB))).first)->second);
             
            

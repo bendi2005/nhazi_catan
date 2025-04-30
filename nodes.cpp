@@ -41,6 +41,7 @@ std::vector<Node*> Node::GetNeighbours()
     
     for(int i =0;i<SIDE_COUNT;i++)
     {
+        printf("\n%d",i);
         Coordinate cur(pos+Tile::NodePos[i]);
         auto it = n_map.find(cur);
     
@@ -51,7 +52,7 @@ std::vector<Node*> Node::GetNeighbours()
             ret_vec.push_back(it->second);
 
 
-            Tile::test++;
+            
             //Edge* E = new Edge(pos,it->first);
             //p_GB->edgemap.emplace(pos+Tile::EdgePos[i],E);
 //

@@ -5,7 +5,7 @@ private:
     
 public: 
 //TODO mi public mi privat
-Coordinate();   
+    Coordinate();   
     int x;
     int y;
     Coordinate(int,int);
