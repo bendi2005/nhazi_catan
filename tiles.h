@@ -17,8 +17,9 @@ std::set<char> tile_resources; //nyilvan nem char hanem majd
 Coordinate pos;
 GameBoard* p_GB;
 Tile(GameBoard*,Coordinate,std::set<char> = {'a'}); //nyilvan nem char
+
 void GenerateNodes(GameBoard*);
-void GenerateEdges(GameBoard*);
+//void GenerateEdges(GameBoard*);
 void PutResourcesIntoNode(Node*);
 //TODO puresourcesintotile
 

@@ -6,6 +6,9 @@ Coordinate::Coordinate()
 }
 Coordinate::Coordinate(int in_x,int in_y) : x(in_x), y(in_y) {}
 
+
+
+
 bool Coordinate::operator!=(const Coordinate& other) const
 {
     return ((this->x != other.x ) || (this->y != other.y));
@@ -25,13 +28,9 @@ Coordinate Coordinate::BigToSmall()
     return ret_c;
 }
 
-Coordinate Coordinate::operator+(const Coordinate& other)
+Coordinate operator+(const Coordinate& first,const Coordinate& second)
 {
-    int tempx = this->x;
-    int tempy = this->y;
-    tempx += other.x;
-    tempy += other.y;
-    return Coordinate(tempx,tempy);
+    return Coordinate(first.x+second.x,first.y+second.y);
 }
 bool Coordinate::operator==(const Coordinate& other) const
 {

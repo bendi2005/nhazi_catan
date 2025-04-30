@@ -7,8 +7,10 @@ class Edge;
 class GameBoard;
 class Node
 {
+private:
+    
 public: //TODO public
-
+Node();
     std::vector<Edge*> own_edges; //ez honnan tudja hogy mi az az Edge lol?
     
     Coordinate pos;
@@ -19,10 +21,10 @@ public: //TODO public
     std::set<char> resources;  //nyilvan nem char hanem Resource osztaly
     
     
-    Node();
+    
     
 
-    Node(Coordinate,int,GameBoard*);
+    Node(Coordinate,GameBoard*);
 
 
     void AddResource(char); //nyilvan nem char hanem resource osztaly

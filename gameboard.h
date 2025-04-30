@@ -8,7 +8,6 @@
 #include <vector> //ezeket meg feltakaritjuk
 #include <utility> //#include <map> might not include std::make_pair
 
-
 class GameBoard 
 {
 public:   //TODO mi privat mi publikus

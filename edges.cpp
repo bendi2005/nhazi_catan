@@ -1,13 +1,13 @@
 #include "edges.h"
 const Coordinate Edge::GetPos() const 
 {
-    return edge_pos;
+    return Coordinate(((node_1_pos.x+node_2_pos.x)/2),(node_1_pos.y+node_2_pos.y)/2);
 }
 Edge::Edge()
 {
     printf("gecigecigeci");
 }
-Edge::Edge(Coordinate c1,Coordinate c2)
+Edge::Edge(const Coordinate& c1,const Coordinate& c2) : node_1_pos(c1),node_2_pos(c2)
 {
-    edge_pos = (c1+c2)/2;
+
 }

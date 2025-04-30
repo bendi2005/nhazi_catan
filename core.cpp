@@ -5,7 +5,8 @@ int main()
 {
     //Create GameBoard
     GameBoard g;
-    printf("gyzotunk");
+    printf("gyzotunk\n");
     printf("\ntest: %d\n",Tile::test);
     printf("%llu",g.edgemap.size());
+    
 }
