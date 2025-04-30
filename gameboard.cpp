@@ -43,9 +43,6 @@ void GameBoard::GenerateLine(int in_line_num)
         //TODO delete this 
     
         
-        
-        
-        
         tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
         
         

@@ -5,7 +5,7 @@ const Coordinate Edge::GetPos() const
 }
 Edge::Edge()
 {
-    printf("gecigecigeci");
+    printf("nem kene");
 }
 Edge::Edge(const Coordinate& c1,const Coordinate& c2) : node_1_pos(c1),node_2_pos(c2)
 {
