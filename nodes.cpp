@@ -52,15 +52,30 @@ void Node::AddResource(char in_resource)
 
 std::vector<Node*> Node::GetNeighbours()
 {
+    //baszna telibe hogy nem mukodik autoval
     std::vector<Node*> ret_vec;
     ret_vec.reserve(6);
-    auto& n_map = p_GB->nodemap;
+    auto n_map = &(p_GB->nodemap);
     for(int i =0;i<6;i++)
     {
-        auto it = n_map.find(pos+Tile::NodePos[i]);
-        if(it != n_map.end())
+        bool isin = false;
+        Node* f;
+        for(auto kvp : *n_map)
         {
-            ret_vec.push_back(it->second);
+            if(kvp.first == (pos+Tile::NodePos[i]))
+            {
+                isin = true;
+                f = kvp.second;
+            }
+        }
+        //auto it = n_map.find(pos+Tile::NodePos[i]);
+        
+        
+        //if(it != n_map.end())
+        if(isin)
+        {
+            //ret_vec.push_back(it->second);
+            ret_vec.push_back(f);
             ////munka
             //// uj Edge(node1,node2)
             //// thisnek az edge
