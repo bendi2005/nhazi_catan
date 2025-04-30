@@ -12,6 +12,7 @@ class Tile
 public:
 static std::vector<Coordinate> NodePos;
 static std::vector<Coordinate> EdgePos;
+static int test;
 std::set<char> tile_resources; //nyilvan nem char hanem majd
 Coordinate pos;
 GameBoard* p_GB;

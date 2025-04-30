@@ -32,16 +32,29 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
     
         Coordinate cur(pos+NodePos[i]);
         
-
+        
         //check if map contains current node
-        auto it = in_p_GB->nodemap.find(cur);
+        //std::map<Coordinate,Node*>::iterator it = in_p_GB->nodemap.find(cur);
+        bool isin = false;
+        Node* f;
+        for(auto kvp : *n_map)
+        {
+            if(kvp.first==cur)
+            {
+                isin = true;
+                f=kvp.second;
+            }
+        }
+        
         
         //contain
-        if(it != in_p_GB->nodemap.end())
+        //if(it != in_p_GB->nodemap.end())
+        if(isin)
         {
             //ember bazdmeg hogy nez ez ki
-            printf("\n!!!!!!!");
-            PutResourcesIntoNode((it)->second);
+            
+            //PutResourcesIntoNode((it)->second);
+            PutResourcesIntoNode(f);
             
         } 
         //not contain
