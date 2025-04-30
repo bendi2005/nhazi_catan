@@ -13,7 +13,7 @@ public:
 static std::vector<Coordinate> NodePos;
 static std::vector<Coordinate> EdgePos;
 std::set<char> tile_resources; //nyilvan nem char hanem majd
-Coordinate cords;
+Coordinate pos;
 GameBoard* p_GB;
 Tile(GameBoard*,Coordinate,std::set<char> = {'a'}); //nyilvan nem char
 void GenerateNodes(GameBoard*);

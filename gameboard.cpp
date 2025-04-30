@@ -44,10 +44,10 @@ void GameBoard::GenerateLine(int in_line_num)
         //TODO delete this 
     
         
-        Tile* T = new Tile(this,cur.BigToSmall());
-        auto it = tilemap.emplace(std::make_pair(cur.BigToSmall(),T));
-        it.first->first.PrintCord();
-        //tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
+        
+        
+        
+        tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
         
         
         
