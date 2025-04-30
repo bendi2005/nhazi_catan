@@ -1,6 +1,7 @@
 #pragma once
 #include "coord.h"
 #include "magic_const.h"
+#include "resource.h"
 #include <vector>
 #include <set>
 class Edge;
@@ -18,7 +19,7 @@ Node();
     GameBoard* p_GB;
 
 
-    std::set<char> resources;  //nyilvan nem char hanem Resource osztaly
+    std::set<Resource> node_resource_types;  //nyilvan nem char hanem Resource osztaly
     
     
     
@@ -27,7 +28,7 @@ Node();
     Node(Coordinate,GameBoard*);
 
 
-    void AddResource(char); //nyilvan nem char hanem resource osztaly
+    void AddResource(Resource); //nyilvan nem char hanem resource osztaly
 
     std::vector<Node*> GetNeighbours();
 };

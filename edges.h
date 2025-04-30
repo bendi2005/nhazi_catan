@@ -1,7 +1,7 @@
 #pragma once
 #include "coord.h"
 #include <stdio.h>
-
+#include <set>
 class Node;
 class GameBoard;
 class Tile;
@@ -15,6 +15,7 @@ public:
     Coordinate node_2_pos;
 
     
+    
     //ez amugy szerintem rohadtul nem kell
     
     
@@ -22,5 +23,5 @@ public:
     
     Edge(const Coordinate&,const Coordinate&);
 
-
+    
 };

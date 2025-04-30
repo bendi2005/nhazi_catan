@@ -26,9 +26,9 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
     }
 
 }   
-void Node::AddResource(char in_resource)
+void Node::AddResource(Resource in_resource)
 {
-    resources.insert(in_resource); 
+    node_resource_types.insert(in_resource); 
 }
 
 std::vector<Node*> Node::GetNeighbours()

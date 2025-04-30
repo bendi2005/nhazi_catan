@@ -1,4 +1,6 @@
 #pragma once 
+#include <set>
+#include "resource.h"
 class Coordinate
 {    
 private:

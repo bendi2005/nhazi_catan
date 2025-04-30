@@ -1,6 +1,7 @@
 //idea: put this in coords.h since that is included in everything
 #pragma once
 #include <stdio.h>
+#include "resource.h"
 #include <vector>
 #include <set>
 constexpr int SIDE_LENGTH = 3;

@@ -19,16 +19,17 @@ public:   //TODO mi privat mi publikus
     std::map<Coordinate,Edge*> edgemap;
     std::map<Coordinate,Tile*> tilemap;
 
+    static int rstpindex;
 
-
+    std::vector<std::set<Resource>> resource_types_for_tiles;
     //TODO desc
-    inline auto min(int a,int b)  //meno auto 😎
+    inline int min(int a,int b)
     {
         return (a > b) ? b : a;
     }    
     Coordinate CalcBegin(int);
     Coordinate CalcEnd(int);
-    GameBoard(); 
+    GameBoard(std::vector<std::set<Resource>> = {}); 
     void GenerateLine(int);
 
 

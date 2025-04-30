@@ -2,15 +2,16 @@
 
 
 //Constructor of GameBoard
-GameBoard::GameBoard()
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset)
 {
     //ez az 5 
+    //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
     for(int i = 0;i < 2*SIDE_LENGTH-1;i++)
     {
      
         GenerateLine(i);
-     
     }
+    
 
 }
 
@@ -43,9 +44,7 @@ void GameBoard::GenerateLine(int in_line_num)
         //TODO delete this 
     
         
-        tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall())));
-        
-        
+        tilemap.emplace(std::make_pair(cur,new Tile(this,cur.BigToSmall(),&(resource_types_for_tiles[rstpindex++]))));
         
     }
     

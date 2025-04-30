@@ -1,12 +1,10 @@
-#include "gameboard.h"
-int Tile::test = 0;
+#include "game.h"
+int GameBoard::rstpindex = 0;
 //TODO document this :downarrow:
 int main()
 {
-    //Create GameBoard
-    GameBoard g;
-    printf("gyzotunk\n");
-    printf("\ntest: %d\n",Tile::test);
-    printf("%llu",g.edgemap.size());
+
+    Game newgame;
+    
     
 }
