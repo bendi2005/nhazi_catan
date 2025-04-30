@@ -6,5 +6,5 @@ int main()
     //Create GameBoard
     GameBoard g;
     printf("gyzotunk");
-    printf("%d",g.tilemap.size());
+    printf("%llu",g.tilemap.size());
 }

@@ -9,12 +9,12 @@
 #include <utility> //#include <map> might not include std::make_pair
 
 
-class GameBoard
+class GameBoard 
 {
 public:   //TODO mi privat mi publikus
 
-    static std::vector<Coordinate> NodePos;
-    static std::vector<Coordinate> EdgePos;  //itt miert nem jo a const lol
+    //static std::vector<Coordinate> NodePos;
+    //static std::vector<Coordinate> EdgePos;  //itt miert nem jo a const lol
 
     std::map<Coordinate,Node*> nodemap;
     std::map<Coordinate,Edge*> edgemap;

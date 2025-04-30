@@ -18,16 +18,20 @@ void Coordinate::GoRight()
 Coordinate Coordinate::BigToSmall()
 {
     
+    
+    
     Coordinate ret_c((2 * x + 2 * y),(-2 * x + 4 * y));
-    ret_c.PrintCord();
+    
     return ret_c;
 }
 
 Coordinate Coordinate::operator+(const Coordinate& other)
 {
-    this->x+=other.x;
-    this->y+=other.y;
-    return *this;
+    int tempx = this->x;
+    int tempy = this->y;
+    tempx += other.x;
+    tempy += other.y;
+    return Coordinate(tempx,tempy);
 }
 bool Coordinate::operator==(const Coordinate& other) const
 {
@@ -35,7 +39,7 @@ bool Coordinate::operator==(const Coordinate& other) const
 }
 bool Coordinate::operator<(const Coordinate& other) const 
 {
-    return (this->x < other.x);
+    return (this->x < other.x || this->y < other.y);
 }
 Coordinate Coordinate::operator/(int divisor) const
 {
