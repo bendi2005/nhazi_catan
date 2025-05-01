@@ -4,9 +4,9 @@
 #include "resource.h"
 #include <vector>
 #include <set>
-constexpr int SIDE_LENGTH = 3;
-constexpr int SIDE_COUNT = 6;
+constexpr int BOARD_SIDE_LENGTH = 3;
+constexpr int SHAPE_NODE_COUNT = 6;
 constexpr int HOW_MANY_SIDES_DOES_AN_EDGE_BORDER = 2;
 //akkor se lesznek benne magic konstansok
-constexpr int HOW_MANY_RESOURCE_DOES_A_TILE_HAVE = 1;
+constexpr int HOW_MANY_RESOURCES_DOES_A_TILE_HAVE = 1;
 constexpr int HOW_MANY_RESOURCES_DOES_A_NODE_HAVE_MAX = 3;

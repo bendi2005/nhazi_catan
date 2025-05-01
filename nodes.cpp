@@ -8,7 +8,7 @@ Node::Node()
 Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
 {
     
-    own_edges.reserve(SIDE_COUNT);
+    own_edges.reserve(SHAPE_NODE_COUNT);
     auto negs = GetNeighbours();
     printf("Negs found: %llu \n",negs.size());
     //for(auto node_element : GetNeighbours())
@@ -35,11 +35,11 @@ std::vector<Node*> Node::GetNeighbours()
 {
     
     std::vector<Node*> ret_vec;
-    ret_vec.reserve(SIDE_COUNT);
+    ret_vec.reserve(SHAPE_NODE_COUNT);
     
     auto& n_map = (p_GB->nodemap);
     
-    for(int i =0;i<SIDE_COUNT;i++)
+    for(int i =0;i<SHAPE_NODE_COUNT;i++)
     {
         printf("\n%d",i);
         Coordinate cur(pos+Tile::NodePos[i]);

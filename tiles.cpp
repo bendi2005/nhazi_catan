@@ -18,25 +18,20 @@ Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>* in
 }
 void Tile::GenerateNodes(GameBoard* in_p_GB)
 {
-    auto& n_map = (in_p_GB->nodemap);
+    //note: dont need to handle edge-case where getter returns null
+    const std::map<Coordinate,Node*>& n_map = (in_p_GB->Get_nodemap());
 
     
-    for(int i = 0;i<SIDE_COUNT;i++)
+    //Iterate through all nodes of the tile
+    for(int i = 0;i<SHAPE_NODE_COUNT;i++)
     {
         //current node coord
-       
-        
-       
-    
         Coordinate cur(pos+NodePos[i]);
-        
         
         //check if map contains current node
         auto it = n_map.find(cur);
         
-        
-        
-        //contain
+        //Contains
         if(it != n_map.end())
         {
             
