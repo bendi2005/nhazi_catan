@@ -1,0 +1,12 @@
+
+OTC-Only one To Call
+
+
+Preset loading:
+In Gameboard() check if preset is empty, if it is create it there, and take it from there.
+
+Bus:
+	bigger picture
+	clean up includes
+	document lines
+	

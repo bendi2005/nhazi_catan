@@ -1,9 +1,12 @@
 #include "game.h"
+
+
+//for loading resources into tiles
 int GameBoard::rstpindex = 0;
-//TODO document this :downarrow:
+
 int main()
 {
-
+    //self-explanatory
     Game newgame;
     
     

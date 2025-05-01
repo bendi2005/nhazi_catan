@@ -13,11 +13,6 @@ bool Coordinate::operator!=(const Coordinate& other) const
 {
     return ((this->x != other.x ) || (this->y != other.y));
 }
-void Coordinate::GoRight()
-{
-    this->y++;
-}
-
 Coordinate Coordinate::BigToSmall()
 {
     

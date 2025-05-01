@@ -1,5 +1,5 @@
 #pragma once 
-#include <set>
+
 #include "resource.h"
 class Coordinate
 {    
@@ -13,9 +13,7 @@ public:
     Coordinate(int,int);
 
     bool operator!=(const Coordinate&) const;
-    void GoRight();
     Coordinate BigToSmall(); 
-    // void SmallToBig(); Ilyen nem     kene elv
     
     bool operator==(const Coordinate&) const;
     bool operator<(const Coordinate&) const;

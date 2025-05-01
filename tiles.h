@@ -1,12 +1,11 @@
 #pragma once
 #include "coord.h"
 #include "magic_const.h"
+
 #include "resource.h"
-#include <string>
+#include "nodes.h"
 
 
-
-class Node;
 class GameBoard;
 class Tile
 {
