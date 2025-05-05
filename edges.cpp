@@ -8,7 +8,7 @@ const Coordinate Edge::GetPos() const
     return Coordinate(((nodes_of_edge.first.GetNodePos().x+nodes_of_edge.second.GetNodePos().x)/2),(nodes_of_edge.first.GetNodePos().y+nodes_of_edge.second.GetNodePos().y)/2);
 }
 
-Node& Edge::GetNodeN(int N) 
+Node& Edge::GetNodeN_modif(int N) 
 {
     return N == 0 ? nodes_of_edge.first : nodes_of_edge.second;
 }

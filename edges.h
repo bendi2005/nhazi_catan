@@ -23,5 +23,5 @@ public:
     
     const Coordinate GetPos() const;
 
-    Node& GetNodeN(int);
+    Node& GetNodeN_modif(int);
 };

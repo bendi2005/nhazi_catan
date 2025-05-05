@@ -21,7 +21,6 @@ void EventManager::InitPlayers(int in_playercount)
 EventManager::EventManager(int in_pcount,int in_max_turncount) : player_count(in_pcount), max_turncount(in_max_turncount)
 {
     InitPlayers(player_count);
-    
     const Player& Winner = SimGame(max_turncount); 
 }
 
@@ -35,7 +34,6 @@ const Player& EventManager::SimGame(int in_max_turncount)
         vec_players[i].FirstTurn();
     }
     
-    
     bool wincon = false;
     while(!wincon)
     {
@@ -44,17 +42,22 @@ const Player& EventManager::SimGame(int in_max_turncount)
         //Iter thru players
         for(auto iter_player = vec_players.begin();iter_player != vec_players.end();iter_player++)
         {
-            //Iter thru actions
-            for(int i = 0;i<ACTION_COUNT;i++)
-            {
-                iter_player->RollDice();
-                iter_player->Trade();
-                iter_player->Build();    
-            }
+            
+            //Ennek van egy sokkal egyszerubb megoldasa nem kell a switch case
+             
+            ////Iter thru actions
+            //for(int i = 0;i<ACTION_COUNT;i++)
+            //{
+            //    //switch case enumokkal    
+            //}
+
+            iter_player->RollDice();
+            iter_player->Trade();
+            iter_player->Build();
             //CheckWincon
             //itt kell initelni a refet
         }
     }
-    const Player& winner = vec_players[0];
+    const Player& winner = vec_players[1];
     return winner;
 }

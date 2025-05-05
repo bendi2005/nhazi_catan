@@ -16,7 +16,7 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types
     for(auto iter = edgemap.begin();iter != edgemap.end();iter++)
     {
         bool is_coastal = false;
-        if((iter->second->GetNodeN(0).GetEdgeCount() == 2) || (iter->second->GetNodeN(1).GetEdgeCount() == 2))
+        if((iter->second->GetNodeN_modif(0).GetEdgeCount() == 2) || (iter->second->GetNodeN_modif(1).GetEdgeCount() == 2))
         {
             is_coastal = true;
         }
@@ -26,8 +26,8 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types
             Resource R(BRICK);
             int rate = 2;
 
-            iter->second->GetNodeN(0).SetHarbor(R,rate);
-            iter->second->GetNodeN(1).SetHarbor(R,rate);
+            iter->second->GetNodeN_modif(0).SetHarbor(R,rate);
+            iter->second->GetNodeN_modif(1).SetHarbor(R,rate);
         }
     }
 }
