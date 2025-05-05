@@ -36,7 +36,10 @@ private:
 
 
 public: 
+    //OTC Constructor
     Node(Coordinate,GameBoard*);
+    
     std::vector<Node*> GetNeighbours();
+    
     void AddResourceToNode(Resource);
 };

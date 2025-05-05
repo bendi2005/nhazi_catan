@@ -10,3 +10,4 @@ constexpr int HOW_MANY_SIDES_DOES_AN_EDGE_BORDER = 2;
 //akkor se lesznek benne magic konstansok
 constexpr int HOW_MANY_RESOURCES_DOES_A_TILE_HAVE = 1;
 constexpr int HOW_MANY_RESOURCES_DOES_A_NODE_HAVE_MAX = 3;
+constexpr int ACTION_COUNT = 3;

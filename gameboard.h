@@ -6,8 +6,9 @@
 #include "edges.h"
 #include "tiles.h"
 
-#include <map>
+
 #include <vector> 
+#include <map>
 #include <utility> //#include <map> might not include std::make_pair
 
 class GameBoard 

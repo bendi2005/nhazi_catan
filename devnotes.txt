@@ -1,3 +1,46 @@
+          ⠀ ____     __⠀⠀⠀⠀
+         ⠀ |    \.-``  )⠀⠀⠀
+        ⠀  |---``\  _.'⠀⠀⠀⠀
+       ⠀.-`'---`` ..'⠀⠀⠀⠀⠀⠀
+       (__...__,-.-`⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　 ／フ   フ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　|  .   .|⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　　／`ミ__xノ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　 /　　 　 |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　 /　 ヽ　　ﾉ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀ 　 │　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀／￣|　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀| (￣ヽ_ヽ)_)__)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀＼二つ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+Todo:
+
+Clean up includes
+clean up files
+
+
+
+
+
+          ⠀ ____     __⠀⠀⠀⠀
+         ⠀ |    \.-``  )⠀⠀⠀
+        ⠀  |---``\  _.'⠀⠀⠀⠀
+       ⠀.-`'---`` ..'⠀⠀⠀⠀⠀⠀
+       (__...__,-.-`⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　 ／フ   フ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　|  .   .|⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　　／`ミ__xノ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　 /　　 　 |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　 /　 ヽ　　ﾉ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀ 　 │　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀／￣|　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀| (￣ヽ_ヽ)_)__)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀＼二つ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+
+
+
+
 
 OTC-Only one To Call
 
@@ -10,30 +53,93 @@ Preset loading:
 In Gameboard() check if preset is empty, if it is create it there, and take it from there.
 
 std::vector<Coordinate> SearchDirection 
-This might appear as being the exact same thing that Tile::NodePos, thats because it is.
-However it serves a logically different purpose, hence its not double code.
+This might appear to be the exact same thing as Tile::NodePos thats because it is.
+However, it serves a logically different purpose, hence its not double code.
 This solution also dismisses the need for a way to access Tile::NodePos 
 (which would be unwanted, either messing up single responsibility or having to fiddle with access) 
 
 
-	
 
-Gameboard
+
+
+ha naggggggyon sok idod van: game ne managenljen semmit, hanem a mostani turn manager legyen egy event manager es a mostani dolgok subclass de ilyet tenyleg csak ha unatkozol
+
+Stucture:
+
+Player
 {
-stuff
+
+Rolldice //could be a member func of gameboard maybe
+Trade
+Build
+Firstturn //first turn is special: special build actions
+
+
 }
-Game{
-	vector<player>
-	setplayercount
-	setmaxturncount
-	init gameboard
-	turnmanager
-}
-turnmanager(maxturncount,playercount)
+
+Turn manager
 {
-first turn
+Enum: roll,trade,build
 
-rest of the turns
+//first time
+iterate throught player:
+takefirstaction
 
+
+checkwincon
+iterate through players
+iterate throught actions in enum
+take action
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+Player
+{
+
+taketurn
+
+}
+
+
+Game
+{
+var
+players<>
+turns
+
+
+func
+init gameboard
+howmany player
+howmany maxturn
+
+init players
+init turnmanager
+
+}
+
+Turnmanager
+{
+firstturn
+foreach player
+{
+	player.taketurn
+}
+
+}
+
+
+
+
+
