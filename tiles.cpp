@@ -2,7 +2,7 @@
 #include "gameboard.h"
 std::vector<Coordinate> Tile::NodePos = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
 std::vector<Coordinate> Tile::EdgePos = {Coordinate(-2,-1),Coordinate(-1,1),Coordinate(1,2),Coordinate(2,1),Coordinate(1,-1),Coordinate(-1,2)};
-Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>& in_resource) : pos(in_center), p_GB(in_p_GB)
+Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>& in_resource,int in_dicenum) : pos(in_center), p_GB(in_p_GB), dicenum(in_dicenum)
 {
     
     //fills tile_resource_types
@@ -62,4 +62,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
     }   
 }
 
-
+const int Tile::GetDiceNum() const
+{
+    return dicenum;
+}

@@ -21,6 +21,7 @@ private:
     std::set<Resource> tile_resource_types; 
     Coordinate pos;
     GameBoard* p_GB;
+    int dicenum;
 
     //For Nodes
     void GenerateNodes(GameBoard*);
@@ -29,9 +30,10 @@ private:
 public:
     
     //OTC Constructor
-    Tile(GameBoard*,Coordinate,const std::set<Resource>& = {});
+    Tile(GameBoard*,Coordinate,const std::set<Resource>& = {},int);
     
     void AddResourceToTile(const Resource);
+    const int GetDiceNum() const;
     const std::set<Resource>& GetResourcesFromTile() const;
     
     

@@ -25,9 +25,4 @@ void Trade();
 
 void Build();
 //jo itt is majd lesz valami
-
-
-
-
-
 };
