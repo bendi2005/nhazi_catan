@@ -1,5 +1,5 @@
 #include "gameboard.h"
-
+#include <random>
 
 //OTC Constructor
 GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset)
@@ -10,6 +10,25 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types
     for(int i = 0;i < 2*BOARD_SIDE_LENGTH-1;i++)
     {
         GenerateLine(i);
+    }
+
+    //Sets harbors
+    for(auto iter = edgemap.begin();iter != edgemap.end();iter++)
+    {
+        bool is_coastal = false;
+        if((iter->second->GetNodeN(0).GetEdgeCount() == 2) || (iter->second->GetNodeN(1).GetEdgeCount() == 2))
+        {
+            is_coastal = true;
+        }
+        if(is_coastal && (random() % 10) == 0) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
+        {
+            //debug
+            Resource R(BRICK);
+            int rate = 2;
+
+            iter->second->GetNodeN(0).SetHarbor(R,rate);
+            iter->second->GetNodeN(1).SetHarbor(R,rate);
+        }
     }
 }
 

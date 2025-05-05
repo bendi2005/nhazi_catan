@@ -2,21 +2,26 @@
 #include "coord.h"
 #include <stdio.h>
 #include <set>
+#include "nodes.h"
 class Node;
 class GameBoard;
 class Tile;
 class Edge
 {
 private:
-    Coordinate node_1_pos;
-    Coordinate node_2_pos;
-    //TODO pair
+    //Coordinate& node_1;
+    //Coordinate& node_2;
+    std::pair<Node&,Node&> nodes_of_edge;
+    
 public:
     //only for debugging
-    Edge();    
+    Edge() = delete;    
 
-    Edge(const Coordinate&,const Coordinate&);
+    Edge(Node&,Node&);
     
+
     
     const Coordinate GetPos() const;
+
+    Node& GetNodeN(int);
 };
