@@ -1,21 +1,34 @@
 #include "tiles.h"
 #include "gameboard.h"
-std::vector<Coordinate> Tile::EdgePos = {Coordinate(-2,-1),Coordinate(-1,1),Coordinate(1,2),Coordinate(2,1),Coordinate(1,-1),Coordinate(-1,2)};
 std::vector<Coordinate> Tile::NodePos = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
-Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>* in_resource) : pos(in_center), p_GB(in_p_GB)
+std::vector<Coordinate> Tile::EdgePos = {Coordinate(-2,-1),Coordinate(-1,1),Coordinate(1,2),Coordinate(2,1),Coordinate(1,-1),Coordinate(-1,2)};
+Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>& in_resource) : pos(in_center), p_GB(in_p_GB)
 {
-      
     
-    
-    
-    for(const auto& in_resource_element : *in_resource)
+    //fills tile_resource_types
+    for(const auto in_resource_element : in_resource)
     {
-        tile_resource_types.emplace(in_resource_element);
+        AddResourceToTile(in_resource_element);
     }
-    //
     GenerateNodes(p_GB);
 
 }
+
+
+
+void Tile::AddResourceToTile(const Resource in_rsc)
+{
+    tile_resource_types.insert(in_rsc);
+    return;
+}
+
+const std::set<Resource>& Tile::GetResourcesFromTile() const
+{
+    return tile_resource_types;
+} 
+
+
+
 void Tile::GenerateNodes(GameBoard* in_p_GB)
 {
     //note: dont need to handle edge-case where getter returns null
@@ -40,11 +53,13 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         } 
         //not contain
         else {
-            //ezt azert gondold at
-            
-            PutResourcesIntoNode((in_p_GB->nodemap.emplace(std::make_pair(cur,new Node(cur,in_p_GB))).first)->second);
-            
-           
+            //Create it and add it to GameBoard
+            //note2: This could be one line, but this execution follows the philosophy
+            //of only calling constructors when they are guaranteed to not throw an error
+            Node* N = new Node(cur,in_p_GB);
+            PutResourcesIntoNode(N);
+            std::pair<Coordinate,Node*> cur_node_pair_toadd = std::make_pair(cur,N);
+            in_p_GB->Add_to_nodemap(cur_node_pair_toadd);
         }
     }   
 }
@@ -52,7 +67,7 @@ void Tile::PutResourcesIntoNode(Node* in_Node) //ha referncia kell akkor sincs n
 {
     for(auto tile_resource : tile_resource_types)
     {
-        in_Node->AddResource(tile_resource);   
+        in_Node->AddResourceToNode(tile_resource);   
     }
 }
 

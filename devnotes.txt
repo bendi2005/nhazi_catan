@@ -2,11 +2,38 @@
 OTC-Only one To Call
 
 
+todo include cleanup
+
+
+
 Preset loading:
 In Gameboard() check if preset is empty, if it is create it there, and take it from there.
 
-Bus:
-	bigger picture
-	clean up includes
-	document lines
+std::vector<Coordinate> SearchDirection 
+This might appear as being the exact same thing that Tile::NodePos, thats because it is.
+However it serves a logically different purpose, hence its not double code.
+This solution also dismisses the need for a way to access Tile::NodePos 
+(which would be unwanted, either messing up single responsibility or having to fiddle with access) 
+
+
 	
+
+Gameboard
+{
+stuff
+}
+Game{
+	vector<player>
+	setplayercount
+	setmaxturncount
+	init gameboard
+	turnmanager
+}
+turnmanager(maxturncount,playercount)
+{
+first turn
+
+rest of the turns
+
+
+}

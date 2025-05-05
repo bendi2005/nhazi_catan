@@ -59,7 +59,7 @@ void GameBoard::GenerateLine(int in_line_num)
         //note2: This could be one line, but this execution follows the philosophy
         //of only calling constructors when they are guaranteed to not throw an error
              
-        Tile* tile_toadd = new Tile(this,cur.BigToSmall(),&(resource_types_for_tiles[rstpindex++]));
+        Tile* tile_toadd = new Tile(this,cur.BigToSmall(),(resource_types_for_tiles[rstpindex++]));
         std::pair coord_tile_toadd = std::make_pair(cur,tile_toadd);
         Add_to_tilemap(coord_tile_toadd);        
     }

@@ -8,6 +8,6 @@ int main()
 {
     //self-explanatory
     Game newgame;
-    
+       
     
 }
