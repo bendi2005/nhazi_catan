@@ -31,9 +31,9 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
 }   
 
 //trivial
-void Node::AddResourceToNode(Resource in_resource)
+void Node::AddTileToNode(Tile& in_tile)
 {
-    node_resource_types.insert(in_resource); 
+    tiles_of_node.insert(in_tile);
 }
 
 

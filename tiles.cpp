@@ -46,10 +46,8 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         
         //Contains
         if(it != n_map.end())
-        {
-            
-            PutResourcesIntoNode(it->second);
-            
+        { 
+            it->second->AddTileToNode(*this);   
         } 
         //not contain
         else {
@@ -57,17 +55,11 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
             //note2: This could be one line, but this execution follows the philosophy
             //of only calling constructors when they are guaranteed to not throw an error
             Node* N = new Node(cur,in_p_GB);
-            PutResourcesIntoNode(N);
+            N->AddTileToNode(*this);
             std::pair<Coordinate,Node*> cur_node_pair_toadd = std::make_pair(cur,N);
             in_p_GB->Add_to_nodemap(cur_node_pair_toadd);
         }
     }   
 }
-void Tile::PutResourcesIntoNode(Node* in_Node) //ha referncia kell akkor sincs nagy baj
-{
-    for(auto tile_resource : tile_resource_types)
-    {
-        in_Node->AddResourceToNode(tile_resource);   
-    }
-}
+
 

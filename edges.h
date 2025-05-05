@@ -10,7 +10,7 @@ class Edge
 private:
     Coordinate node_1_pos;
     Coordinate node_2_pos;
-
+    //TODO pair
 public:
     //only for debugging
     Edge();    

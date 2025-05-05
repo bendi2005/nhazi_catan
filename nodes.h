@@ -18,7 +18,7 @@ private:
     Node();
 
     //trivial
-    std::set<Resource> node_resource_types;
+    std::set<Tile&> tiles_of_node;
     Coordinate pos;
     GameBoard* p_GB;
     std::vector<Edge*> own_edges; //ez honnan tudja hogy mi az az Edge lol?
@@ -41,5 +41,6 @@ public:
     
     std::vector<Node*> GetNeighbours();
     
-    void AddResourceToNode(Resource);
+
+    void AddTileToNode(Tile&);
 };

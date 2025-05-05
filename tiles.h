@@ -33,6 +33,6 @@ public:
     
     void AddResourceToTile(const Resource);
     const std::set<Resource>& GetResourcesFromTile() const;
-
+    
     
 };
