@@ -17,7 +17,7 @@ Todo:
 
 Clean up includes
 clean up files
-
+clean up constructor not doing enough
 
 
 

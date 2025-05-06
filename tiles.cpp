@@ -47,7 +47,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
         //Contains
         if(it != n_map.end())
         { 
-            it->second->AddTileToNode(*this);   
+            it->second->AddTileToNode(this);   
         } 
         //not contain
         else {
@@ -55,7 +55,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
             //note2: This could be one line, but this execution follows the philosophy
             //of only calling constructors when they are guaranteed to not throw an error
             Node* N = new Node(cur,in_p_GB);
-            N->AddTileToNode(*this);
+            N->AddTileToNode(this);
             std::pair<Coordinate,Node*> cur_node_pair_toadd = std::make_pair(cur,N);
             in_p_GB->Add_to_nodemap(cur_node_pair_toadd);
         }

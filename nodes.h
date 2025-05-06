@@ -27,7 +27,7 @@ private:
     Node();
 
     //trivial
-    std::set<Tile&> tiles_of_node;
+    std::set<Tile*> tiles_of_node;
     Coordinate pos;
     GameBoard* p_GB;
     std::vector<Edge*> own_edges; //ez honnan tudja hogy mi az az Edge lol?
@@ -36,7 +36,7 @@ public:
     //OTC Constructor
     Node(Coordinate,GameBoard*);
     
-    std::vector<Node&> GetNeighbours();
+    std::vector<Node*> GetNeighbours();
     
     const Coordinate GetNodePos() const;
 
@@ -46,7 +46,7 @@ public:
     void SetEdgeCount(); //ezt amugy lehet nem hasznaljuk semmire
     void IncEdgeCount(); //ennek az egvilagon semmi ertelme 
     
-    void AddTileToNode(Tile&);
+    void AddTileToNode(Tile*);
     
     void SetHarbor(Resource,int);
     bool IsHarbor();

@@ -21,7 +21,7 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
     for(auto element : negs)
     {       
         //same thing as in tiles.cpp
-        Edge* E = new Edge(*this,element);
+        Edge* E = new Edge(this,element);
         std::pair<Coordinate,Edge*> cor_edge_pair_toadd = std::make_pair(E->GetPos(),E);
         p_GB->Add_to_edgemap(cor_edge_pair_toadd);
         edgecount++;
@@ -45,7 +45,7 @@ void Node::IncEdgeCount()
 
 
 //trivial
-void Node::AddTileToNode(Tile& in_tile)
+void Node::AddTileToNode(Tile* in_tile)
 {
     tiles_of_node.insert(in_tile);
     return;
@@ -71,10 +71,10 @@ bool Node::IsHarbor()
 
 //Checks all 6 directions, and if it finds a node there 
 //its a neighbour: adds it to list and creates edge between them
-std::vector<Node&> Node::GetNeighbours()
+std::vector<Node*> Node::GetNeighbours()
 {
     
-    std::vector<Node&> ret_vec;
+    std::vector<Node*> ret_vec;
     ret_vec.reserve(SHAPE_NODE_COUNT);
     
     auto nmap = p_GB->Get_nodemap();
@@ -87,7 +87,7 @@ std::vector<Node&> Node::GetNeighbours()
         if(it != nmap.end())
         {
 
-            ret_vec.push_back(*(it->second));         
+            ret_vec.push_back(it->second);         
         }
     }
     return ret_vec;   
