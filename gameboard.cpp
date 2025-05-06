@@ -6,6 +6,9 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
 
+
+    //for harbor creation
+    srand(time(0));
     //Runs for the number of lines it needs to generate
     for(int i = 0;i < 2*BOARD_SIDE_LENGTH-1;i++)
     {
@@ -20,7 +23,8 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types
         {
             is_coastal = true;
         }
-        if(is_coastal && (random() % 10) == 0) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
+        
+        if(is_coastal && ((rand() % 10) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
         {
             //debug
             Resource R(BRICK);
@@ -58,6 +62,7 @@ Coordinate GameBoard::CalcEnd(int in_line_num)  //! Ezt gondold at meg egy kicsi
 //Generates the in_line_num-th line
 void GameBoard::GenerateLine(int in_line_num)
 {
+    
     Coordinate line_begin = CalcBegin(in_line_num);
     Coordinate line_end = CalcEnd(in_line_num);
     
@@ -65,6 +70,7 @@ void GameBoard::GenerateLine(int in_line_num)
     //note: ez jofele iteracio mert nem egy valami elemein megyunk vegig
     for(Coordinate cur = line_begin;cur != line_end;cur.y++)
     {
+        
         //Does multiple things
         //Coordinate-base transformation on cur
         //Generates a tile, calling its OTC Constructor, with:
@@ -128,4 +134,16 @@ const std::map<Coordinate,Tile*>& GameBoard::Get_tilemap() const
 void GameBoard::Add_to_tilemap(const std::pair<Coordinate,Tile*> in_tile)
 {
     tilemap.insert(in_tile);
+}
+
+//felig teszt
+void GameBoard::PrintHarbor() const
+{
+    for(auto node : nodemap)
+    {
+        if(node.second->IsHarbor())
+        {
+            printf("Harbor at Node x: %d y: %d\n",node.second->GetNodePos().GetX(),node.second->GetNodePos().GetY());
+        }
+    }
 }

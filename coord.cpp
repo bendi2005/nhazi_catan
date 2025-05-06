@@ -44,3 +44,20 @@ void Coordinate::PrintCord() const
 {
     printf("\n%d  %d\n",x,y);
 }
+
+
+int Coordinate::GetX() const 
+{
+    return x;
+}
+
+
+int Coordinate::GetY() const 
+{
+    return y;
+}
+
+
+
+
+

@@ -7,6 +7,7 @@ int GameBoard::rstpindex = 0;
 int main()
 {
     //trivial
+    
     Game newgame;
        
     

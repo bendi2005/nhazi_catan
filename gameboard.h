@@ -5,6 +5,7 @@
 #include "nodes.h"
 #include "edges.h"
 #include "tiles.h"
+#include <time.h>
 
 
 #include <vector> 
@@ -56,10 +57,32 @@ public:   //TODO mi privat mi publikus
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
     //OTC Constructor
-    GameBoard(std::vector<std::set<Resource>> = {}); 
+    GameBoard(std::vector<std::set<Resource>> = 
+        {{WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL},
+        {WOOL}
+        
+        }); 
 
-    
-
-
-
+    //felig teszt    
+    void PrintHarbor() const;
 };
+
+
+

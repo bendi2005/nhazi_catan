@@ -1,5 +1,11 @@
 #pragma once
 #include <set>
+
+
+#include <stdio.h>
+
+
+
 enum enum_ResourceTypes
 {
     BRICK,
@@ -20,7 +26,7 @@ Resource(enum_ResourceTypes);
 
 bool operator<(const Resource&) const;
 };
-bool operator<(const std::set<Resource>& ,const std::set<Resource>&);
+
 
 
 

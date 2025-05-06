@@ -53,4 +53,8 @@ public:
     
     void SetHarbor(Resource,int);
     bool IsHarbor();
+
+    
+    
+    
 };

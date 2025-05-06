@@ -20,5 +20,11 @@ public:
     Coordinate operator/(int) const;
     void PrintCord() const;
     //operator>(const Coordinate&) const;
+
+    int GetX() const;
+    int GetY() const;
+
+    
+    
 };
 Coordinate operator+(const Coordinate&,const Coordinate&);
