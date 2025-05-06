@@ -10,5 +10,6 @@ Game::Game()
     //getmaxturncount
     int mtc = 10;
     //TODO error handling
-    EventManager EM(pc,mtc);
+    EventManager EM(&g,pc,mtc);
+    const Player* Winner = EM.SimGame(); 
 }

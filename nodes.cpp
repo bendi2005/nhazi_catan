@@ -1,14 +1,9 @@
 #include "nodes.h"
-#include "edges.h"
-
 #include "gameboard.h"
 
 std::vector<Coordinate> Node::SearchDirections = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
 
-Node::Node()
-{
-    printf("Node constructor default called, ezt se kene nagyon hivogatni");  
-}
+
 
 
 //OTC Constructor
@@ -17,7 +12,6 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
     own_edges.reserve(SHAPE_NODE_COUNT);
     auto negs = GetNeighbours();
     
-    //for(auto node_element : GetNeighbours())
     for(auto element : negs)
     {       
         //same thing as in tiles.cpp
@@ -33,7 +27,7 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : pos(in_coord),p_GB(in_p_GB)
 
 
 
-const int Node::GetEdgeCount() const
+int Node::GetEdgeCount() const
 {
     return edgecount;
 }

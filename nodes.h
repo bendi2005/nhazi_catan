@@ -2,6 +2,7 @@
 #include "coord.h"
 #include "magic_const.h"
 #include "resource.h"
+#include "edges.h"
 #include <vector>
 #include <set>
 struct str_HarborInfo
@@ -10,8 +11,10 @@ struct str_HarborInfo
     Resource harbor_resource_type;
     int rate;
 };
-class Edge;
+class Tile;
+
 class GameBoard;
+class Edge;
 class Node
 {
 private:
@@ -20,11 +23,10 @@ private:
     //note: see devnotes about this
     static std::vector<Coordinate> SearchDirections;
     int edgecount;
-    str_HarborInfo harborinfo;
+    str_HarborInfo harborinfo = {false,BRICK,100};
 
 
-    //nem fog kelleni debug utan
-    Node();
+    
 
     //trivial
     std::set<Tile*> tiles_of_node;
@@ -40,9 +42,10 @@ public:
     
     const Coordinate GetNodePos() const;
 
-    
+    //nem fog kelleni debug utan
+    Node() = delete;
 
-    const int GetEdgeCount() const;
+    int GetEdgeCount() const;
     void SetEdgeCount(); //ezt amugy lehet nem hasznaljuk semmire
     void IncEdgeCount(); //ennek az egvilagon semmi ertelme 
     

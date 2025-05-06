@@ -30,10 +30,10 @@ private:
 public:
     
     //OTC Constructor
-    Tile(GameBoard*,Coordinate,const std::set<Resource>& = {},int);
+    Tile(GameBoard*,Coordinate,const std::set<Resource>& = {},int = 0);
     
     void AddResourceToTile(const Resource);
-    const int GetDiceNum() const;
+    int GetDiceNum() const;
     const std::set<Resource>& GetResourcesFromTile() const;
     
     

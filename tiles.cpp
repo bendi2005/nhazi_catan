@@ -62,7 +62,7 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
     }   
 }
 
-const int Tile::GetDiceNum() const
+int Tile::GetDiceNum() const
 {
     return dicenum;
 }

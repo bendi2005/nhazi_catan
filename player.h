@@ -1,28 +1,36 @@
+#pragma once
 #include "game.h"
 #include <string>
+#include <stdio.h>
 class Player
 {
 private:
-    static int next_id;
+    
     int id;
     std::string player_name;
 
 public:
 
-
+static int next_id;
 //OTC Constructor
 Player(std::string);
 
 
 //Actions
-void FirstTurn();
+void FirstTurnSet(GameBoard*);
 
-void RollDice();
+void FirstTurnRoad(GameBoard*);
+
+void RollDice(GameBoard*);
 //aki eros itt meghivja a gameboard distribut fuggvenyet
 
-void Trade();
+void Trade(GameBoard*);
 //na ezen majd gondolkozunk meg
 
-void Build();
+void Build(GameBoard*);
 //jo itt is majd lesz valami
+
+//static void ClearNextId();
+bool operator<(const Player&);
+
 };

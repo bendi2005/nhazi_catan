@@ -9,29 +9,38 @@ EventManager::EventManager()
 
 void EventManager::InitPlayers(int in_playercount)
 {
-    Player P("Cica");
+    //for inpc
+    in_playercount += 0; //nowarning
+    //Player::ClearNextId();
+    Player* P = new Player("Cica");
     vec_players.push_back(P);
-    Player P("Kutya");
+    P = new Player("Kutya");
     vec_players.push_back(P);
     
 }
 
 
 //OTC Constructor
-EventManager::EventManager(int in_pcount,int in_max_turncount) : player_count(in_pcount), max_turncount(in_max_turncount)
+EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount) : GB(in_pGB), player_count(in_pcount), max_turncount(in_max_turncount)
 {
     InitPlayers(player_count);
-    const Player& Winner = SimGame(max_turncount); 
+    
 }
 
 
-const Player& EventManager::SimGame(int in_max_turncount)
+const Player* EventManager::SimGame()
 {
     //First Turn 
     //note: this wont affect wincon
     for(int i = 0;i<player_count;i++)
     {
-        vec_players[i].FirstTurn();
+        vec_players[i]->FirstTurnSet(GB);
+        vec_players[i]->FirstTurnRoad(GB);
+    }
+    for(int i = player_count;i>0;i--)
+    {
+        vec_players[i]->FirstTurnSet(GB);
+        vec_players[i]->FirstTurnRoad(GB);
     }
     
     bool wincon = false;
@@ -51,13 +60,13 @@ const Player& EventManager::SimGame(int in_max_turncount)
             //    //switch case enumokkal    
             //}
 
-            iter_player->RollDice();
-            iter_player->Trade();
-            iter_player->Build();
+            (*iter_player)->RollDice(GB);
+            (*iter_player)->Trade(GB);
+            (*iter_player)->Build(GB);
             //CheckWincon
             //itt kell initelni a refet
         }
     }
-    const Player& winner = vec_players[1];
+    const Player* winner = vec_players[1];
     return winner;
 }
