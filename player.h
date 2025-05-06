@@ -2,12 +2,21 @@
 #include "game.h"
 #include <string>
 #include <stdio.h>
+
+struct Inventory
+{
+    int settlements_available;
+    int cities_available;
+    int roads_available;
+};
+
 class Player
 {
 private:
     
     int id;
     std::string player_name;
+    
 
 public:
 

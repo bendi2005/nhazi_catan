@@ -64,34 +64,10 @@ This solution also dismisses the need for a way to access Tile::NodePos
 
 ha naggggggyon sok idod van: game ne managenljen semmit, hanem a mostani turn manager legyen egy event manager es a mostani dolgok subclass de ilyet tenyleg csak ha unatkozol
 
-Stucture:
-
-Player
-{
-
-Rolldice //could be a member func of gameboard maybe
-Trade
-Build
-Firstturn //first turn is special: special build actions
 
 
-}
 
-Turn manager
-{
-Enum: roll,trade,build
-
-//first time
-iterate throught player:
-takefirstaction
-
-
-checkwincon
-iterate through players
-iterate throught actions in enum
-take action
-
-}
+Meg nagyon sok ido: a tileok tobb darabot produceolnak egy resourcebol
 
 
 
@@ -100,46 +76,8 @@ take action
 
 
 
-
-
-
-
-Player
-{
-
-taketurn
-
-}
-
-
-Game
-{
-var
-players<>
-turns
-
-
-func
-init gameboard
-howmany player
-howmany maxturn
-
-init players
-init turnmanager
-
-}
-
-Turnmanager
-{
-firstturn
-foreach player
-{
-	player.taketurn
-}
-
-}
-
-
-
-
-
+Building:
+       -Choose what
+       -Choose where
+       -Check if available
+       -Build

@@ -6,6 +6,8 @@ public:
     //OTC Constructor
     Game();
 
+
+    //useful for debugging
     template<typename T> void PrintMap(std::map<Coordinate,T> in_map)
     {
         int i = 1;

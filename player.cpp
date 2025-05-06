@@ -12,6 +12,18 @@ Player::Player(std::string in_name) : id(next_id++), player_name(in_name)
 void Player::FirstTurnSet(GameBoard* in_pGB)
 {
     printf("\nfirst set\n");
+
+    //Choose what=Set
+
+    //Choose where
+    
+    
+    //Check if available
+
+    
+    //Buildit
+
+
 }
 
 void Player::FirstTurnRoad(GameBoard* in_pGB)

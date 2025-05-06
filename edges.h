@@ -12,7 +12,8 @@ private:
     //Coordinate& node_1;
     //Coordinate& node_2;
     std::pair<Node*,Node*> nodes_of_edge;
-    
+    static int next_edge_id;
+    int edge_id;   
 public:
     //only for debugging
     Edge() = delete;    

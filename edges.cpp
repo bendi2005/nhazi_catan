@@ -1,5 +1,6 @@
 #include "edges.h"
-Edge::Edge(Node* c1,Node* c2) : nodes_of_edge(c1,c2) //I have a bad feeling about this
+int Edge::next_edge_id = 0;
+Edge::Edge(Node* c1,Node* c2) : nodes_of_edge(c1,c2), edge_id(next_edge_id++) //I have a bad feeling about this
 {
     
 }

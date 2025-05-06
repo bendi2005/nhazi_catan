@@ -7,6 +7,7 @@ Game::Game()
     //TODO preset beker
     GameBoard g;
     //getplayercount
+    
     g.PrintHarbor();
     int pc = 2;
     //getmaxturncount
