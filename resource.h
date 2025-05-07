@@ -1,12 +1,8 @@
 #pragma once
 #include <set>
-
-
 #include <stdio.h>
 
-
-
-enum enum_ResourceTypes
+enum ResourceTypes
 {
     BRICK,
     LUMBER,
@@ -17,12 +13,12 @@ enum enum_ResourceTypes
 class Resource
 {
 public:
-enum_ResourceTypes Resourcetype;
+ResourceTypes Resourcetype;
 
 
 Resource() = delete;
 
-Resource(enum_ResourceTypes);
+Resource(ResourceTypes);
 
 bool operator<(const Resource&) const;
 };

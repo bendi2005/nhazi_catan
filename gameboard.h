@@ -60,31 +60,32 @@ public:   //TODO mi privat mi publikus
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
     //OTC Constructor
-    GameBoard(std::vector<std::set<Resource>> = 
-        {{WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL},
-        {WOOL}
-        
-        }); 
+    GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}});
 
     //felig teszt    
     void PrintHarbor() const;
+
+    //Criterias  
+
+    //ezek trivialisak 
+    bool Crit_isFreeNode(int);
+    bool Crit_isFreeEdge(int);
+    bool Crit_isNodeUpgradeAble(int,Player*);
+
+
+    //getneighbour es mindegyik hitnek owner_node nullptr
+    bool Crit_Distance(int);
+    
+    //edge nodejai kozul valamelyik NEM nullptr (mindketto nem lehet elobbi miatt)
+    //VAGY 
+    //edge nodejai kozul valamelyiknek valamelyik edgenek ownerje NEM nullptr ()
+    bool Crit_Connected(int);
+
+    //Builds
+    void BuildSettlement(int);
+    void Upgrade(int);
+    void BuildRoad(int);
+
 };
 
 

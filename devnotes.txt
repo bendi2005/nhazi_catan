@@ -1,3 +1,7 @@
+Bjarne bacsinak szolni hogy legyen static const!
+
+makefilet megcsinalni
+
           ⠀ ____     __⠀⠀⠀⠀
          ⠀ |    \.-``  )⠀⠀⠀
         ⠀  |---``\  _.'⠀⠀⠀⠀
@@ -37,16 +41,50 @@ clean up constructor not doing enough
 ⠀| (￣ヽ_ヽ)_)__)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀＼二つ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
+Rule changeseket el kell kezdeni iroGATOni
 
+set up phase turn 2ben nem kell a masodik settlementhez rakni a roadot (amugy is hulye szabaly lowkey)
+
+
+
+
+
+
+
+
+
+
+
+          ⠀ ____     __⠀⠀⠀⠀
+         ⠀ |    \.-``  )⠀⠀⠀
+        ⠀  |---``\  _.'⠀⠀⠀⠀
+       ⠀.-`'---`` ..'⠀⠀⠀⠀⠀⠀
+       (__...__,-.-`⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　 ／フ   フ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　　　|  .   .|⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　　／`ミ__xノ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　 　 /　　 　 |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀　　 /　 ヽ　　ﾉ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀ 　 │　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀／￣|　　 | | |⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀| (￣ヽ_ヽ)_)__)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀＼二つ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 
 
 
 OTC-Only one To Call
 
+WWPB:
 
-todo include cleanup
+What
+Where
+Possible
+Build
 
+
+Amikor grafikus lesz ezen annyi modusul, hogy ugye nyilak lesznek a beirt id helyett de hogy azok is az idt adjak vissza. (What megmarad)
+((Ha esetleg eger alapu akkor a what az toggleable lesz)
 
 
 Preset loading:
@@ -60,16 +98,27 @@ This solution also dismisses the need for a way to access Tile::NodePos
 
 
 
+<English>
+A criteriak ugy tunhetnek mintha nem OOP lenne, de azert mert ezek tenyleg mas criteria fuggvenyek.
+Ha fejlesztenem a jatekot es csinalnek pl: super road, mega city, akkor ezeknek is ugyanez lenne a criteria es AZ mar hasznossa tenne oket.
+</English>
 
 
-ha naggggggyon sok idod van: game ne managenljen semmit, hanem a mostani turn manager legyen egy event manager es a mostani dolgok subclass de ilyet tenyleg csak ha unatkozol
+meg tudod oldani hogy a nodemap es edgemapben ne keresni kelljen id alapjan hanem hogy ugy rendezze oket? lehet
+
+
+
+
+
 
 
 megtobb ido: robber (kezdes: tile is idt kap)
 
 Meg nagyon sok ido: a tileok tobb darabot produceolnak egy resourcebol
 
+kozepes ido: 12 osztalyos criteria megoldas amit zsepi mondott
 
+Meg sok ido: eger alapu valasztas (check epsilon radius)
 
 
 

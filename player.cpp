@@ -1,8 +1,23 @@
 #include "player.h"
 int Player::next_player_id = 0;
 
-Player::Player(std::string in_name) : id(next_player_id++), player_name(in_name)
-{}
+Player::Player(std::string in_name) : player_id(next_player_id++), player_name(in_name)
+{
+    //init inventory
+    
+    inventory.settlements_available = SETTLEMENT_PIECE_COUNT;
+    inventory.cities_available = CITY_PIECE_COUNT;
+    inventory.roads_available = ROAD_PIECE_COUNT;
+    for(int i = 0;i<RESOURCE_COUNT;i++)
+    {
+        inventory.resource_cards.insert(std::make_pair(Resource((ResourceTypes)i),0));
+        
+        //separate into 3 lines if doesnt work
+        //Resource R((ResourceTypes)i);
+        //std::pair<Resource,int> temp_pair = std::make_pair(R,0);
+        //inventory.resource_cards.insert(temp_pair);
+    }
+}
 
 //void Player::ClearNextId()
 //{
