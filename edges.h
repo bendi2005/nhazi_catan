@@ -14,6 +14,10 @@ private:
     std::pair<Node*,Node*> nodes_of_edge;
     static int next_edge_id;
     int edge_id;   
+
+    Player* owner_edge;
+    Building* building_edge; 
+
 public:
     //only for debugging
     Edge() = delete;    

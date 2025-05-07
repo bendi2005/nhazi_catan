@@ -1,7 +1,7 @@
 #include "player.h"
-int Player::next_id = 1;
+int Player::next_player_id = 0;
 
-Player::Player(std::string in_name) : id(next_id++), player_name(in_name)
+Player::Player(std::string in_name) : id(next_player_id++), player_name(in_name)
 {}
 
 //void Player::ClearNextId()

@@ -65,7 +65,7 @@ This solution also dismisses the need for a way to access Tile::NodePos
 ha naggggggyon sok idod van: game ne managenljen semmit, hanem a mostani turn manager legyen egy event manager es a mostani dolgok subclass de ilyet tenyleg csak ha unatkozol
 
 
-
+megtobb ido: robber (kezdes: tile is idt kap)
 
 Meg nagyon sok ido: a tileok tobb darabot produceolnak egy resourcebol
 

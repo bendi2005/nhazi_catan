@@ -7,6 +7,9 @@
 #include "tiles.h"
 #include <time.h>
 
+#include "player.h"
+#include "building.h"
+
 
 #include <vector> 
 #include <map>

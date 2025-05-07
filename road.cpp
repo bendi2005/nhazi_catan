@@ -6,6 +6,5 @@ Road::Road()
 }
 int Road::GetVictoryPoints() const 
 {
-    //1/3 a virtualis osztalynak elbaszott
     return 0;
 }

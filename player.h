@@ -20,7 +20,7 @@ private:
 
 public:
 
-static int next_id;
+static int next_player_id;
 //OTC Constructor
 Player(std::string);
 

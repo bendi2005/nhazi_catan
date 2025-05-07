@@ -23,6 +23,7 @@ private:
     //note: see devnotes about this
     static std::vector<Coordinate> SearchDirections;
     int edgecount;
+    
     str_HarborInfo harborinfo = {false,BRICK,100};
 
 
@@ -32,7 +33,12 @@ private:
     std::set<Tile*> tiles_of_node;
     Coordinate pos;
     GameBoard* p_GB;
-    std::vector<Edge*> own_edges; //ez honnan tudja hogy mi az az Edge lol?
+    std::vector<Edge*> own_edges;
+    
+    static int next_node_id;
+    int id;
+    Player* owner_node;    
+    Building* building_node;
 
 public: 
     //OTC Constructor
