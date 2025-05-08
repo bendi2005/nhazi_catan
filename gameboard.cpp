@@ -20,55 +20,77 @@
 
 
 
-bool GameBoard::Crit_isFreeNode( Coordinate in_coord, Player * in_player) const
+bool GameBoard::Crit_isFreeNode(Coordinate in_coord, Player * in_player) const
 {
-    //getter for owner
-    return (nodemap.at(in_coord)->owner_node == nullptr)
+    return (nodemap.at(in_coord)->GetNodeOwner() == nullptr);
 }
 bool GameBoard::Crit_Distance( Coordinate in_coord, Player*  in_player) const
 {
-
+    return (nodemap.at(in_coord)->GetNodeOwner() == in_player);
 }
 bool GameBoard::Crit_Node_Connected( Coordinate in_coord, Player* in_player) const
 {
-
+    return (edgemap.at(in_coord)->GetEdgeOwner() == nullptr);
 }
 
 
 
-const std::vector<GameBoard::CritFunction>& GameBoard::GetSettlementCriteriaFunction() 
+const std::vector<GameBoard::CritFunction>& GameBoard::GetSettlementCriteriaFunction() const
 {
     return SettlementCriteria;
 }
-const std::vector<GameBoard::CritFunction>& GameBoard::GetCityCriteriaFunction() 
+const std::vector<GameBoard::CritFunction>& GameBoard::GetCityCriteriaFunction() const
 {
     return CityCriteria;
 }
-const std::vector<GameBoard::CritFunction>& GameBoard::GetRoadCriteriaFunction() 
+const std::vector<GameBoard::CritFunction>& GameBoard::GetRoadCriteriaFunction() const
 {
     return RoadCriteria;
 }
 
 
 
-
-
-GameBoard::BuildFunction GameBoard::BuildSettlement(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+void GameBoard::BuildSettlementFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
     nodemap[in_coord]->SetNodeOwner(in_player);
     nodemap[in_coord]->SetNodeBuilding(in_type);
 }
     
-GameBoard::BuildFunction GameBoard::UpgradeSettlement(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+void GameBoard::UpgradeSettlementFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
     nodemap[in_coord]->SetNodeBuilding(in_type);
 }
 
-GameBoard::BuildFunction GameBoard::BuildRoad(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+void GameBoard::BuildRoadFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
     edgemap[in_coord]->SetEdgeOwner(in_player);
     edgemap[in_coord]->SetEdgeBuilding(in_type);
 }
+
+
+
+
+
+GameBoard::BuildFunction GameBoard::GetSettlementBuildFunction() const
+{
+    return BuildSettlement;
+}    
+
+GameBoard::BuildFunction GameBoard::GetUpgradeSettlementFunction() const
+{
+    return UpgradeSettlement;
+}
+GameBoard::BuildFunction GameBoard::GetRoadBuildFunction() const
+{   
+    return BuildRoad;
+}
+
+
+
+
+
+
+
 
 
 
@@ -111,7 +133,7 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 
 
 //OTC Constructor
-GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected}
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected},BuildSettlement{&BuildSettlementFunction},UpgradeSettlement{&UpgradeSettlementFunction},BuildRoad{&BuildRoadFunction}
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
 

@@ -111,7 +111,7 @@ void EventManager::Phase_Build(Player* current_player)
 
 
     //4. build
-    
+    GB->(*GameBoard::BuildFunction)
 
 
 }
@@ -120,7 +120,7 @@ bool EventManager::CallAllCritFunc(const std::vector<GameBoard::CritFunction>& i
 {
     for(auto critfunc : in_func_vector)
     {
-        if(!critfunc(in_coord,current_player))
+        if(!((GB->*critfunc)(in_coord,current_player)))
         {
             return false;
         }
@@ -128,8 +128,12 @@ bool EventManager::CallAllCritFunc(const std::vector<GameBoard::CritFunction>& i
     return true;
 }
 
+
+
+
 std::map<Resource,int> EventManager::GetBuildingCost(Building::BuildingTypes btype)
 {
+    //itt lehet baja lesz hogy nincs default de mi tudjuk hogy ezt kezeljuk (criteria)
     switch(btype)
     {
         case Building::BuildingTypes::SETTLEMENT :
@@ -151,8 +155,6 @@ const std::vector<GameBoard::CritFunction>& EventManager::GetCritFunctionVec(Bui
             return GB->GetCityCriteriaFunction();
         case Building::BuildingTypes::ROAD :
             return GB->GetRoadCriteriaFunction();
-        default:
-            return {};
     }
 
 }
@@ -160,10 +162,12 @@ GameBoard::BuildFunction EventManager::GetBuildFunction(Coordinate in_coord,Play
 {
     switch(btype)
     {
-        case Building::BuildingTypes::SETTLEMENT
-            return GameBoard::
-
-
+        case Building::BuildingTypes::SETTLEMENT :
+            return GB->GetSettlementBuildFunction();
+        case Building::BuildingTypes::CITY :
+            return GB->GetUpgradeSettlementFunction();
+        case Building::BuildingTypes::ROAD :
+            return GB->GetRoadBuildFunction();
     }
 } 
 

@@ -55,21 +55,31 @@ private:
 //de szep
 public:
     using CritFunction = bool(GameBoard::*)(Coordinate, Player*) const;
-    //using BuildFunction = void(*)( Coordinate, Player*);
+    using BuildFunction = void(GameBoard::*)(Coordinate, Player*,Building::BuildingTypes);
 private:
-    /*const*/ std::vector<CritFunction> SettlementCriteria;
-    /*const*/ std::vector<CritFunction> CityCriteria;
-    /*const*/ std::vector<CritFunction> RoadCriteria;
+    const std::vector<CritFunction> SettlementCriteria;
+    const std::vector<CritFunction> CityCriteria ;
+    const std::vector<CritFunction> RoadCriteria;
+
+
+    BuildFunction BuildSettlement;
+    BuildFunction UpgradeSettlement;
+    BuildFunction BuildRoad;
+
 
 public:   //TODO mi privat mi publikus
 
     
 
-    const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction();
-    const std::vector<GameBoard::CritFunction>& GetCityCriteriaFunction();
-    const std::vector<GameBoard::CritFunction>& GetRoadCriteriaFunction();
+    const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction() const;
+    const std::vector<GameBoard::CritFunction>& GetCityCriteriaFunction() const;
+    const std::vector<GameBoard::CritFunction>& GetRoadCriteriaFunction() const;
     
-    
+    BuildFunction GetSettlementBuildFunction() const;    
+    BuildFunction GetUpgradeSettlementFunction() const;
+    BuildFunction GetRoadBuildFunction() const;
+
+
     int Get_rstpindex() const;
     void Set_rstpindex(const int);
 
@@ -83,17 +93,11 @@ public:   //TODO mi privat mi publikus
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
 
-    BuildFunction BuildSettlement( Coordinate, Player*,Building::BuildingTypes);
+    void BuildSettlementFunction(Coordinate,Player*,Building::BuildingTypes);
+    void UpgradeSettlementFunction(Coordinate, Player*,Building::BuildingTypes);
+    void BuildRoadFunction(Coordinate,Player*,Building::BuildingTypes);
     
-    BuildFunction UpgradeSettlement( Coordinate, Player*,Building::BuildingTypes );
-    
-    BuildFunction BuildRoad( Coordinate, Player*,Building::BuildingTypes);
-
-    
-
-
-    
-    
+        
     
     
     
@@ -143,9 +147,7 @@ public:   //TODO mi privat mi publikus
 
 
     //Builds
-    void BuildSettlement(Coordinate);
-    void Upgrade(Coordinate);
-    void BuildRoad(Coordinate);
+    
 
 };
 

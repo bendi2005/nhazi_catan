@@ -32,8 +32,13 @@ public:
 
     int GetEdgeId() const;
     
+    
+    
     void SetEdgeOwner(Player*);
-
+    const Player* GetEdgeOwner() const;
+    
+    
+    
     void SetEdgeBuilding(Building::BuildingTypes);
     
     

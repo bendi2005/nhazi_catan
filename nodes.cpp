@@ -103,3 +103,7 @@ void Node::SetNodeBuilding(Building::BuildingTypes in_type)
     building_node = in_type;
 }
 
+const Player* Node::GetNodeOwner() const
+{
+    return owner_node;
+}

@@ -65,7 +65,7 @@ public:
 
     
     void SetNodeOwner(Player*);
-
+    const Player* GetNodeOwner() const;
     
     void SetNodeBuilding(const Building::BuildingTypes);
     

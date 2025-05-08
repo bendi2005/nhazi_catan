@@ -60,7 +60,9 @@ std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);
 
 const std::vector<GameBoard::CritFunction>& GetCritFunctionVec(Building::BuildingTypes) const;
 
-bool CallAllCritFunc(Coordinate,Player*,Building::BuildingTypes) const;
+GameBoard::BuildFunction GetBuildFunction(Coordinate,Player*,Building::BuildingTypes);
+
+bool CallAllCritFunc(const std::vector<GameBoard::CritFunction>&,Coordinate,Player*,Building::BuildingTypes) const;
 
 
 };
