@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <set>
 #include "nodes.h"
-class Node;
-class GameBoard;
-class Tile;
+#include "player.h"
+#include "building.h"
+
 class Edge
 {
 private:
@@ -16,7 +16,7 @@ private:
     int edge_id;   
 
     Player* owner_edge;
-    Building* building_edge; 
+    Building::BuildingTypes building_edge; 
 
 public:
     //only for debugging
@@ -29,4 +29,12 @@ public:
     const Coordinate GetPos() const;
 
     Node* GetNodeN_modif(int);
+
+    int GetEdgeId() const;
+    
+    void SetEdgeOwner(Player*);
+
+    void SetEdgeBuilding(Building::BuildingTypes);
+    
+    
 };

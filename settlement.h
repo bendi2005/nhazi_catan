@@ -5,10 +5,11 @@ class Settlement : public Building
 private:
     //debugging
     static int settlement_count;
+    static const std::map<Resource,int> Cost;
 public:
     Settlement();
     int GetVictoryPoints() const override;
     
-    static const std::map<Resource,int> Cost;
+    
     static const std::map<Resource,int> GetCost();
 };

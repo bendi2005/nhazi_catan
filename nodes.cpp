@@ -7,7 +7,7 @@ std::vector<Coordinate> Node::SearchDirections = {Coordinate(-2,-2),Coordinate(-
 
 
 //OTC Constructor
-Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos(in_coord),p_GB(in_p_GB),owner_node(nullptr),building_node(nullptr)
+Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos(in_coord),p_GB(in_p_GB),owner_node(nullptr),building_node(Building::BuildingTypes::EMPTY)
 {
     own_edges.reserve(SHAPE_NODE_COUNT);
     auto negs = GetNeighbours();
@@ -86,3 +86,20 @@ std::vector<Node*> Node::GetNeighbours()
     }
     return ret_vec;   
 }
+
+int Node::GetNodeId() const
+{
+    return node_id;
+}
+
+void Node::SetNodeOwner(Player*  in_player)
+{
+    owner_node = in_player;
+}
+
+    
+void Node::SetNodeBuilding(Building::BuildingTypes in_type)
+{
+    building_node = in_type;
+}
+

@@ -51,64 +51,145 @@ const Player* EventManager::SimGame()
         for(auto iter_player = vec_players.begin();iter_player != vec_players.end();iter_player++)
         {
             
-            //Ennek van egy sokkal egyszerubb megoldasa nem kell a switch case
-             
-            ////Iter thru actions
-            //for(int i = 0;i<ACTION_COUNT;i++)
-            //{
-            //    //switch case enumokkal    
-            //}
+            Player* current_player = *iter_player;
+            Phase_RollDice();
+            Phase_Trade();
+            Phase_Build(current_player);        
 
-            (*iter_player)->RollDice(GB);
-            (*iter_player)->Trade(GB);
-            (*iter_player)->Build(GB);
+            
+            
+            //(*iter_player)->RollDice(GB);
+            //(*iter_player)->Trade(GB);
+            //(*iter_player)->Build(GB);
             //CheckWincon
-            //itt kell initelni a refet
+            //itt kell initelni a refet   ??? ez mi 
         }
     }
     const Player* winner = vec_players[1];
     return winner;
 }
 
+//Player-independent
+void EventManager::Phase_RollDice()
+{
+    //GB->RollDice();
+
+}
+
+//GameBoard independent
+void EventManager::Phase_Trade()
+{
+
+}
+
+
+void EventManager::Phase_Build(Player* current_player)
+{
+    //a where what vegere valahogyan meglesz egy node vagy egy edge
+    //ha grafikus akkor kattintassal a konkret a pozbol, ha nyillal akkor id
+    //ha nem grafikus akkor id
+    //amig nem grafikus (lehet utana is) addig kell egy find_type_by_id.
+    //debug: where az egy id a what egy Building (a whaton beluli switchcase megoldja passal)
+
+    //TODO error handling
+    
+    //1. where
+    int foo = PromptWhere(); //ez csak egy prompt
+
+    //2. what
+    char c = PromptWhat();
+    Building::BuildingTypes type = Building::GetTypeFromChar(c);
+
+    //3. possible
+    
+    //economy
+    bool a = current_player->CanAfford(GetBuildingCost(type));
+    
+    //placement
+    bool b = CallAllCritFunc(GetCritFunctionVec(type),GB->id_to_coord(foo,type),current_player,type);
+    
+
+
+    //4. build
+    
+
+
+}
+
+bool EventManager::CallAllCritFunc(const std::vector<GameBoard::CritFunction>& in_func_vector,Coordinate in_coord,Player* current_player,Building::BuildingTypes type) const
+{
+    for(auto critfunc : in_func_vector)
+    {
+        if(!critfunc(in_coord,current_player))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+std::map<Resource,int> EventManager::GetBuildingCost(Building::BuildingTypes btype)
+{
+    switch(btype)
+    {
+        case Building::BuildingTypes::SETTLEMENT :
+            return Settlement::GetCost();
+        case Building::BuildingTypes::CITY :
+            return City::GetCost();
+        case Building::BuildingTypes::ROAD :
+            return Road::GetCost();
+    }
+}
+const std::vector<GameBoard::CritFunction>& EventManager::GetCritFunctionVec(Building::BuildingTypes btype) const
+{
+    //note: might be static but i dont think so
+    switch(btype)
+    {
+        case Building::BuildingTypes::SETTLEMENT :
+            return GB->GetSettlementCriteriaFunction();
+        case Building::BuildingTypes::CITY :
+            return GB->GetCityCriteriaFunction();
+        case Building::BuildingTypes::ROAD :
+            return GB->GetRoadCriteriaFunction();
+        default:
+            return {};
+    }
+
+}
+GameBoard::BuildFunction EventManager::GetBuildFunction(Coordinate in_coord,Player* in_player,Building::BuildingTypes btype)
+{
+    switch(btype)
+    {
+        case Building::BuildingTypes::SETTLEMENT
+            return GameBoard::
+
+
+    }
+} 
 
 //ezen biztos lehetne kicsit pofasitani de a fejleszto akarata hianyaban
 //ezen modositasok elmaradnak.
-bool EventManager::CheckAllCriteria(Settlement type,int in_id)
-{
-    
-    //affordos cuccok
+//bool EventManager::CheckAllCriteria(Settlement type,int in_id)
+//{
+//    
+//    //affordos cuccok
+//
+//    
+//    
+//    //placementes cuccok
+//
+//    return;
+//}
+//
+//bool EventManager::CheckAllCriteria(City type,int in_id)
+//{
+//
+//}
+//bool EventManager::CheckAllCriteria(Road type,int in_id)
+//{
+//}
 
-    
-    
-    //placementes cuccok
 
-    return;
-}
-
-bool EventManager::CheckAllCriteria(City type,int in_id)
-{
-
-}
-bool EventManager::CheckAllCriteria(Road type,int in_id)
-{
-}
-
-
-Settlement EventManager::pass_Setl()
-{
-    Settlement S;
-    return S;
-}
-City EventManager::pass_City()
-{
-    City C;
-    return C;
-}
-Road EventManager::pass_Road()
-{
-    Road R;
-    return R;
-}
 
 
 char EventManager::What() const

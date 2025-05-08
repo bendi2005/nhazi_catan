@@ -77,14 +77,17 @@ OTC-Only one To Call
 
 WWPB:
 
-What
 Where
+What
 Possible
 Build
 
 
 Amikor grafikus lesz ezen annyi modusul, hogy ugye nyilak lesznek a beirt id helyett de hogy azok is az idt adjak vissza. (What megmarad)
 ((Ha esetleg eger alapu akkor a what az toggleable lesz)
+
+
+Es ugy lesz hogy nem lesz what mert az benne lesz a where-ben a tudasa ennek
 
 
 Preset loading:

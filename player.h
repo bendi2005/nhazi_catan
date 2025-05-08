@@ -3,6 +3,12 @@
 #include <string>
 #include <stdio.h>
 
+#include "settlement.h"
+#include "city.h"
+#include "road.h"
+
+
+
 struct Inventory
 {
     int settlements_available;
@@ -31,9 +37,13 @@ void FirstTurnSet(GameBoard*);
 
 void FirstTurnRoad(GameBoard*);
 
-bool CanAfford(Building);
+bool CanAfford(std::map<Resource,int>);
 
 
+
+
+
+//ezekbol lehet semmi nem lesz lol
 void RollDice(GameBoard*);
 //aki eros itt meghivja a gameboard distribut fuggvenyet
 

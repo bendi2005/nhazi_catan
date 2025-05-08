@@ -1,9 +1,10 @@
 #pragma once
 #include "coord.h"
 #include "magic_const.h"
-#include "resource.h"
 #include "edges.h"
 #include <vector>
+#include "building.h"
+
 #include <set>
 struct str_HarborInfo
 {
@@ -13,8 +14,7 @@ struct str_HarborInfo
 };
 class Tile;
 
-class GameBoard;
-class Edge;
+class Player;
 class Node
 {
 private:
@@ -36,9 +36,9 @@ private:
     std::vector<Edge*> own_edges;
     
     static int next_node_id;
-    int id;
+    int node_id;
     Player* owner_node;    
-    Building* building_node;
+    Building::BuildingTypes building_node;
 
 public: 
     //OTC Constructor
@@ -60,7 +60,14 @@ public:
     void SetHarbor(Resource,int);
     bool IsHarbor();
 
+    int GetNodeId() const;
+
+
     
+    void SetNodeOwner(Player*);
+
+    
+    void SetNodeBuilding(const Building::BuildingTypes);
     
     
 };

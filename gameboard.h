@@ -15,9 +15,15 @@
 #include <map>
 #include <utility> //#include <map> might not include std::make_pair
 
+
+
+
+
 class GameBoard 
 {
 private:
+    
+    
     //Handles which element of resource_types_for_tiles vector is the next tile's
     static int rstpindex;
 
@@ -44,9 +50,26 @@ private:
     Coordinate CalcEnd(int);
 
     void GenerateLine(int);
+
+
+//de szep
+public:
+    using CritFunction = bool(GameBoard::*)(Coordinate, Player*) const;
+    //using BuildFunction = void(*)( Coordinate, Player*);
+private:
+    /*const*/ std::vector<CritFunction> SettlementCriteria;
+    /*const*/ std::vector<CritFunction> CityCriteria;
+    /*const*/ std::vector<CritFunction> RoadCriteria;
+
 public:   //TODO mi privat mi publikus
 
+    
 
+    const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction();
+    const std::vector<GameBoard::CritFunction>& GetCityCriteriaFunction();
+    const std::vector<GameBoard::CritFunction>& GetRoadCriteriaFunction();
+    
+    
     int Get_rstpindex() const;
     void Set_rstpindex(const int);
 
@@ -59,32 +82,70 @@ public:   //TODO mi privat mi publikus
     const std::map<Coordinate,Tile*>& Get_tilemap() const;
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
+
+    BuildFunction BuildSettlement( Coordinate, Player*,Building::BuildingTypes);
+    
+    BuildFunction UpgradeSettlement( Coordinate, Player*,Building::BuildingTypes );
+    
+    BuildFunction BuildRoad( Coordinate, Player*,Building::BuildingTypes);
+
+    
+
+
+    
+    
+    
+    
+    
+    
     //OTC Constructor
     GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}});
 
     //felig teszt    
     void PrintHarbor() const;
 
+
+    //converter
+    const Coordinate id_to_coord(int,Building::BuildingTypes) const;
+
+
     //Criterias  
 
-    //ezek trivialisak 
-    bool Crit_isFreeNode(int);
-    bool Crit_isFreeEdge(int);
-    bool Crit_isNodeUpgradeAble(int,Player*);
-
-
-    //getneighbour es mindegyik hitnek owner_node nullptr
-    bool Crit_Distance(int);
     
+    //NODE itt a Player* azert van mert kurvameno fuggvenypointer vektort
+    //hasznalni
+
+    //ezek trivialisak 
+     bool Crit_isFreeNode( Coordinate, Player* )const;
+    //getneighbour es mindegyik hitnek owner_node nullptr
+     bool Crit_Distance( Coordinate, Player* )const;
+    //TODO
+     bool Crit_Node_Connected( Coordinate, Player* )const;
+    
+    
+
+    //Edge
+     bool Crit_isFreeEdge( Coordinate, Player* )const;
     //edge nodejai kozul valamelyik NEM nullptr (mindketto nem lehet elobbi miatt)
     //VAGY 
     //edge nodejai kozul valamelyiknek valamelyik edgenek ownerje NEM nullptr ()
-    bool Crit_Connected(int);
+     bool Crit_Edge_Connected( Coordinate, Player* ) const;
+    
+
+    //City
+     bool Crit_isNodeUpgradeAble( Coordinate, Player* ) const;
+
+
+    
+    
+    
+    
+
 
     //Builds
-    void BuildSettlement(int);
-    void Upgrade(int);
-    void BuildRoad(int);
+    void BuildSettlement(Coordinate);
+    void Upgrade(Coordinate);
+    void BuildRoad(Coordinate);
 
 };
 

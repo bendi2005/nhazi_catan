@@ -1,8 +1,117 @@
 #include "gameboard.h"
 #include <random>
 
+//I think these arent const
+//const std::vector<GameBoard::CritFunction> GameBoard::SettlementCriteria = 
+//{
+//    //probaljuk ki & nelkul vicces
+//    &GameBoard::Crit_isFreeNode,&GameBoard::Crit_Distance,&GameBoard::Crit_Node_Connected
+//};
+//
+//const std::vector<GameBoard::CritFunction> GameBoard::CityCriteria =
+//{
+//    &GameBoard::Crit_isNodeUpgradeAble
+//};
+//
+//const std::vector<GameBoard::CritFunction> GameBoard::RoadCriteria = 
+//{
+//    &GameBoard::Crit_isFreeEdge,&GameBoard::Crit_Edge_Connected
+//};
+
+
+
+bool GameBoard::Crit_isFreeNode( Coordinate in_coord, Player * in_player) const
+{
+    //getter for owner
+    return (nodemap.at(in_coord)->owner_node == nullptr)
+}
+bool GameBoard::Crit_Distance( Coordinate in_coord, Player*  in_player) const
+{
+
+}
+bool GameBoard::Crit_Node_Connected( Coordinate in_coord, Player* in_player) const
+{
+
+}
+
+
+
+const std::vector<GameBoard::CritFunction>& GameBoard::GetSettlementCriteriaFunction() 
+{
+    return SettlementCriteria;
+}
+const std::vector<GameBoard::CritFunction>& GameBoard::GetCityCriteriaFunction() 
+{
+    return CityCriteria;
+}
+const std::vector<GameBoard::CritFunction>& GameBoard::GetRoadCriteriaFunction() 
+{
+    return RoadCriteria;
+}
+
+
+
+
+
+GameBoard::BuildFunction GameBoard::BuildSettlement(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+{
+    nodemap[in_coord]->SetNodeOwner(in_player);
+    nodemap[in_coord]->SetNodeBuilding(in_type);
+}
+    
+GameBoard::BuildFunction GameBoard::UpgradeSettlement(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+{
+    nodemap[in_coord]->SetNodeBuilding(in_type);
+}
+
+GameBoard::BuildFunction GameBoard::BuildRoad(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
+{
+    edgemap[in_coord]->SetEdgeOwner(in_player);
+    edgemap[in_coord]->SetEdgeBuilding(in_type);
+}
+
+
+
+
+
+
+const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_type) const
+{
+    switch(in_type)
+    {
+        case Building::BuildingTypes::SETTLEMENT :
+            {
+                for(auto coord_node_pair : nodemap)
+                {
+                    if(coord_node_pair.second->GetNodeId() == in_id)
+                    {
+                        return coord_node_pair.first;
+                    }
+                }
+                printf("\n:(((\n");
+            }
+
+        //not needed because this is the same as settlement
+        //case Building::BuildingTypes::CITY : 
+
+        case Building::BuildingTypes::ROAD :
+            {
+                    for(auto coord_edge_pair : edgemap)
+                    {
+                        if(coord_edge_pair.second->GetEdgeId() == in_id)
+                        {
+                            return coord_edge_pair.first;
+                        }
+                    }
+                    printf("\n:(((\n");
+            }
+    }
+}
+
+
+
 //OTC Constructor
-GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset)
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset) : resource_types_for_tiles(in_preset), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected}
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
 
@@ -147,3 +256,8 @@ void GameBoard::PrintHarbor() const
         }
     }
 }
+
+
+
+
+

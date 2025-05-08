@@ -5,16 +5,16 @@
 class Building   
 {
 private:
+    
 public:
     
     //ha keves a hely o megy elsonek
     virtual ~Building() = default;
+    enum class BuildingTypes {EMPTY,SETTLEMENT, CITY, ROAD};
     
-    
-    virtual int GetVictoryPoints() const = 0;
 
+    virtual int GetVictoryPoints() const = 0;
+    static BuildingTypes GetTypeFromChar(char);
     
     
-    //ez egy csunyabb kor emleke
-    //virtual std::map<Resource,int> GetCost() const = 0;
 };

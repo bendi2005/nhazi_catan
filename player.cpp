@@ -65,3 +65,10 @@ bool Player::operator<(const Player& other)
 {
     return (this->player_name < other.player_name);
 }
+
+bool Player::CanAfford(std::map<Resource,int> in_map)
+{
+    
+}
+
+
