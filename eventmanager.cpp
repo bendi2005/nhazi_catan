@@ -228,3 +228,10 @@ char EventManager::PromptWhat() const
         return std::tolower(temp[0]);
 }
 
+int EventManager::PromptWhere() const
+{
+    printf("Specify WHERE you want to build: ");
+    int n;
+    //TODO error handing
+    scanf("%d",&n);
+}

@@ -2,13 +2,12 @@
 #include <random>
 
 //OTC Constructor
-GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&(GameBoard::Crit_isFreeNode),&(GameBoard::Crit_Distance),&(GameBoard::Crit_Node_Connected)}, CityCriteria{&(GameBoard::Crit_isNodeUpgradeAble)},RoadCriteria{&(GameBoard::Crit_isFreeEdge),&(GameBoard::Crit_Edge_Connected)},FirstTurnSettlementCriteria{&(GameBoard::Crit_Distance),&(GameBoard::Crit_isFreeNode)},BuildSettlement{&(GameBoard::BuildSettlementFunction)},UpgradeSettlement{&(GameBoard::UpgradeSettlementFunction)},BuildRoad{&(GameBoard::BuildRoadFunction)}
+//GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&(GameBoard::Crit_isFreeNode),&(GameBoard::Crit_Distance),&(GameBoard::Crit_Node_Connected)}, CityCriteria{&(GameBoard::Crit_isNodeUpgradeAble)},RoadCriteria{&(GameBoard::Crit_isFreeEdge),&(GameBoard::Crit_Edge_Connected)},FirstTurnSettlementCriteria{&(GameBoard::Crit_Distance),&(GameBoard::Crit_isFreeNode)},BuildSettlement{&(GameBoard::BuildSettlementFunction)},UpgradeSettlement{&(GameBoard::UpgradeSettlementFunction)},BuildRoad{&(GameBoard::BuildRoadFunction)}
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum)
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
     //szerintem ugy lesz hogy itt fel lesz toltve az amihez nincs preset
     //meaning nem tile-onkent van random gen
-
-
 
     //for harbor creation and dice rolling
     srand(time(0));
@@ -25,6 +24,7 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
         if((iter->second->GetNodeN_modif(0)->GetEdgeCount() == 2) || (iter->second->GetNodeN_modif(1)->GetEdgeCount() == 2))
         {
             is_coastal = true;
+            printf("hit");
         }
         
         if(is_coastal && ((rand() % 10) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
@@ -37,8 +37,20 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
             iter->second->GetNodeN_modif(1)->SetHarbor(R,rate);
         }
     }
+
+    InitFuncStuff();
 }
 
+void GameBoard::InitFuncStuff()
+{
+    SettlementCriteria = {(&GameBoard::Crit_isFreeEdge),(&GameBoard::Crit_Distance),(&GameBoard::Crit_Node_Connected)};
+    CityCriteria = {&GameBoard::Crit_isNodeUpgradeAble};
+    RoadCriteria = {&GameBoard::Crit_isFreeEdge,&GameBoard::Crit_Edge_Connected};
+    FirstTurnSettlementCriteria = {&GameBoard::Crit_Distance,&GameBoard::Crit_isFreeNode};
+    BuildSettlement = {&GameBoard::BuildSettlementFunction};
+    UpgradeSettlement = {&GameBoard::UpgradeSettlementFunction};
+    BuildRoad = {&GameBoard::BuildRoadFunction};
+}
 
 //Calculate functions:
 

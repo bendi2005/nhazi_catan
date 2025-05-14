@@ -2,9 +2,8 @@
 #include "coord.h"
 #include "magic_const.h"
 
-#include "nodes.h"
 #include "edges.h"
-#include "tiles.h"
+#include "tiles.h" //contains nodes.h
 #include <time.h>
 
 #include "player.h"
@@ -18,7 +17,9 @@
 
 
 
-
+class Node;
+class Tile;
+class Edge;
 class GameBoard 
 {
 private:
@@ -68,10 +69,11 @@ public:
     using BuildFunction = void(GameBoard::*)(Coordinate, Player*,Building::BuildingTypes);
 private:
     
-    const std::vector<CritFunction> SettlementCriteria;
-    const std::vector<CritFunction> CityCriteria ;
-    const std::vector<CritFunction> RoadCriteria;
-    const std::vector<CritFunction> FirstTurnSettlementCriteria;
+    std::vector<CritFunction> SettlementCriteria;
+    std::vector<CritFunction> CityCriteria ;
+    std::vector<CritFunction> RoadCriteria;
+    std::vector<CritFunction> FirstTurnSettlementCriteria;
+    
 
 
     //BuildFunctions
@@ -82,6 +84,8 @@ private:
 
 public:   //TODO mi privat mi publikus
 
+
+    void InitFuncStuff();
     
     //Getters for CritFunctions
     const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction() const;

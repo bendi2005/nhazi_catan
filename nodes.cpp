@@ -1,6 +1,7 @@
 #include "nodes.h"
 #include "gameboard.h"
 
+int Node::next_node_id = 0;
 //set SearchDirections
 std::vector<Coordinate> Node::SearchDirections = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
 

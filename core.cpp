@@ -2,5 +2,6 @@
 int main()
 {
     Game newgame;
+    printf("done");
     return 0;   
 }

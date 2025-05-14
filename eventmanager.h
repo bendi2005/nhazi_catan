@@ -45,7 +45,7 @@ void Phase_Distribute();
 void Phase_Trade();
 void Phase_Build(Player*);
 
-int PromptWhere();
+int PromptWhere() const;
 char PromptWhat() const;
 
 

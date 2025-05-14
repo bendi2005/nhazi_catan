@@ -1,7 +1,5 @@
 #include "game.h"
 #include "eventmanager.h"
-#include <map>
-#include <utility>
 
 
 //for loading resources into tiles
@@ -15,10 +13,11 @@ Game::Game()
     GameBoard g;
     //getplayercount
 
-    //en nem akarom elhinni hogy ez 72:
+    printf("en nem akarom elhinni hogy ez 72:\n");
     printf("\n%d\n",Edge::next_edge_id);
     
     g.PrintHarbor();
+    
     int pc = 2;
     //getmaxturncount
     
@@ -26,5 +25,5 @@ Game::Game()
     //TODO error handling
     
     EventManager EM(&g,pc,mtc);
-    // Player* Winner = EM.SimGame(); 
+    Player* Winner = EM.SimGame(); 
 }

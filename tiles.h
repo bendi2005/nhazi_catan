@@ -8,6 +8,9 @@
 //necessary forward declaration
 class GameBoard;
 
+
+class Player;
+class Node;
 class Tile
 {
 
