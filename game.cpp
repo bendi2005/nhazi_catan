@@ -23,5 +23,5 @@ Game::Game()
     //TODO error handling
     
     EventManager EM(&g,pc,mtc);
-    //const Player* Winner = EM.SimGame(); 
+    // Player* Winner = EM.SimGame(); 
 }

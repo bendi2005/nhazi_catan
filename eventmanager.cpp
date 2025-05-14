@@ -2,7 +2,7 @@
 
 
 //OTC Constructor
-EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount) : GB(in_pGB), player_count(in_pcount), max_turncount(in_max_turncount)
+EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount) : GB(in_pGB), player_count(in_pcount), max_turncount(in_max_turncount), bonus_res{{BRICK,4},{LUMBER,4},{WOOL,2},{GRAIN,2}}
 {
     InitPlayers(player_count);
 }
@@ -12,30 +12,76 @@ EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount)
 void EventManager::InitPlayers(int in_playercount)
 {
     Player::ClearNextId();
+    
 
     //for debug
     in_playercount = 2; //nowarning
     Player* P = new Player("Cica");
+    GiveBonusResToPlayer(P);
     vec_players.push_back(P);
     P = new Player("Kutya");
+    GiveBonusResToPlayer(P);
     vec_players.push_back(P);
 
 }
 
+void EventManager::GiveBonusResToPlayer(Player* in_player)
+{
+    for(auto kvp_res_int : bonus_res)
+    {
+        in_player->AddResourceCard(kvp_res_int.second,kvp_res_int.first);
+    }
+}
 
-const Player* EventManager::SimGame()
+void EventManager::FirstTurn(Player* in_player)
+{
+    
+    //settlement
+    Player* current_player = in_player;
+    //Todo error handling
+    
+    //1. What = Settlement
+    
+    //2. Where
+    int foo = PromptWhere();
+
+    //3. Possible
+    //Economy possible 
+    //placement
+    bool possible = CallAllCritFunc(GB->GetFirstTurnSettlementCriteria(),GB->id_to_coord(foo,Building::BuildingTypes::SETTLEMENT),current_player,Building::BuildingTypes::SETTLEMENT);
+    
+    //4. Build
+    (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::SETTLEMENT), current_player,Building::BuildingTypes::SETTLEMENT);
+
+    //roadbuild + give rs
+
+    //1. What = Road
+
+    //2. Where
+    foo = PromptWhere();
+    
+    //3. Possible
+    //placement
+    possible = CallAllCritFunc(GB->GetRoadCriteriaFunction(),GB->id_to_coord(foo,Building::BuildingTypes::ROAD),current_player,Building::BuildingTypes::ROAD);
+    
+    //4. Build
+    (GB->*(GB->GetRoadBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::ROAD), current_player,Building::BuildingTypes::ROAD);
+}
+
+
+Player* EventManager::SimGame()
 {
     //First Turn 
     //note: this wont affect wincon
     for(int i = 0;i<player_count;i++)
     {
-        //Todo
+        FirstTurn(vec_players[i]);
     }
 
     //Second turn (reversed order)
     for(int i = player_count-1;i>=0;i--)
     {
-        //todo
+        FirstTurn(vec_players[i]);
     }
     
     bool wincon = false;
@@ -61,11 +107,10 @@ const Player* EventManager::SimGame()
             //itt kell initelni a refet   ??? ez mi  ???tovabbra se tudom
         }
     }
-    const Player* winner = vec_players[1];
+    Player* winner = vec_players[1];
     return winner;
 }
 
-//Player-independent
 void EventManager::Phase_Distribute()
 {
     GB->DistributeResources();
@@ -103,7 +148,6 @@ void EventManager::Phase_Build(Player* current_player)
     //placement
     bool b = CallAllCritFunc(GetCritFunctionVec(type),GB->id_to_coord(foo,type),current_player,type);
     
-
 
     //4. build
     (GB->*(GetBuildFunction(GB->id_to_coord(foo, type), current_player, type)))(GB->id_to_coord(foo, type), current_player,type);

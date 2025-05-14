@@ -7,7 +7,7 @@ std::vector<Coordinate> Tile::EdgePos = {Coordinate(-2,-1),Coordinate(-1,1),Coor
 Tile::Tile(GameBoard* in_p_GB, Coordinate in_center,const std::set<Resource>& in_resource,int in_dienum) : pos(in_center), p_GB(in_p_GB), dienum(in_dienum)
 {
     
-    //fills tile_resource_types
+    //fills tile_resources
     for(const auto in_resource_element : in_resource)
     {
         AddResourceToTile(in_resource_element);
@@ -55,13 +55,13 @@ void Tile::GenerateNodes(GameBoard* in_p_GB)
 //Getter and Setter for resources of tile (Setter sets 1, Getter gets all)
 void Tile::AddResourceToTile(const Resource in_rsc)
 {
-    tile_resource_types.insert(in_rsc);
+    tile_resources.insert(in_rsc);
     return;
 }
 
 const std::set<Resource>& Tile::GetResourcesFromTile() const
 {
-    return tile_resource_types;
+    return tile_resources;
 } 
 
 //Getter for DieNum
@@ -73,9 +73,9 @@ int Tile::GetDieNum() const
 
 void Tile::GiveResources(Player* in_player,int in_rcount) 
 {
-    for(auto rs : tile_resource_types)
+    for(auto rs : tile_resources)
     {
-        in_player->AddResourceCard(in_rcount,rs.Resourcetype);
+        in_player->AddResourceCard(in_rcount,rs);
     }
 
 }

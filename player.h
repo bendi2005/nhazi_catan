@@ -27,47 +27,37 @@ private:
 
 public:
 
+//Called for idk what
 static void ClearNextId();
+
 static int next_player_id;
-//OTC Constructor
+
+//OTC Constructor, sets up inventory
 Player(std::string);
 
 
-//Getters for owned things
+//Getters for owned Nodes and Edgess (returns a vector of pointers to them)
 
 std::vector<Node*> GetOwnedNodes(GameBoard*);
 std::vector<Edge*> GetOwnedEdges(GameBoard*);
 
 
 
-void AddResourceCard(int,ResourceTypes);
+void AddResourceCard(int,Resource);
 
 
+//Take Building count piece when building it 
+void TakeSettlementPiece();
+void TakeCityPiece();
+void TakeRoadPiece();
 
-//Actions
-void FirstTurnSet(GameBoard*);
+//Give back when upgrading to city
+void GiveBackSettlementPiece();
 
-void FirstTurnRoad(GameBoard*);
+//Take Resources for building
+void TakeBuildingResources(std::map<Resource,int>);
 
 bool CanAfford(std::map<Resource,int>);
-
-
-
-
-
-
-
-//ezekbol lehet semmi nem lesz lol
-void RollDice(GameBoard*);
-//aki eros itt meghivja a gameboard distribut fuggvenyet
-
-void Trade(GameBoard*);
-//na ezen majd gondolkozunk meg
-
-void Build(GameBoard*);
-//jo itt is majd lesz valami
-
-
 
 //for std::map
 bool operator<(const Player&);

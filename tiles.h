@@ -18,7 +18,7 @@ private:
     static std::vector<Coordinate> EdgePos;
 
     //properties of Tile
-    std::set<Resource> tile_resource_types; 
+    std::set<Resource> tile_resources; 
     Coordinate pos;
     GameBoard* p_GB;
     int dienum;
@@ -40,6 +40,6 @@ public:
     //Getter for DieNum
     int GetDieNum() const;
     
-    void GiveResources(Player*,int) const;
+    void GiveResources(Player*,int) ;
     
 };

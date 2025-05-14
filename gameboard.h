@@ -74,12 +74,12 @@ private:
     //Vector of criteria for a Road
     const std::vector<CritFunction> RoadCriteria;
 
+    const std::vector<CritFunction> FirstTurnSettlementCriteria;
 
-    //Building of Settlement
+
+    //BuildFunctions
     BuildFunction BuildSettlement;
-    //Building of City (= upgrading a Settlement)
     BuildFunction UpgradeSettlement;
-    //Building of Road
     BuildFunction BuildRoad;
 
 
@@ -90,7 +90,9 @@ public:   //TODO mi privat mi publikus
     const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction() const;
     const std::vector<GameBoard::CritFunction>& GetCityCriteriaFunction() const;
     const std::vector<GameBoard::CritFunction>& GetRoadCriteriaFunction() const;
-    
+    const std::vector<CritFunction>& GetFirstTurnSettlementCriteria() const;
+
+
     //Getters for BuildFunctions
     BuildFunction GetSettlementBuildFunction() const;    
     BuildFunction GetUpgradeSettlementFunction() const;
@@ -135,6 +137,9 @@ public:   //TODO mi privat mi publikus
     bool Crit_isNodeUpgradeAble(Coordinate,Player*) const;
 
     
+    
+    
+    
     //OTC Constructor
     //note: ez majd be lesz allitva valami szep presetre
     GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}},std::vector<int> ={7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7});
@@ -148,7 +153,7 @@ public:   //TODO mi privat mi publikus
 
     int RollDice() const;
 
-    void DistributeResources() const;
+    void DistributeResources();
 
 };
 

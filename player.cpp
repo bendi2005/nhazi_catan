@@ -28,7 +28,7 @@ void Player::ClearNextId()
 }
 
 
-//Returns a vector of the owned nodes
+
 std::vector<Node*> Player::GetOwnedNodes(GameBoard* in_pGB)
 {
     std::vector<Node*> ret_vec;
@@ -44,7 +44,6 @@ std::vector<Node*> Player::GetOwnedNodes(GameBoard* in_pGB)
     return ret_vec;
 }
 
-//Returns a vector of the owned edges
 std::vector<Edge*> Player::GetOwnedEdges(GameBoard* in_pGB)
 {
     std::vector<Edge*> ret_vec;
@@ -62,55 +61,57 @@ std::vector<Edge*> Player::GetOwnedEdges(GameBoard* in_pGB)
 
 
 
-
-
-
-
-void Player::FirstTurnSet(GameBoard* in_pGB)
+void Player::AddResourceCard(int n,Resource in_r)
 {
-    printf("\nfirst set\n");
-
-    //Choose what=Set
-
-    //Choose where
-    
-    
-    //Check if available
-
-    
-    //Buildit
-
-
+    inventory.resource_cards.at(in_r) += n;
 }
 
-void Player::FirstTurnRoad(GameBoard* in_pGB)
+void Player::TakeSettlementPiece()
 {
-    printf("\nFirst road\n");
+    inventory.settlements_available--;
 }
 
-void Player::RollDice(GameBoard* in_pGB)
+void Player::TakeCityPiece()
 {
-    printf("\n\nroll");
+    inventory.cities_available--;
 }
 
-void Player::Trade(GameBoard* in_pGB)
+void Player::TakeRoadPiece()
 {
-    printf("\nTrade\n");
+    inventory.roads_available--;
 }
 
-void Player::Build(GameBoard* in_pGB)
+
+void Player::GiveBackSettlementPiece()
 {
-    printf("\nbuild\n");
+    inventory.settlements_available++;
+}
+
+//Decrease each resource type by the cost of it (the ones wiht 0 stay the same)
+void Player::TakeBuildingResources(std::map<Resource,int> in_map)
+{
+    for(auto iter : in_map)
+    {
+        inventory.resource_cards.at(iter.first) -= iter.second;
+    }
+}
+
+
+bool Player::CanAfford(std::map<Resource,int> in_map)
+{
+    for(auto kvp_res_int : in_map)
+    {
+        if(inventory.resource_cards.at(kvp_res_int.first) < kvp_res_int.second)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Player::operator<(const Player& other)
 {
     return (this->player_name < other.player_name);
-}
-
-bool Player::CanAfford(std::map<Resource,int> in_map)
-{
-    
 }
 
 

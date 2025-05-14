@@ -13,8 +13,8 @@ std::vector<Player*> vec_players;
 int player_count;
 int max_turncount;
 GameBoard* GB = nullptr;
-
-
+const std::map<Resource,int> bonus_res;
+void GiveBonusResToPlayer(Player*);
 
 public:
 
@@ -23,14 +23,14 @@ EventManager(GameBoard*,int = 2,int = 10);
 
 
 void InitPlayers(int);
-const Player* SimGame();
+Player* SimGame();
 
 char What() const; 
 
 int Where(char);
 
 
-
+void FirstTurn(Player*);
 
 //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
 //bool CheckAllCriteria(Settlement, int);

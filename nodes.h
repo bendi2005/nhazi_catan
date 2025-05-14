@@ -93,6 +93,8 @@ public:
     void SetNodeBuilding(const Building::BuildingTypes);
     void SetNodePointerBuilding(Building*);
 
+    Building* GetNodePointerBuilding();
+
 
 
 };

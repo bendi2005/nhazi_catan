@@ -2,7 +2,7 @@
 #include <random>
 
 //OTC Constructor
-GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected},BuildSettlement{&BuildSettlementFunction},UpgradeSettlement{&UpgradeSettlementFunction},BuildRoad{&BuildRoadFunction}
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected},FirstTurnSettlementCriteria{&Crit_Distance,&Crit_isFreeNode},BuildSettlement{&BuildSettlementFunction},UpgradeSettlement{&UpgradeSettlementFunction},BuildRoad{&BuildRoadFunction}
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
     //szerintem ugy lesz hogy itt fel lesz toltve az amihez nincs preset
@@ -274,6 +274,10 @@ const std::vector<GameBoard::CritFunction>& GameBoard::GetRoadCriteriaFunction()
     return RoadCriteria;
 }
 
+const std::vector<GameBoard::CritFunction>& GameBoard::GetFirstTurnSettlementCriteria() const
+{
+    return FirstTurnSettlementCriteria;
+}
 
 
 //Build functions
@@ -281,22 +285,36 @@ const std::vector<GameBoard::CritFunction>& GameBoard::GetRoadCriteriaFunction()
 //Builds Settlement
 void GameBoard::BuildSettlementFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
-    nodemap[in_coord]->SetNodeOwner(in_player);
-    Settlement* S = new Settlement;
+    //Calls the OTC constructor of Settlement
+    Settlement* built_set = new Settlement(in_player);
+
+    //Sets Node
+    nodemap[in_coord]->SetNodePointerBuilding(built_set);
     nodemap[in_coord]->SetNodeBuilding(in_type);
+    nodemap[in_coord]->SetNodeOwner(in_player);    
 }
     
 //Upgrades Settlement (=Builds City)  
 void GameBoard::UpgradeSettlementFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
+    //Calls OTC Constructor of City
+    City* built_city = new City(in_player);
+
+    //Sets Node
+    nodemap[in_coord]->SetNodePointerBuilding(built_city);
     nodemap[in_coord]->SetNodeBuilding(in_type);
+    nodemap[in_coord]->SetNodeOwner(in_player);    
+    
 }
 
 //Builds Road
 void GameBoard::BuildRoadFunction(Coordinate in_coord, Player* in_player,Building::BuildingTypes in_type)
 {
-    edgemap[in_coord]->SetEdgeOwner(in_player);
+    Road* built_road = new Road(in_player);
+    
+    edgemap[in_coord]->SetEdgePointerBuilding(built_road);
     edgemap[in_coord]->SetEdgeBuilding(in_type);
+    edgemap[in_coord]->SetEdgeOwner(in_player);    
 }
 
 
@@ -361,13 +379,13 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 void GameBoard::DistributeResources()
 {
     int sum = RollDice();
-    for(auto geci : nodemap)
+    for(auto kvp_coord_node : nodemap)
     {
-        for(auto fasz : geci.second->GetTilesOfNode())
+        for(auto element_tile : kvp_coord_node.second->GetTilesOfNode())
         {
-            if(geci.second->GetNodeOwner() != nullptr && fasz->GetDieNum() == sum)
+            if(kvp_coord_node.second->GetNodeOwner() != nullptr && element_tile->GetDieNum() == sum)
             {
-                fasz->GiveResources(geci.second->GetNodeOwner(),geci.second->GetNodePointerBuilding()->ProduceResource());
+                element_tile->GiveResources(kvp_coord_node.second->GetNodeOwner(),kvp_coord_node.second->GetNodePointerBuilding()->ProduceResourceCount());
             }
         }
 
