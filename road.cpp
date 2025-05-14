@@ -8,8 +8,20 @@ Road::Road()
 }
 int Road::GetVictoryPoints() const 
 {
-    return 0;
+    return VICTORY_POINT_VALUE_ROAD;
 }
+
+int Road::ProduceResource() const 
+{
+    return PRODUCE_RESOURCE_VALUE_ROAD;
+}
+
+Building::BuildingTypes Road::GetBuildingType() const
+{
+    return Building::BuildingTypes::ROAD;
+}
+
+
 const std::map<Resource,int> Road::GetCost()
 {
     return Road::Cost;

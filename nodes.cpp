@@ -1,15 +1,13 @@
 #include "nodes.h"
 #include "gameboard.h"
 
+//set SearchDirections
 std::vector<Coordinate> Node::SearchDirections = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
 
-
-
-
 //OTC Constructor
-Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos(in_coord),p_GB(in_p_GB),owner_node(nullptr),building_node(Building::BuildingTypes::EMPTY)
+Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos(in_coord),p_GB(in_p_GB),owner_node(nullptr),building_type_node(Building::BuildingTypes::EMPTY),pointer_building_node(nullptr)
 {
-    own_edges.reserve(SHAPE_NODE_COUNT);
+    own_edges.reserve(SHAPE_EDGE_COUNT);
     auto negs = GetNeighbours();
     
     for(auto element : negs)
@@ -18,7 +16,7 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos
         Edge* E = new Edge(this,element);
         std::pair<Coordinate,Edge*> cor_edge_pair_toadd = std::make_pair(E->GetPos(),E);
         p_GB->Add_to_edgemap(cor_edge_pair_toadd);
-        edgecount++;
+        
         //Add edge to this node and the neighbour node
         own_edges.push_back(E);
         element->own_edges.push_back(E);
@@ -26,15 +24,40 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos
 }   
 
 
+//Getter for pos
+const Coordinate Node::GetNodePos() const
+{
+    return pos;
+}
 
+//Getter for id
+int Node::GetNodeId() const
+{
+    return node_id;
+}
+
+//Getter for  OwnEdges
+const std::vector<Edge*> Node::GetOwnEdges() const
+{
+    return own_edges;
+}
+
+//Getter for EdgeCount
 int Node::GetEdgeCount() const
 {
     return edgecount;
 }
 
-void Node::IncEdgeCount()
+
+//Getter and Setter for NodeOwner
+Player* Node::GetNodeOwner() const
 {
-    edgecount++;
+    return owner_node;
+}
+
+void Node::SetNodeOwner(Player*  in_player)
+{
+    owner_node = in_player;
 }
 
 
@@ -45,11 +68,13 @@ void Node::AddTileToNode(Tile* in_tile)
     return;
 }
 
-const Coordinate Node::GetNodePos() const
+const std::set<Tile*> Node::GetTilesOfNode() const
 {
-    return pos;
+    return tiles_of_node;
 }
 
+
+//Harbor related
 
 void Node::SetHarbor(Resource in_resource_type,int in_rate)
 {
@@ -61,6 +86,7 @@ bool Node::IsHarbor()
 {
     return harborinfo.is_there;
 }
+
 
 
 //Checks all 6 directions, and if it finds a node there 
@@ -87,23 +113,19 @@ std::vector<Node*> Node::GetNeighbours()
     return ret_vec;   
 }
 
-int Node::GetNodeId() const
+void Node::SetNodeBuilding(const Building::BuildingTypes in_build )
 {
-    return node_id;
+    building_type_node = in_build;
 }
 
-void Node::SetNodeOwner(Player*  in_player)
+void Node::SetNodePointerBuilding(Building* in_build)
 {
-    owner_node = in_player;
+    pointer_building_node = in_build;
 }
 
-    
-void Node::SetNodeBuilding(Building::BuildingTypes in_type)
+Building* Node::GetNodePointerBuilding()
 {
-    building_node = in_type;
+    return pointer_building_node;
 }
 
-const Player* Node::GetNodeOwner() const
-{
-    return owner_node;
-}
+

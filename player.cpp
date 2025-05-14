@@ -4,10 +4,13 @@ int Player::next_player_id = 0;
 Player::Player(std::string in_name) : player_id(next_player_id++), player_name(in_name)
 {
     //init inventory
-    
+
+    //init building pieces
     inventory.settlements_available = SETTLEMENT_PIECE_COUNT;
     inventory.cities_available = CITY_PIECE_COUNT;
     inventory.roads_available = ROAD_PIECE_COUNT;
+    
+    //init resource cards
     for(int i = 0;i<RESOURCE_COUNT;i++)
     {
         inventory.resource_cards.insert(std::make_pair(Resource((ResourceTypes)i),0));
@@ -19,10 +22,49 @@ Player::Player(std::string in_name) : player_id(next_player_id++), player_name(i
     }
 }
 
-//void Player::ClearNextId()
-//{
-//    next_id = 1;
-//}
+void Player::ClearNextId()
+{
+    next_player_id = 0;
+}
+
+
+//Returns a vector of the owned nodes
+std::vector<Node*> Player::GetOwnedNodes(GameBoard* in_pGB)
+{
+    std::vector<Node*> ret_vec;
+    //maybe excessive
+    ret_vec.reserve(TILE_COUNT*SHAPE_NODE_COUNT);
+    for(auto iter : in_pGB->Get_nodemap())
+    {
+        if(iter.second->GetNodeOwner() == this)
+        {
+            ret_vec.push_back(iter.second);
+        }
+    }
+    return ret_vec;
+}
+
+//Returns a vector of the owned edges
+std::vector<Edge*> Player::GetOwnedEdges(GameBoard* in_pGB)
+{
+    std::vector<Edge*> ret_vec;
+    //maybe excessive
+    ret_vec.reserve(TILE_COUNT*SHAPE_NODE_COUNT);
+    for(auto iter : in_pGB->Get_edgemap())
+    {
+        if(iter.second->GetEdgeOwner() == this)
+        {
+            ret_vec.push_back(iter.second);
+        }
+    }
+    return ret_vec;
+}
+
+
+
+
+
+
 
 void Player::FirstTurnSet(GameBoard* in_pGB)
 {

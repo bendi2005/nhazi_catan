@@ -27,9 +27,21 @@ private:
 
 public:
 
+static void ClearNextId();
 static int next_player_id;
 //OTC Constructor
 Player(std::string);
+
+
+//Getters for owned things
+
+std::vector<Node*> GetOwnedNodes(GameBoard*);
+std::vector<Edge*> GetOwnedEdges(GameBoard*);
+
+
+
+void AddResourceCard(int,ResourceTypes);
+
 
 
 //Actions
@@ -38,6 +50,8 @@ void FirstTurnSet(GameBoard*);
 void FirstTurnRoad(GameBoard*);
 
 bool CanAfford(std::map<Resource,int>);
+
+
 
 
 
@@ -53,7 +67,9 @@ void Trade(GameBoard*);
 void Build(GameBoard*);
 //jo itt is majd lesz valami
 
-//static void ClearNextId();
+
+
+//for std::map
 bool operator<(const Player&);
 
 };

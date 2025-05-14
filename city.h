@@ -7,8 +7,11 @@ private:
     static const std::map<Resource,int> Cost;
 public:
     City();
-    int GetVictoryPoints() const override;
     
+    int GetVictoryPoints() const override;
+    int ProduceResource() const override;
+    Building::BuildingTypes GetBuildingType() const override;
+
     static const std::map<Resource,int> GetCost();
 };
 

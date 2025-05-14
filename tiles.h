@@ -17,11 +17,11 @@ private:
     static std::vector<Coordinate> NodePos;
     static std::vector<Coordinate> EdgePos;
 
-    //trivial
+    //properties of Tile
     std::set<Resource> tile_resource_types; 
     Coordinate pos;
     GameBoard* p_GB;
-    int dicenum;
+    int dienum;
 
     //For Nodes
     void GenerateNodes(GameBoard*);
@@ -30,11 +30,16 @@ private:
 public:
     
     //OTC Constructor
-    Tile(GameBoard*,Coordinate,const std::set<Resource>& = {},int = 0);
+    Tile(GameBoard*,Coordinate,const std::set<Resource>& ,int);
     
-    void AddResourceToTile(const Resource);
-    int GetDiceNum() const;
+
+    //Getter and Setter for resources of tile (Setter sets 1, Getter gets all)
     const std::set<Resource>& GetResourcesFromTile() const;
+    void AddResourceToTile(const Resource);
     
+    //Getter for DieNum
+    int GetDieNum() const;
+    
+    void GiveResources(Player*,int) const;
     
 };

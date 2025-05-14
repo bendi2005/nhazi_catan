@@ -11,6 +11,17 @@ int City::GetVictoryPoints() const
 {
     return VICTORY_POINT_VALUE_CITY;
 }
+
+int City::ProduceResource() const 
+{
+    return PRODUCE_RESOURCE_VALUE_CITY;
+}
+
+Building::BuildingTypes City::GetBuildingType() const
+{
+    return Building::BuildingTypes::CITY;
+}
+
 const std::map<Resource,int> City::GetCost()
 {
     return City::Cost;

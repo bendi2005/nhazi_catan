@@ -1,6 +1,20 @@
+
+napirendig pontok
+
+-Mi van a resourceal?
+-jo e az edge gend
+
+
+
+
+nodemap ha 1 helyen nem szabad konst legyen akkor sehol se az?
+
+
 Bjarne bacsinak szolni hogy legyen static const!
 
 makefilet megcsinalni
+
+amik lehet moduslunak a trade megirasakor: TADA
 
           ⠀ ____     __⠀⠀⠀⠀
          ⠀ |    \.-``  )⠀⠀⠀
@@ -109,7 +123,7 @@ Ha fejlesztenem a jatekot es csinalnek pl: super road, mega city, akkor ezeknek 
 
 meg tudod oldani hogy a nodemap es edgemapben ne keresni kelljen id alapjan hanem hogy ugy rendezze oket? lehet
 
-
+FONTOS!!! NE FELEJTS EL DESTRUKTORT IRNI A SETTLEMENTHEZ FOLEG
 
 
 
@@ -117,7 +131,9 @@ meg tudod oldani hogy a nodemap es edgemapben ne keresni kelljen id alapjan hane
 
 megtobb ido: robber (kezdes: tile is idt kap)
 
-Meg nagyon sok ido: a tileok tobb darabot produceolnak egy resourcebol
+Meg nagyon sok ido: a tileok tobb felebol tobb darabot produceolnak egy resourcebol
+
+nem tudom mennyi ido de eleg felesleges csak az ocdmet bassza: harbor preset
 
 kozepes ido: 12 osztalyos criteria megoldas amit zsepi mondott
 

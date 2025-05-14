@@ -6,68 +6,93 @@
 #include "building.h"
 
 #include <set>
+//TADA
+//Harbor
+//if is_there, owner can exchange <rate> of <harbor_resource_type> for 1 of chosen resource 
 struct str_HarborInfo
 {
     bool is_there = false;
     Resource harbor_resource_type;
     int rate;
 };
-class Tile;
 
+//Forward declarations
+class Tile;
 class Player;
 class Node
 {
 private:
 
+    static int next_node_id;
+    
     //this is the same thing as Tile::NodePos
     //note: see devnotes about this
     static std::vector<Coordinate> SearchDirections;
+    
+    //i think this is only useful for debugging but not sure
     int edgecount;
     
+    //preset
     str_HarborInfo harborinfo = {false,BRICK,100};
 
 
     
 
-    //trivial
-    std::set<Tile*> tiles_of_node;
+    //Properties of Node
+    int node_id;
     Coordinate pos;
     GameBoard* p_GB;
-    std::vector<Edge*> own_edges;
     
-    static int next_node_id;
-    int node_id;
+    std::set<Tile*> tiles_of_node;
+    std::vector<Edge*> own_edges;
+
     Player* owner_node;    
-    Building::BuildingTypes building_node;
+    Building::BuildingTypes building_type_node;
+    Building* pointer_building_node;
 
 public: 
     //OTC Constructor
     Node(Coordinate,GameBoard*);
     
-    std::vector<Node*> GetNeighbours();
-    
-    const Coordinate GetNodePos() const;
-
-    //nem fog kelleni debug utan
+    //nem fog kelleni debug utan (???)
     Node() = delete;
 
+    //Getter for pos
+    const Coordinate GetNodePos() const;
+
+    //Getter for id
+    int GetNodeId() const;
+    
+    //Getter for EdgeCount
     int GetEdgeCount() const;
-    void SetEdgeCount(); //ezt amugy lehet nem hasznaljuk semmire
-    void IncEdgeCount(); //ennek az egvilagon semmi ertelme 
     
+
+    
+
+
+
+
+    //desc in cpp
+    std::vector<Node*> GetNeighbours();
+
     void AddTileToNode(Tile*);
-    
+    const std::set<Tile*> GetTilesOfNode() const;
+
+    //Harbor related
     void SetHarbor(Resource,int);
     bool IsHarbor();
 
-    int GetNodeId() const;
-
-
-    
+    //Getter for OwnEdges
+    const std::vector<Edge*> GetOwnEdges() const;
+       
+    //Getter and Setter for NodeOwner
+    Player* GetNodeOwner() const;
     void SetNodeOwner(Player*);
-    const Player* GetNodeOwner() const;
     
+    //Builds on Node
     void SetNodeBuilding(const Building::BuildingTypes);
-    
-    
+    void SetNodePointerBuilding(Building*);
+
+
+
 };

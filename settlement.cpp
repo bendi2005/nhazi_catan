@@ -12,20 +12,19 @@ int Settlement::GetVictoryPoints() const
     return VICTORY_POINT_VALUE_SETTLEMENT;
 }
 
+int Settlement::ProduceResource() const
+{
+    return PRODUCE_RESOURCE_VALUE_SETTLEMENT;
+}
+
+
 const std::map<Resource,int> Settlement::GetCost()
 {
     return Settlement::Cost;
 }
 
+Building::BuildingTypes Settlement::GetBuildingType() const 
+{
+    return BuildingTypes::SETTLEMENT;
+}
 
-//std::map<Resource,int> Settlement::GetCost() const 
-//{
-//    std::map<Resource,int> retmap;
-//    
-//    retmap.insert(std::make_pair(Resource(BRICK),1));
-//    retmap.insert(std::make_pair(Resource(LUMBER),1));
-//    retmap.insert(std::make_pair(Resource(WOOL),1));
-//    retmap.insert(std::make_pair(Resource(GRAIN),1));
-//
-//    return retmap;
-//}

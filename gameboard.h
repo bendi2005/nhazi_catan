@@ -26,7 +26,10 @@ private:
     
     //Handles which element of resource_types_for_tiles vector is the next tile's
     static int rstpindex;
+    //Same as ^ but for die num
+    static int dienumindex;
 
+    
     //Maps of Node,Edge,Tile
     std::map<Coordinate,Node*> nodemap;
     std::map<Coordinate,Edge*> edgemap;
@@ -35,7 +38,9 @@ private:
     
     //Passes in the resource_type to to tile
     std::vector<std::set<Resource>> resource_types_for_tiles;
-   
+    std::vector<int> dicenum_for_tiles;
+
+
     //Need this for CalcEnd();
     inline int min(int a,int b)
     {
@@ -49,39 +54,55 @@ private:
     //Calculates the coordinate of the tile it needs to END generating the in_line_num-th line 
     Coordinate CalcEnd(int);
 
+
+    //Generates a line of tiles
     void GenerateLine(int);
 
 
-//de szep
+//Function pointers to functions handling checking the criteria to building and building
+//Need to define these before vectors of them
 public:
+    //Criterion function, only depending on the state of the board
     using CritFunction = bool(GameBoard::*)(Coordinate, Player*) const;
+    //Building function
     using BuildFunction = void(GameBoard::*)(Coordinate, Player*,Building::BuildingTypes);
 private:
+    //Vector of criteria for a Settlement
     const std::vector<CritFunction> SettlementCriteria;
+    //Vector of criteria for a City
     const std::vector<CritFunction> CityCriteria ;
+    //Vector of criteria for a Road
     const std::vector<CritFunction> RoadCriteria;
 
 
+    //Building of Settlement
     BuildFunction BuildSettlement;
+    //Building of City (= upgrading a Settlement)
     BuildFunction UpgradeSettlement;
+    //Building of Road
     BuildFunction BuildRoad;
 
 
 public:   //TODO mi privat mi publikus
 
     
-
+    //Getters for CritFunctions
     const std::vector<GameBoard::CritFunction>& GetSettlementCriteriaFunction() const;
     const std::vector<GameBoard::CritFunction>& GetCityCriteriaFunction() const;
     const std::vector<GameBoard::CritFunction>& GetRoadCriteriaFunction() const;
     
+    //Getters for BuildFunctions
     BuildFunction GetSettlementBuildFunction() const;    
     BuildFunction GetUpgradeSettlementFunction() const;
     BuildFunction GetRoadBuildFunction() const;
 
 
+    //Getter and Setter for rstpindex
     int Get_rstpindex() const;
     void Set_rstpindex(const int);
+
+
+    //Getters and Setters for maps
 
     const std::map<Coordinate,Node*>& Get_nodemap() const;
     void Add_to_nodemap(const std::pair<Coordinate,Node*>);
@@ -93,17 +114,30 @@ public:   //TODO mi privat mi publikus
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
 
+
     void BuildSettlementFunction(Coordinate,Player*,Building::BuildingTypes);
     void UpgradeSettlementFunction(Coordinate, Player*,Building::BuildingTypes);
     void BuildRoadFunction(Coordinate,Player*,Building::BuildingTypes);
     
         
+    //Criteria Functions
+
+    //Node 
+    bool Crit_isFreeNode(Coordinate,Player*)const;
+    bool Crit_Distance(Coordinate,Player*)const;
+    bool Crit_Node_Connected(Coordinate,Player*)const;
     
+    //Edge
+    bool Crit_isFreeEdge(Coordinate,Player*)const;
+    bool Crit_Edge_Connected(Coordinate,Player*) const;
     
-    
+    //City
+    bool Crit_isNodeUpgradeAble(Coordinate,Player*) const;
+
     
     //OTC Constructor
-    GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}});
+    //note: ez majd be lesz allitva valami szep presetre
+    GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}},std::vector<int> ={7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7});
 
     //felig teszt    
     void PrintHarbor() const;
@@ -112,42 +146,9 @@ public:   //TODO mi privat mi publikus
     //converter
     const Coordinate id_to_coord(int,Building::BuildingTypes) const;
 
+    int RollDice() const;
 
-    //Criterias  
-
-    
-    //NODE itt a Player* azert van mert kurvameno fuggvenypointer vektort
-    //hasznalni
-
-    //ezek trivialisak 
-     bool Crit_isFreeNode( Coordinate, Player* )const;
-    //getneighbour es mindegyik hitnek owner_node nullptr
-     bool Crit_Distance( Coordinate, Player* )const;
-    //TODO
-     bool Crit_Node_Connected( Coordinate, Player* )const;
-    
-    
-
-    //Edge
-     bool Crit_isFreeEdge( Coordinate, Player* )const;
-    //edge nodejai kozul valamelyik NEM nullptr (mindketto nem lehet elobbi miatt)
-    //VAGY 
-    //edge nodejai kozul valamelyiknek valamelyik edgenek ownerje NEM nullptr ()
-     bool Crit_Edge_Connected( Coordinate, Player* ) const;
-    
-
-    //City
-     bool Crit_isNodeUpgradeAble( Coordinate, Player* ) const;
-
-
-    
-    
-    
-    
-
-
-    //Builds
-    
+    void DistributeResources() const;
 
 };
 

@@ -18,10 +18,6 @@ GameBoard* GB = nullptr;
 
 public:
 
-//debug only
-EventManager();
-
-
 //OTC Constructor
 EventManager(GameBoard*,int = 2,int = 10);
 
@@ -45,12 +41,12 @@ Settlement pass_Setl();
 City pass_City();
 Road pass_Road();
 
-void Phase_RollDice();
+void Phase_Distribute();
 void Phase_Trade();
 void Phase_Build(Player*);
 
 int PromptWhere();
-char PromptWhat();
+char PromptWhat() const;
 
 
 //Kerdes ez igy rendben van?

@@ -14,6 +14,9 @@ public:
     
 
     virtual int GetVictoryPoints() const = 0;
+    virtual int ProduceResource() const = 0;
+    virtual Building::BuildingTypes GetBuildingType() const = 0;
+
     static BuildingTypes GetTypeFromChar(char);
     
     
