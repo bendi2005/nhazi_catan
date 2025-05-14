@@ -1,5 +1,8 @@
 #pragma once
 #include "gameboard.h"
+#include <map>
+#include <utility>
+
 class Game
 {
 public:

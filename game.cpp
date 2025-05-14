@@ -1,5 +1,8 @@
 #include "game.h"
 #include "eventmanager.h"
+#include <map>
+#include <utility>
+
 
 //for loading resources into tiles
 int GameBoard::rstpindex = 0;

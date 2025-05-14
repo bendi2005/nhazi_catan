@@ -2,7 +2,7 @@
 #include <random>
 
 //OTC Constructor
-GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&Crit_isFreeNode,&Crit_Distance,&Crit_Node_Connected}, CityCriteria{&Crit_isNodeUpgradeAble},RoadCriteria{&Crit_isFreeEdge,&Crit_Edge_Connected},FirstTurnSettlementCriteria{&Crit_Distance,&Crit_isFreeNode},BuildSettlement{&BuildSettlementFunction},UpgradeSettlement{&UpgradeSettlementFunction},BuildRoad{&BuildRoadFunction}
+GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum), SettlementCriteria{&(GameBoard::Crit_isFreeNode),&(GameBoard::Crit_Distance),&(GameBoard::Crit_Node_Connected)}, CityCriteria{&(GameBoard::Crit_isNodeUpgradeAble)},RoadCriteria{&(GameBoard::Crit_isFreeEdge),&(GameBoard::Crit_Edge_Connected)},FirstTurnSettlementCriteria{&(GameBoard::Crit_Distance),&(GameBoard::Crit_isFreeNode)},BuildSettlement{&(GameBoard::BuildSettlementFunction)},UpgradeSettlement{&(GameBoard::UpgradeSettlementFunction)},BuildRoad{&(GameBoard::BuildRoadFunction)}
 {
     //MAJOR TODO lekezelni hogy van-e preset (ha nem akkor majd randgen)
     //szerintem ugy lesz hogy itt fel lesz toltve az amihez nincs preset

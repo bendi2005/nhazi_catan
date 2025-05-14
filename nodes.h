@@ -17,8 +17,10 @@ struct str_HarborInfo
 };
 
 //Forward declarations
+class GameBoard;
 class Tile;
 class Player;
+class Edge;
 class Node
 {
 private:

@@ -67,13 +67,10 @@ public:
     //Building function
     using BuildFunction = void(GameBoard::*)(Coordinate, Player*,Building::BuildingTypes);
 private:
-    //Vector of criteria for a Settlement
+    
     const std::vector<CritFunction> SettlementCriteria;
-    //Vector of criteria for a City
     const std::vector<CritFunction> CityCriteria ;
-    //Vector of criteria for a Road
     const std::vector<CritFunction> RoadCriteria;
-
     const std::vector<CritFunction> FirstTurnSettlementCriteria;
 
 

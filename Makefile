@@ -1,34 +1,31 @@
 # Compiler and flags
-CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17
+CXX := g++
+CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -MMD -MP
 
-# Target program name
-TARGET = my_program
+# Files
+SRCS := $(wildcard *.cpp)
+OBJS := $(SRCS:.cpp=.o)
+DEPS := $(SRCS:.cpp=.d)
 
-# Source files (all .cpp files in the root directory)
-SOURCES = $(wildcard *.cpp)
+# Target
+TARGET := my_program
 
-# Object files (all .cpp files converted to .o files)
-OBJECTS = $(SOURCES:.cpp=.o)
-
-# Include directories (Add paths if you have custom header directories)
-INCLUDES = -I.
-
-# Default rule: build the target (executable)
+# Default rule
 all: $(TARGET)
 
-# Link object files to create the executable
-$(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(TARGET) $(OBJECTS)
+# Link object files into the final executable
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Rule to compile each .cpp file into .o file
+# Compile each .cpp into .o with dependency files
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean rule to remove old object files and executable
+# Clean build artifacts
 clean:
-	rm -f $(TARGET) $(OBJECTS)
+	rm -f $(OBJS) $(DEPS) $(TARGET)
 
-# Optional: Clean all object files inside the obj/ directory
-clean_objs:
-	rm -f obj/*.o
+# Include auto-generated dependency files
+-include $(DEPS)
+
+.PHONY: all clean

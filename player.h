@@ -6,9 +6,13 @@
 #include "settlement.h"
 #include "city.h"
 #include "road.h"
+#include "nodes.h"
+#include "edges.h"
+#include "gameboard.h"
 
-
-
+class GameBoard;
+class Edge;
+class Node;
 struct Inventory
 {
     int settlements_available;

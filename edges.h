@@ -6,6 +6,7 @@
 #include "player.h"
 #include "building.h"
 
+class Node;
 class Edge
 {
 private:

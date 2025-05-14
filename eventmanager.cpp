@@ -116,7 +116,7 @@ void EventManager::Phase_Distribute()
     GB->DistributeResources();
 }
 
-//GameBoard independent
+//GameBoard independent //TODO
 void EventManager::Phase_Trade()
 {
     //todo
@@ -148,9 +148,16 @@ void EventManager::Phase_Build(Player* current_player)
     //placement
     bool b = CallAllCritFunc(GetCritFunctionVec(type),GB->id_to_coord(foo,type),current_player,type);
     
-
     //4. build
-    (GB->*(GetBuildFunction(GB->id_to_coord(foo, type), current_player, type)))(GB->id_to_coord(foo, type), current_player,type);
+    if(a && b)
+    {
+        (GB->*(GetBuildFunction(GB->id_to_coord(foo, type), current_player, type)))(GB->id_to_coord(foo, type), current_player,type);
+    } else 
+    {
+        //error
+    }
+    
+    
 
 
 
