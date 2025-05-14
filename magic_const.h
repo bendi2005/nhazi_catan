@@ -12,7 +12,7 @@ constexpr int HOW_MANY_RESOURCES_DOES_A_TILE_HAVE = 1;
 constexpr int HOW_MANY_RESOURCES_DOES_A_NODE_HAVE_MAX = 3;
 constexpr int TILE_COUNT = 19;
 
-
+constexpr char* geci = "asd";
 constexpr int ACTION_COUNT = 3;
 
 constexpr int RESOURCE_COUNT = 5;

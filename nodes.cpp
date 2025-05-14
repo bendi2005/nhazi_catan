@@ -20,7 +20,11 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos
         
         //Add edge to this node and the neighbour node
         own_edges.push_back(E);
+        edgecount++;
         element->own_edges.push_back(E);
+        
+        //todo setter
+        element->edgecount++;
     }
 }   
 

@@ -1,6 +1,8 @@
 #pragma once
 #include <set>
 #include <stdio.h>
+#include <string>
+
 
 enum ResourceTypes
 {
@@ -21,6 +23,10 @@ Resource() = delete;
 Resource(ResourceTypes);
 
 bool operator<(const Resource&) const;
+
+std::string EnumToString();
+
+
 };
 
 

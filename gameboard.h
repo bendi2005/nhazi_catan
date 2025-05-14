@@ -142,8 +142,7 @@ public:   //TODO mi privat mi publikus
     
     
     //OTC Constructor
-    //note: ez majd be lesz allitva valami szep presetre
-    GameBoard(std::vector<std::set<Resource>> = {{WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}, {WOOL}},std::vector<int> ={7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7});
+    GameBoard(std::vector<std::set<Resource>> = {{ORE}, {WOOL}, {LUMBER}, {GRAIN}, {BRICK}, {WOOL}, {BRICK}, {GRAIN}, {LUMBER}, {}, {LUMBER}, {ORE}, {LUMBER}, {ORE}, {GRAIN}, {WOOL}, {BRICK}, {GRAIN}, {WOOL}},std::vector<int> ={10,2,9,12,6,4,10,9,11,7,3,8,8,3,4,5,5,6,11});
 
     //felig teszt    
     void PrintHarbor() const;

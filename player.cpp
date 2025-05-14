@@ -63,8 +63,17 @@ std::vector<Edge*> Player::GetOwnedEdges(GameBoard* in_pGB)
 
 void Player::AddResourceCard(int n,Resource in_r)
 {
+    //debug
+    printf("Added %d of %s to %s\n",n,in_r.EnumToString().c_str(),GetName().c_str());
+
     inventory.resource_cards.at(in_r) += n;
 }
+
+const std::string Player::GetName() const
+{
+    return player_name;
+}
+
 
 void Player::TakeSettlementPiece()
 {

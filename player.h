@@ -45,6 +45,8 @@ Player(std::string);
 std::vector<Node*> GetOwnedNodes(GameBoard*);
 std::vector<Edge*> GetOwnedEdges(GameBoard*);
 
+const std::string GetName() const;
+
 
 
 void AddResourceCard(int,Resource);

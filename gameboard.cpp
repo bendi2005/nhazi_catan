@@ -21,10 +21,11 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
     for(auto iter = edgemap.begin();iter != edgemap.end();iter++)
     {
         bool is_coastal = false;
+        
         if((iter->second->GetNodeN_modif(0)->GetEdgeCount() == 2) || (iter->second->GetNodeN_modif(1)->GetEdgeCount() == 2))
         {
             is_coastal = true;
-            printf("hit");
+        
         }
         
         if(is_coastal && ((rand() % 10) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
@@ -32,7 +33,7 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
             //debug
             Resource R(BRICK);
             int rate = 2;
-
+            
             iter->second->GetNodeN_modif(0)->SetHarbor(R,rate);
             iter->second->GetNodeN_modif(1)->SetHarbor(R,rate);
         }
@@ -390,13 +391,21 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 
 void GameBoard::DistributeResources()
 {
-    int sum = RollDice();
+    //debug
+    //int sum = RollDice();
+    
+    int sum = 10;
+    
     for(auto kvp_coord_node : nodemap)
     {
         for(auto element_tile : kvp_coord_node.second->GetTilesOfNode())
         {
+                    
+            //if(kvp_coord_node.second->GetNodeOwner() != nullptr && element_tile->GetDieNum() == sum)
+            //debug
             if(kvp_coord_node.second->GetNodeOwner() != nullptr && element_tile->GetDieNum() == sum)
-            {
+            {   
+                
                 element_tile->GiveResources(kvp_coord_node.second->GetNodeOwner(),kvp_coord_node.second->GetNodePointerBuilding()->ProduceResourceCount());
             }
         }

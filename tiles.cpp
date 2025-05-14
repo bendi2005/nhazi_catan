@@ -1,5 +1,6 @@
 #include "tiles.h"
 #include "gameboard.h"
+#include <iostream>
 
 //set offsets
 std::vector<Coordinate> Tile::NodePos = {Coordinate(-2,-2),Coordinate(-2,0),Coordinate(0,2),Coordinate(2,2),Coordinate(2,0 ),Coordinate(0,-2)};
@@ -75,8 +76,14 @@ void Tile::GiveResources(Player* in_player,int in_rcount)
 {
     for(auto rs : tile_resources)
     {
+        
         in_player->AddResourceCard(in_rcount,rs);
+        
+        
+        printf("%d of %s added for %s\n",in_rcount,rs.EnumToString().c_str(),in_player->GetName().c_str());
+
     }
+    
 
 }
 

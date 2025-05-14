@@ -38,11 +38,11 @@ void EventManager::FirstTurn(Player* in_player)
     
     //settlement
     Player* current_player = in_player;
-    //Todo error handling
     
     //1. What = Settlement
     
     //2. Where
+    
     int foo = PromptWhere();
 
     //3. Possible
@@ -51,8 +51,13 @@ void EventManager::FirstTurn(Player* in_player)
     bool possible = CallAllCritFunc(GB->GetFirstTurnSettlementCriteria(),GB->id_to_coord(foo,Building::BuildingTypes::SETTLEMENT),current_player,Building::BuildingTypes::SETTLEMENT);
     
     //4. Build
-    (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::SETTLEMENT), current_player,Building::BuildingTypes::SETTLEMENT);
-
+    if(possible)
+    {
+        (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::SETTLEMENT), current_player,Building::BuildingTypes::SETTLEMENT);
+    } else 
+    {
+        printf("gatya");
+    }
     //roadbuild + give rs
 
     //1. What = Road
@@ -65,7 +70,13 @@ void EventManager::FirstTurn(Player* in_player)
     possible = CallAllCritFunc(GB->GetRoadCriteriaFunction(),GB->id_to_coord(foo,Building::BuildingTypes::ROAD),current_player,Building::BuildingTypes::ROAD);
     
     //4. Build
-    (GB->*(GB->GetRoadBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::ROAD), current_player,Building::BuildingTypes::ROAD);
+    if(possible)
+    {
+        (GB->*(GB->GetRoadBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::ROAD), current_player,Building::BuildingTypes::ROAD);
+    } else 
+    {
+        printf("gatya");
+    }
 }
 
 
@@ -84,6 +95,8 @@ Player* EventManager::SimGame()
         FirstTurn(vec_players[i]);
     }
     
+    printf("Setup over\n");
+    
     bool wincon = false;
     while(!wincon)
     {
@@ -93,7 +106,8 @@ Player* EventManager::SimGame()
         for(auto iter_player = vec_players.begin();iter_player != vec_players.end();iter_player++)
         {
             
-            Player* current_player = *iter_player;
+            
+            Player* current_player = *iter_player;  
             Phase_Distribute();
             Phase_Trade();
             Phase_Build(current_player);        
@@ -113,6 +127,7 @@ Player* EventManager::SimGame()
 
 void EventManager::Phase_Distribute()
 {
+    
     GB->DistributeResources();
 }
 
@@ -144,19 +159,28 @@ void EventManager::Phase_Build(Player* current_player)
     
     //economy
     bool a = current_player->CanAfford(GetBuildingCost(type));
+    if(!a)
+    {
+        printf("cant afford\n");
+    }
+    //debug: 
+    a = true;
+    
     
     //placement
     bool b = CallAllCritFunc(GetCritFunctionVec(type),GB->id_to_coord(foo,type),current_player,type);
+    
     
     //4. build
     if(a && b)
     {
         (GB->*(GetBuildFunction(GB->id_to_coord(foo, type), current_player, type)))(GB->id_to_coord(foo, type), current_player,type);
+    
     } else 
     {
         //error
     }
-    
+    printf("first buildphase done\n");
     
 
 
@@ -191,6 +215,7 @@ std::map<Resource,int> EventManager::GetBuildingCost(Building::BuildingTypes bty
             return Road::GetCost();
     }
 }
+
 const std::vector<GameBoard::CritFunction>& EventManager::GetCritFunctionVec(Building::BuildingTypes btype) const
 {
     //note: might be static but i dont think so
@@ -205,6 +230,7 @@ const std::vector<GameBoard::CritFunction>& EventManager::GetCritFunctionVec(Bui
     }
 
 }
+
 GameBoard::BuildFunction EventManager::GetBuildFunction(Coordinate in_coord,Player* in_player,Building::BuildingTypes btype)
 {
     switch(btype)
@@ -215,6 +241,8 @@ GameBoard::BuildFunction EventManager::GetBuildFunction(Coordinate in_coord,Play
             return GB->GetUpgradeSettlementFunction();
         case Building::BuildingTypes::ROAD :
             return GB->GetRoadBuildFunction();
+        case Building::BuildingTypes::EMPTY :
+            printf(":(");
     }
 } 
 
@@ -223,7 +251,7 @@ char EventManager::PromptWhat() const
         printf("Specify WHAT you want to build: ");
         std::string temp;
         //TODO Error handling
-        scanf("%s",temp);
+            scanf("%s",temp.c_str());
 
         return std::tolower(temp[0]);
 }
@@ -234,4 +262,6 @@ int EventManager::PromptWhere() const
     int n;
     //TODO error handing
     scanf("%d",&n);
+    if(n<0)
+    return n;
 }
