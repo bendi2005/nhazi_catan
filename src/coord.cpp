@@ -1,4 +1,4 @@
-#include "coord.h"
+#include "../include/coord.h"
 #include <stdio.h>
 Coordinate::Coordinate()
 {

@@ -1,5 +1,5 @@
-#include "tiles.h"
-#include "gameboard.h"
+#include "../include/tiles.h"
+#include "../include/gameboard.h"
 #include <iostream>
 
 //set offsets

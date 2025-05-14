@@ -1,4 +1,4 @@
-#include "edges.h"
+#include "../include/edges.h"
 int Edge::next_edge_id = 0;
 
 

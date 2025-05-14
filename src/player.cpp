@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../include/player.h"
 int Player::next_player_id = 0;
 
 Player::Player(std::string in_name) : player_id(next_player_id++), player_name(in_name)

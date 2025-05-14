@@ -1,5 +1,5 @@
-#include "nodes.h"
-#include "gameboard.h"
+#include "../include/nodes.h"
+#include "../include/gameboard.h"
 
 int Node::next_node_id = 0;
 //set SearchDirections

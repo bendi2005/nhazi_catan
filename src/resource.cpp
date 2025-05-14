@@ -1,4 +1,4 @@
-#include "resource.h"
+#include "../include/resource.h"
 bool Resource::operator<(const Resource& other) const 
 {
     return (this->Resourcetype < other.Resourcetype);

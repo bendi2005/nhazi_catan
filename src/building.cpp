@@ -1,4 +1,4 @@
-#include "building.h"
+#include "../include/building.h"
 Building::BuildingTypes Building::GetTypeFromChar(char c)
 {
     switch(c)

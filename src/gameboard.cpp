@@ -1,4 +1,4 @@
-#include "gameboard.h"
+#include "../include/gameboard.h"
 #include <random>
 
 //OTC Constructor

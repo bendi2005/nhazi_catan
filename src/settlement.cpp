@@ -1,4 +1,4 @@
-#include "settlement.h"
+#include "../include/settlement.h"
 int Settlement::settlement_count = 0;
 
 const std::map<Resource,int> Settlement::Cost = {{BRICK,1},{LUMBER,1},{WOOL,1},{GRAIN,1}};

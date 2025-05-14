@@ -1,5 +1,5 @@
-#include "game.h"
-#include "eventmanager.h"
+#include "../include/game.h"
+#include "../include/eventmanager.h"
 
 
 //for loading resources into tiles

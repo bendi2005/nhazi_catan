@@ -1,31 +1,35 @@
-# Compiler and flags
+# === CONFIG ===
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -MMD -MP
+CXXFLAGS := -Wall -DMEMTRACE # -Werror
 
-# Files
-SRCS := $(wildcard *.cpp)
-OBJS := $(SRCS:.cpp=.o)
-DEPS := $(SRCS:.cpp=.d)
+SRC_DIRS := . include src 
+OBJ_DIR := obj
+BIN_DIR := bin
+TARGET := $(BIN_DIR)/onitama.exe
 
-# Target
-TARGET := my_program
+# === FILES ===
+SOURCES := $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))
+OBJECTS := $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
 
-# Default rule
+# === RULES ===
+
 all: $(TARGET)
+	cloc core.cpp src include
 
-# Link object files into the final executable
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJECTS)
+	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-# Compile each .cpp into .o with dependency files
-%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Clean build artifacts
+$(OBJ_DIR)/%.o: lib/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJS) $(DEPS) $(TARGET)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-# Include auto-generated dependency files
--include $(DEPS)
-
-.PHONY: all clean
+run: $(TARGET)
+	./$(TARGET)
