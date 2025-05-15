@@ -10,7 +10,7 @@ CXXFLAGS := -Wall -DMEMTRACE $(SFML_INCLUDE) # -Werror
 SRC_DIRS := . include src 
 OBJ_DIR := obj
 BIN_DIR := bin
-TARGET := $(BIN_DIR)/onitama.exe
+TARGET := $(BIN_DIR)/catan
 
 # === FILES ===
 SOURCES := $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.cpp))

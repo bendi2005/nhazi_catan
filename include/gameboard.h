@@ -31,14 +31,17 @@ private:
     static int dienumindex;
 
     
-    //Maps of Node,Edge,Tile
+    //Map of Node's on the GameBoard
     std::map<Coordinate,Node*> nodemap;
+    //Map of Edge's on the GameBoard
     std::map<Coordinate,Edge*> edgemap;
+    //Map of Tile's on the GameBoard
     std::map<Coordinate,Tile*> tilemap;
 
     
-    //Passes in the resource_type to to tile
+    //vector of sets of Resources for each tile: the nth (0-indexed) set is the set of resources for the nth tile
     std::vector<std::set<Resource>> resource_types_for_tiles;
+    //vector of the Diece numbers for each tile: the nth (0-indexed) int is the die number for the nth tile
     std::vector<int> dicenum_for_tiles;
 
 

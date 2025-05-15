@@ -29,13 +29,6 @@ void Settlement::take_building_resource(Player* in_player)
 }
 
 
-
-void Settlement::DestructSettlement(Player* in_player)
-{
-    in_player->GiveBackSettlementPiece();
-    settlement_count--;
-}
-
 int Settlement::GetVictoryPoints() const 
 {
     return VICTORY_POINT_VALUE_SETTLEMENT;
