@@ -1,6 +1,7 @@
 #include "../include/player.h"
-int Player::next_player_id = 0;
+int Player::next_player_id = 0; //Biztos ami biztos (ez ki lesz torolve, vagy a eventmanager.clearid)
 
+//OTC Constructor
 Player::Player(std::string in_name) : player_id(next_player_id++), player_name(in_name)
 {
     //init inventory
@@ -74,6 +75,15 @@ const std::string Player::GetName() const
     return player_name;
 }
 
+const int Player::GetPlayerId() const
+{
+    return player_id;
+}
+
+const int Player::GetNextPlayerId()
+{
+    return next_player_id;
+}
 
 void Player::TakeSettlementPiece()
 {

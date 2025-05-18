@@ -2,27 +2,191 @@
 
 
 //OTC Constructor
-EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount) : GB(in_pGB), player_count(in_pcount), max_turncount(in_max_turncount), bonus_res{{BRICK,4},{LUMBER,4},{WOOL,2},{GRAIN,2}}
+EventManager::EventManager()
 {
-    InitPlayers(player_count);
+    CurrentState = GameState::Zero;
+    player_count = 0;
+    if(!(font.openFromFile("Ubuntu.ttf")))
+    {
+        printf("\nSomething wrong with font\n");
+        return;
+    }
+
+    firsttext = new sf::Text(font);
+    firsttext->setString("Welcome to Catan! Press any key to continue...");
+    firsttext->setCharacterSize(40);
+
+    firsttext->setFillColor(sf::Color::White);
+    firsttext->setPosition({550,400});
+}
+
+void EventManager::Draw(sf::RenderWindow& window)
+{
+
+    window.clear(sf::Color::Black);
+    switch(CurrentState)
+    {
+        case GameState::Zero :
+            window.clear(sf::Color::Blue);
+            window.draw(*firsttext);
+            AdvanceCurrentState();
+            break;
+
+        case GameState::WelcomeScreen :
+            window.clear(sf::Color::Blue);
+            
+            window.draw(*firsttext);
+            if(advance_perm)
+            {
+                    
+                AdvanceCurrentState();
+                advance_perm = false;
+            }
+            break;    
+        case GameState::PromptPlayerCount :
+            window.clear(sf::Color::Blue);
+            window.draw(*firsttext);
+            if(advance_perm)
+            {   
+                AdvanceCurrentState();
+                advance_perm = false;
+            }
+            break;
+        case GameState::PromptPlayerNames :
+            window.clear(sf::Color::Green);
+            window.draw(*firsttext);
+            if(advance_perm)
+            {
+                AdvanceCurrentState();
+                advance_perm = false;
+            }
+            
+            
+        //...
+
+
+    }
+}
+
+void EventManager::AdvanceCurrentState()
+{
+    switch(CurrentState)
+    {
+        case GameState::Zero :
+            CurrentState = GameState::WelcomeScreen;
+            break;
+        case GameState::WelcomeScreen :
+            CurrentState = GameState::PromptPlayerCount;
+            break;
+        case GameState::PromptPlayerCount :
+            CurrentState = GameState::PromptPlayerNames;
+            break;
+        case GameState::PromptPlayerNames :
+            CurrentState = GameState::SetupPhase;
+            break;
+        //...
+
+
+
+
+    }
 }
 
 
-//Initializes players
-void EventManager::InitPlayers(int in_playercount)
+void EventManager::HandleEvent(const sf::Event& event)
 {
-    Player::ClearNextId();
+    switch(CurrentState)
+    {
+        case GameState::Zero :
+            std::this_thread::sleep_for(std::chrono::milliseconds(220));
+            break;
+        case GameState::WelcomeScreen :
+            if(const auto* keyrelased = event.getIf<sf::Event::KeyReleased>())
+            {
+                
+                PromptPlayerCount();  
+                advance_perm = true; 
+            } else if(const auto* mouseclicked = event.getIf<sf::Event::MouseButtonReleased>())
+            {
+                
+                PromptPlayerCount();
+                advance_perm = true;
+            }
+            break;
+        case GameState::PromptPlayerCount :
+            if(const auto* textentered = event.getIf<sf::Event::TextEntered>())
+            {
+                if(textentered->unicode >= '2' && textentered->unicode <= '9')
+                {
+                    player_count = textentered->unicode-'0';
+                    firsttext->setString("Please enter name for Player 1:");
+                    advance_perm = true;
+                    Player::ClearNextId();
+                } else 
+                {
+                    firsttext->setString("Please enter a number between 2 and 9");
+                }
+            }
+            break;
+        case GameState::PromptPlayerNames :
+            if(const auto* textentered = event.getIf<sf::Event::TextEntered>())
+            {
+                if((textentered->unicode == '\b') && (!inputbuffer.empty()) ) //backspace
+                {
+                    inputbuffer.pop_back();
+                    firsttext->setString(inputbuffer);
+                } else if((textentered->unicode == '\r') || (textentered->unicode == '\n') ) //enter
+                {
+                    if(InitPlayer()) //all players initialized
+                    {
+                        inputbuffer.clear();
+                        //after this setup phase begins
+                        //placeholder:
+                        firsttext->setString("So far so good");
+                        advance_perm = true;
+                    } else
+                    {
+                        inputbuffer.clear();
+                        firsttext->setString("Please enter name for Player " + std::to_string(Player::GetNextPlayerId()+1) + ": ");
+                    }
+                } else if(textentered->unicode < '128') //valid char typed
+                {
+                    inputbuffer += static_cast<char>(textentered->unicode);
+                    firsttext->setString(inputbuffer);
+                }
+                
+            } 
+            
+            break;
+        case GameState::SetupPhase :
+            break;
+
+    }
+    return;
+}
+
+void EventManager::PromptPlayerCount()
+{
+    firsttext->setString("Enter how many players: (2-9)");
+}
+
+
+//EventManager::EventManager(GameBoard* in_pGB,int in_pcount,int in_max_turncount) : GB(in_pGB), player_count(in_pcount), max_turncount(in_max_turncount), bonus_res{{BRICK,4},{LUMBER,4},{WOOL,2},{GRAIN,2}}
+//{
+//    InitPlayer(player_count);
+//
+//}
+
+
+
+bool EventManager::InitPlayer()
+{
     
-
-    //for debug
-    in_playercount = 2; //nowarning
-    Player* P = new Player("Cica");
-    GiveBonusResToPlayer(P);
-    vec_players.push_back(P);
-    P = new Player("Kutya");
-    GiveBonusResToPlayer(P);
-    vec_players.push_back(P);
-
+    Player* p = new Player(inputbuffer);
+    vec_players.push_back(p);    
+    printf("mi a kurva anyam van: %d %d\n",p->GetPlayerId(),player_count-1);
+    return (p->GetPlayerId() == player_count-1);
+    
 }
 
 void EventManager::GiveBonusResToPlayer(Player* in_player)

@@ -1,5 +1,4 @@
 #pragma once
-#include "game.h"
 #include <string>
 #include <stdio.h>
 
@@ -27,6 +26,7 @@ private:
     
     int player_id;
     std::string player_name;
+    static int next_player_id;
     Inventory inventory;
 
 public:
@@ -34,7 +34,7 @@ public:
 //Called for idk what
 static void ClearNextId();
 
-static int next_player_id;
+
 
 //OTC Constructor, sets up inventory
 Player(std::string);
@@ -46,8 +46,8 @@ std::vector<Node*> GetOwnedNodes(GameBoard*);
 std::vector<Edge*> GetOwnedEdges(GameBoard*);
 
 const std::string GetName() const;
-
-
+const int GetPlayerId() const;
+static const int GetNextPlayerId();
 
 void AddResourceCard(int,Resource);
 

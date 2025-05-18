@@ -1,33 +1,74 @@
-#include "include/game.h"
-#include <SFML/Graphics.hpp>
+#include "./include/graphicmanager.h"
+#include "./include/eventmanager.h"
 
+int GameBoard::rstpindex = 0;
+int GameBoard::dienumindex = 0;
 int main()
 {
-    //sf::RenderWindow window(sf::VideoMode({200, 200}), "SFML works!");
-    //sf::CircleShape shape(100.f);
-    //shape.setFillColor(sf::Color::Green);
-//
-    //while (window.isOpen())
+
+    sf::RenderWindow window(sf::VideoMode({1800,1100}),"Catan");
+    
+    EventManager evman;
+    
+    while(window.isOpen())
+    {
+        while(std::optional event = window.pollEvent())
+        {
+            if(event->getIf<sf::Event::Closed>())
+            {
+                printf("\nBye bye");
+                window.close();
+            }
+            evman.HandleEvent(*event);   
+            evman.Draw(window);
+            window.display();
+            
+            
+            
+ 
+            
+            
+            
+
+
+
+        }
+    }
+
+
+    
+    //GameBoard g;
+    //GraphicManager GM(window);
+
+    //while(window.isOpen())
     //{
-    //    while (const std::optional event = window.pollEvent())
+    //    while(const std::optional event = window.pollEvent())
     //    {
-    //        if (event->is<sf::Event::Closed>())
+    //        if(event->getIf<sf::Event::Closed>())
+    //        {
     //            window.close();
-    //    }
+    //        }
+    //        int pc = 2;
+    //        //getmaxturncount
 //
-    //    window.clear();
-    //    window.draw(shape);
-    //    window.display();
-    //}
+    //        int mtc = 10;
+    //        //TODO error handling
+    //
+    //        EventManager EM(&g,pc,mtc);
+    //        Player* Winner = EM.SimGame(); 
+//
+//
+//
+    //    }
+    //} 
+
+
+
     
     
-    Game newgame;
+    
+
+    
     printf("done");
     return 0;
 }
-
-
-
-    //Game newgame;
-    //printf("done");
-    //return 0;  

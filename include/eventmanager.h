@@ -1,64 +1,90 @@
 #pragma once
-#include "game.h"
 #include "player.h"
-
-
-
-
+#include <SFML/Graphics.hpp> 
 #include <vector>
+#include <string>
+#include <thread>
+#include <chrono>
+
+
+
+enum class GameState
+{
+    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,SetupPhase
+};
+
 class EventManager
 {
 private:
-std::vector<Player*> vec_players;
-int player_count;
-int max_turncount;
-GameBoard* GB = nullptr;
-const std::map<Resource,int> bonus_res;
-void GiveBonusResToPlayer(Player*);
+
+    GameState CurrentState;
+    sf::Text* firsttext;
+    sf::Font font;
+    
+    bool advance_perm = false;
+    std::string inputbuffer;
+
+
+
+    std::vector<Player*> vec_players;
+    int player_count;
+    int max_turncount;
+    GameBoard* GB = nullptr;
+    const std::map<Resource,int> bonus_res;
+    void GiveBonusResToPlayer(Player*);
 
 public:
 
-//OTC Constructor
-EventManager(GameBoard*,int = 2,int = 10);
+    //OTC Constructor
+    EventManager();
+    EventManager(GameBoard*,int = 2,int = 10);
+
+    void AdvanceCurrentState();
 
 
-void InitPlayers(int);
-Player* SimGame();
+    void Draw(sf::RenderWindow&);
 
-char What() const; 
+    void HandleEvent(const sf::Event&);
+    
+    void PromptPlayerCount();
 
-int Where(char);
+    bool InitPlayer();
+    Player* SimGame();
 
+    char What() const; 
 
-void FirstTurn(Player*);
-
-//Itt a switch case helyet ez igy nez ki OOP modon szerintem:
-//bool CheckAllCriteria(Settlement, int);
-//bool CheckAllCriteria(City,int);
-//bool CheckAllCriteria(Road,int);
-
-Settlement pass_Setl();
-City pass_City();
-Road pass_Road();
-
-void Phase_Distribute();
-void Phase_Trade();
-void Phase_Build(Player*);
-
-int PromptWhere() const;
-char PromptWhat() const;
+    int Where(char);
 
 
-//Kerdes ez igy rendben van?
+    void FirstTurn(Player*);
+
+    //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
+    //bool CheckAllCriteria(Settlement, int);
+    //bool CheckAllCriteria(City,int);
+    //bool CheckAllCriteria(Road,int);
+
+    Settlement pass_Setl();
+    City pass_City();
+    Road pass_Road();
+
+    void Phase_Distribute();
+    void Phase_Trade();
+    void Phase_Build(Player*);
+
+    int PromptWhere() const;
+    char PromptWhat() const;
 
 
-std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);
+    //Kerdes ez igy rendben van?
 
-const std::vector<GameBoard::CritFunction>& GetCritFunctionVec(Building::BuildingTypes) const;
 
-GameBoard::BuildFunction GetBuildFunction(Coordinate,Player*,Building::BuildingTypes);
+    std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);
 
-bool CallAllCritFunc(const std::vector<GameBoard::CritFunction>&,Coordinate,Player*,Building::BuildingTypes) const;
+    const std::vector<GameBoard::CritFunction>& GetCritFunctionVec(Building::BuildingTypes) const;
+
+    GameBoard::BuildFunction GetBuildFunction(Coordinate,Player*,Building::BuildingTypes);
+
+    bool CallAllCritFunc(const std::vector<GameBoard::CritFunction>&,Coordinate,Player*,Building::BuildingTypes) const;
 
 
 };
