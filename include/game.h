@@ -18,7 +18,7 @@ public:
         int i = 0;
         for(auto iter = in_map.begin();iter != in_map.end();iter++)
         {
-            //printf("id: %d\n",iter->second.Ge(),iter->first.GetY());
+            printf("id: %d x: %d y: %d\n",iter->second->GetNodeId(),iter->first.GetX(),iter->first.GetY());
             i++;
         }
         printf("\nCount: %d\n",i);

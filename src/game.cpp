@@ -40,7 +40,7 @@ Game::Game()
     //
     //}
     //g.PrintHarbor();
-    
+    PrintMap(g.Get_nodemap());
     int pc = 2;
     //getmaxturncount
     
