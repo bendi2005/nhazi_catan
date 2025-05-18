@@ -1,4 +1,4 @@
-#include "./include/graphicmanager.h"
+
 #include "./include/eventmanager.h"
 
 int GameBoard::rstpindex = 0;
