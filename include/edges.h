@@ -40,8 +40,11 @@ public:
     Edge(Node*,Node*);
     
 
-    //Returns the Coordinate of edge's middle point
-    const Coordinate GetPos() const;
+    //Returns the Coordinate of edge's middle point //this doesnt actually work I think 
+    //I can fix this by making a function that converts a sf::Vector2f into coordinates, so the maps of coordiantes will be good.
+    Coordinate GetPos() const;
+
+    sf::Vector2f GetMidPoint();
 
     //Gets the nth (0-index) Node* of nodes_of_edge 
     Node* GetNodeN_modif(int);

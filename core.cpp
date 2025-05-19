@@ -15,59 +15,15 @@ int main()
         {
             if(event->getIf<sf::Event::Closed>())
             {
-                printf("\nBye bye");
+                printf("close request");
                 window.close();
             }
             evman.HandleEvent(*event);   
             evman.Draw(window);
             window.display();
-            
-            
-            
- 
-            
-            
-            
-
-
-
         }
     }
 
-
-    
-    //GameBoard g;
-    //GraphicManager GM(window);
-
-    //while(window.isOpen())
-    //{
-    //    while(const std::optional event = window.pollEvent())
-    //    {
-    //        if(event->getIf<sf::Event::Closed>())
-    //        {
-    //            window.close();
-    //        }
-    //        int pc = 2;
-    //        //getmaxturncount
-//
-    //        int mtc = 10;
-    //        //TODO error handling
-    //
-    //        EventManager EM(&g,pc,mtc);
-    //        Player* Winner = EM.SimGame(); 
-//
-//
-//
-    //    }
-    //} 
-
-
-
-    
-    
-    
-
-    
     printf("done");
     return 0;
 }

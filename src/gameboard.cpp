@@ -220,6 +220,18 @@ int GameBoard::SettlementInRadius(const sf::Vector2i mouse_pos)
     return -1;
 }
 
+int GameBoard::RoadInRadius(const sf::Vector2i mouse_pos)
+{
+    for(auto kvp_coord_edge : edgemap)
+    {
+        //Todo make a function thats inclickradius and takes in sf::Vector2f
+        ////if(kvp_coord_edge.second->getmi)
+        //{
+        //    return kvp_coord_edge.second->GetEdgeId();
+        //}
+    return -1;
+    }
+}
 
 
 

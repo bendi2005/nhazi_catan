@@ -7,7 +7,7 @@ Edge::Edge(Node* c1,Node* c2) : nodes_of_edge(c1,c2), edge_id(next_edge_id++),ow
 {}
 
 
-const Coordinate Edge::GetPos() const 
+Coordinate Edge::GetPos() const 
 {
     return Coordinate(((nodes_of_edge.first->GetNodePos().x+nodes_of_edge.second->GetNodePos().x)/2),(nodes_of_edge.first->GetNodePos().y+nodes_of_edge.second->GetNodePos().y)/2);
 }
@@ -65,7 +65,9 @@ sf::RectangleShape Edge::MakeEdgeImage()
 
     ret_edge.setPosition(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos());
     ret_edge.setFillColor(GetColorFromOwner());
+
     
+
 
     float angle = atan2(dir.y,dir.x) * RAD_TO_DEG;
     ret_edge.setRotation(sf::degrees(angle));
@@ -74,11 +76,17 @@ sf::RectangleShape Edge::MakeEdgeImage()
     return ret_edge;
 }
 
+
+sf::Vector2f Edge::GetMidPoint()
+{
+    return {((GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos().x+GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos().x)/2.0f), ((GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos().y+GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos().y)/2.0f)};
+}
+
 sf::Color Edge::GetColorFromOwner()
 {
     if(!owner_edge)
     {
-        return sf::Color::White;
+        return sf::Color(204, 102, 153,255);
     } else 
     {
         int hash = 0;
@@ -92,7 +100,7 @@ sf::Color Edge::GetColorFromOwner()
         int g = (hash >> 8) & 0xFF;
         int b = (hash >> 16) & 0xFF;
 
-        return sf::Color(r,g,b,100);
+        return sf::Color(r,g,b,255);
     }
 }
 

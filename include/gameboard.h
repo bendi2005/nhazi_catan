@@ -163,7 +163,8 @@ public:   //TODO mi privat mi publikus
     
     int SettlementInRadius(const sf::Vector2i);
     
-
+    int RoadInRadius(const sf::Vector2i);
+    
 
     //OTC Constructor
     GameBoard(std::vector<std::set<Resource>> = {{ResourceTypes::ORE}, {ResourceTypes::WOOL}, {ResourceTypes::LUMBER}, {ResourceTypes::GRAIN}, {ResourceTypes::BRICK}, {ResourceTypes::WOOL}, {ResourceTypes::BRICK}, {ResourceTypes::GRAIN}, {ResourceTypes::LUMBER}, {ResourceTypes::DESERT}, {ResourceTypes::LUMBER}, {ResourceTypes::ORE}, {ResourceTypes::LUMBER}, {ResourceTypes::ORE}, {ResourceTypes::GRAIN}, {ResourceTypes::WOOL}, {ResourceTypes::BRICK}, {ResourceTypes::GRAIN}, {ResourceTypes::WOOL}},std::vector<int> ={10,2,9,12,6,4,10,9,11,7,3,8,8,3,4,5,5,6,11});

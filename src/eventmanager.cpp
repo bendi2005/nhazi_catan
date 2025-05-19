@@ -21,7 +21,40 @@ EventManager::EventManager()
 
     firsttext->setFillColor(sf::Color::White);
     firsttext->setPosition({550,400});
+
+    cur_player = 0;
+    once = false;
+    is_setup = false;
 }
+
+void EventManager::IncrementCurPlayer()
+{
+    if(is_setup) //setup phase?
+    { 
+        if(once)  //iterated through once
+        {
+            if(cur_player == 0) //are we back at the beginning
+            {
+                is_setup = true;
+            }
+        } else  //havent iterated through once
+        {
+            if(cur_player == player_count-1) //are we at the end
+            {
+                once = true;
+            } else 
+            {
+                cur_player++;
+            }
+        }
+
+    } else  //not setup phase
+    {
+        cur_player = (cur_player + 1) % player_count;
+        return;
+    }
+}
+
 
 void EventManager::Draw(sf::RenderWindow& window)
 {
@@ -88,7 +121,11 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.draw(*firsttext);
             DrawGB(window);
             return;
-            
+        case GameState::Placeholder :
+            window.clear(sf::Color(102, 255, 204,100));
+            window.draw(*firsttext);
+            DrawGB(window);
+            return;
         //...
 
 
@@ -142,6 +179,19 @@ void EventManager::AdvanceCurrentState()
             return;
         case GameState::FirstTurnSettlement :
             CurrentState = GameState::FirstTurnRoad;
+            return;
+        case GameState::FirstTurnRoad :
+            IncrementCurPlayer();
+            if(is_setup)
+            {
+                CurrentState = GameState::FirstTurnSettlement;
+            } else 
+            {
+                CurrentState = GameState::Placeholder;
+            }
+            return;
+        case GameState::Placeholder :
+            return;            
         //...
 
 
@@ -216,31 +266,43 @@ void EventManager::HandleEvent(const sf::Event& event)
             } 
             break;
         case GameState::GameBoardGen :
-            InitGameBoard();
+        {    InitGameBoard();
             firsttext->setString("GameBoard rendered: do anything to continue");
             firsttext->setPosition(textboxpos);
             return;
+        }
         case GameState::FirstTurnSettlement :
-        {
-            int cur_player = 0;
-            firsttext->setString("Click on the node you want to build into a settlement:");
+        
+            firsttext->setString("Click on the Node you want to build into a settlement:");
             firsttext->setPosition(textboxpos);
             if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
             {
                 int try_id = GB->SettlementInRadius(clicked->position);
-                printf("\nClicked on %d %d\n",clicked->position.x,clicked->position.y);
                 if(try_id != -1)
                 {
                     if(FirstTurnSettlement(vec_players[cur_player],try_id))
                     {
-                        advance_perm = true;           
+                        advance_perm = true;        
                     }
                 }
             }
             return;
-        }
+        
         case GameState::FirstTurnRoad :
-            return;       
+            firsttext->setString("Click on the Edge you want to build into a road:");
+            firsttext->setPosition(textboxpos);
+            if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
+            {
+                int try_id = GB->RoadInRadius(clicked->position);
+                if(try_id != -1)
+                {
+                    if(FirstTurnRoad(vec_players[cur_player],try_id))
+                    {
+                        advance_perm = true;
+                    }
+                }
+            }
+            return;      
     }
     return;
 }
@@ -291,72 +353,33 @@ bool EventManager::FirstTurnSettlement(Player* in_player,int in_id)
         return true;
     } else 
     {
-        firsttext->setString("Please enter a valid option:");
+        firsttext->setString("Please enter a valid Node option:");
         return false;
     }
 }
 
-void EventManager::FirstTurn(Player* in_player)
+bool EventManager::FirstTurnRoad(Player* in_player,int in_id)
 {
-    
-    //settlement
-    Player* current_player = in_player;
-    
-    //1. What = Settlement
-    
-    //2. Where
-    
-    int foo = PromptWhere();
-
-    //3. Possible
-    //Economy possible 
-    //placement
-    bool possible = CallAllCritFunc(GB->GetFirstTurnSettlementCriteria(),GB->id_to_coord(foo,Building::BuildingTypes::SETTLEMENT),current_player,Building::BuildingTypes::SETTLEMENT);
-    
-    //4. Build
-    if(possible)
+    if(CallAllCritFunc(GB->GetRoadCriteriaFunction(),GB->id_to_coord(in_id,Building::BuildingTypes::ROAD),in_player,Building::BuildingTypes::ROAD))
     {
-        (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::SETTLEMENT), current_player,Building::BuildingTypes::SETTLEMENT);
+        (GB->*(GB->GetRoadBuildFunction()))(GB->id_to_coord(in_id, Building::BuildingTypes::ROAD), in_player,Building::BuildingTypes::ROAD);
+        return true;
     } else 
-    {
-        printf("gatya");
-    }
-    //roadbuild + give rs
-
-    //1. What = Road
-
-    //2. Where
-    foo = PromptWhere();
-    
-    //3. Possible
-    //placement
-    possible = CallAllCritFunc(GB->GetRoadCriteriaFunction(),GB->id_to_coord(foo,Building::BuildingTypes::ROAD),current_player,Building::BuildingTypes::ROAD);
-    
-    //4. Build
-    if(possible)
-    {
-        (GB->*(GB->GetRoadBuildFunction()))(GB->id_to_coord(foo, Building::BuildingTypes::ROAD), current_player,Building::BuildingTypes::ROAD);
-    } else 
-    {
-        printf("gatya");
+    {   
+        firsttext->setString("Please enter a valid Edge option:");
+        return false;
     }
 }
+
+
 
 
 Player* EventManager::SimGame()
 {
     //First Turn 
     //note: this wont affect wincon
-    for(int i = 0;i<player_count;i++)
-    {
-        FirstTurn(vec_players[i]);
-    }
+   
 
-    //Second turn (reversed order)
-    for(int i = player_count-1;i>=0;i--)
-    {
-        FirstTurn(vec_players[i]);
-    }
     
     printf("Setup over\n");
     

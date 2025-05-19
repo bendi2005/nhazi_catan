@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+
 #include <thread>
 #include <chrono>
 
@@ -40,6 +41,9 @@ private:
     const std::map<Resource,int> bonus_res;
     void GiveBonusResToPlayer(Player*);
 
+    int cur_player;
+    bool once;
+    bool is_setup;
 public:
 
 
@@ -66,10 +70,12 @@ public:
     int Where(char);
 
 
-    void FirstTurn(Player*);
 
+    
     bool FirstTurnSettlement(Player*,int);
     
+    bool FirstTurnRoad(Player*, int);
+
     
     //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
     //bool CheckAllCriteria(Settlement, int);
@@ -90,7 +96,7 @@ public:
 
     void InitGameBoard();
 
-    
+    void IncrementCurPlayer();
 
 
     std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);

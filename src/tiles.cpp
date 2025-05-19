@@ -103,7 +103,6 @@ sf::Color Tile::ColorByResource()
         switch(tile_resources.begin()->Resourcetype)
         {
             case ResourceTypes::BRICK :
-               
                 return BRICK_COLOR;
             case ResourceTypes::LUMBER :
                 return LUMBER_COLOR;

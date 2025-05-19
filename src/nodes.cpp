@@ -151,7 +151,7 @@ sf::Color Node::GetColorFromOwner()
         int g = (hash >> 8) & 0xFF;
         int b = (hash >> 16) & 0xFF;
 
-        return sf::Color(r,g,b,100);
+        return sf::Color(r,g,b,255);
     }
 }
 
