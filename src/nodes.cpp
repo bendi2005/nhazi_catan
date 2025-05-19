@@ -133,14 +133,35 @@ Building* Node::GetNodePointerBuilding()
     return pointer_building_node;
 }
 
+sf::Color Node::GetColorFromOwner()
+{
+    if(!owner_node)
+    {
+        return sf::Color::White;
+    } else 
+    {
+        int hash = 0;
+
+        for (char c : owner_node->GetName())
+        {
+            hash = (hash * 31) + static_cast<uint8_t>(c);
+        }
+
+        int r = (hash >> 0) & 0xFF;
+        int g = (hash >> 8) & 0xFF;
+        int b = (hash >> 16) & 0xFF;
+
+        return sf::Color(r,g,b,100);
+    }
+}
+
 sf::CircleShape Node::MakeNodeImage()
 {
     sf::CircleShape node_ret(NODE_SIZE,50);
     
-    node_ret.setFillColor(sf::Color::Cyan);
     node_ret.setOrigin({NODE_SIZE,NODE_SIZE});
-    node_ret.setPosition(pos.ScaledOrtoOrigoOffsetPos(NODE_SCALE));
-
+    node_ret.setPosition(pos.ScaledOrtoOrigoOffsetPos());
+    node_ret.setFillColor(GetColorFromOwner());
     return node_ret;
 }
 

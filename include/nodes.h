@@ -68,7 +68,7 @@ public:
     //Getter for EdgeCount
     int GetEdgeCount() const;
     
-
+    sf::Color GetColorFromOwner();
     
 
 

@@ -6,23 +6,27 @@ Coordinate::Coordinate(int in_x,int in_y) : x(in_x), y(in_y) {}
 sf::Vector2f Coordinate::OrtoPos()
 {
    
-    float ex = TILE_SIDELENGHT* y *1.73205f/4;
-    float why = TILE_SIDELENGHT * (x/2.0 - y/4.0);
+    float ex =  TILE_SIDELENGHT * (x * ORTO_U_LAMBDA + y * ORTO_V_LAMBDA);
+    float why = TILE_SIDELENGHT * (x * ORTO_U_MU + y * ORTO_V_MU);
 
     return sf::Vector2f{ex,why};
 }
 
-sf::Vector2f Coordinate::ScaledOrtoPos(float scale)
-{   
-    sf::Vector2f postoscale = OrtoPos();
-    return sf::Vector2f{postoscale.x*scale,postoscale.y*scale};
-}
 
-sf::Vector2f Coordinate::ScaledOrtoOrigoOffsetPos(float scale)
+sf::Vector2f Coordinate::ScaledOrtoOrigoOffsetPos()
 {
-    sf::Vector2f postooffset = ScaledOrtoPos(scale);    
+    sf::Vector2f postooffset = OrtoPos();    
     return sf::Vector2f{postooffset.x+ORIGO.x,postooffset.y+ORIGO.y};
 }
+
+
+bool Coordinate::InClickRadius(const sf::Vector2i click_pos)
+{
+    return (abs((ScaledOrtoOrigoOffsetPos().x-click_pos.x)) <= CLICK_RADIUS && (abs((ScaledOrtoOrigoOffsetPos().y-click_pos.y)) <= CLICK_RADIUS));
+}
+
+
+
 
 
 

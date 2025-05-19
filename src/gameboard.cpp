@@ -104,7 +104,6 @@ void GameBoard::GenerateLine(int in_line_num)
              
         //TODO random (?)
         Tile* tile_toadd = new Tile(this,cur.BigToSmall(),(resource_types_for_tiles[rstpindex++]),dicenum_for_tiles[dienumindex++]);
-        printf("\n %d %d\n",cur.x,cur.y);
         std::pair coord_tile_toadd = std::make_pair(cur,tile_toadd);
         Add_to_tilemap(coord_tile_toadd);        
     }
@@ -177,9 +176,17 @@ void GameBoard::DrawTiles(std::vector<sf::CircleShape>* vec_toadd)
 
 void GameBoard::DrawEdges(std::vector<sf::RectangleShape>* vec_toadd)
 {
-    for(auto kvp_coord_edgeptr : edgemap)
+    for(int i = 0;i<EDGE_COUNT;i++)
     {
-        vec_toadd->push_back(kvp_coord_edgeptr.second->MakeEdgeImage());
+        Edge* cur_edge = nullptr;
+        for(auto kvp_coord_edgeptr : edgemap)
+        {
+            if(kvp_coord_edgeptr.second->GetEdgeId() == i)
+            {
+                cur_edge = kvp_coord_edgeptr.second;
+            }
+        }
+        vec_toadd->push_back(cur_edge->MakeEdgeImage());
     }
     return;
 }
@@ -201,14 +208,20 @@ void GameBoard::DrawNodes(std::vector<sf::CircleShape>* vec_toadd)
     return;
 }
 
+int GameBoard::SettlementInRadius(const sf::Vector2i mouse_pos)
+{
+    for(auto kvp_coord_nodeptr : nodemap)
+    {
+        if(kvp_coord_nodeptr.second->GetNodePos().InClickRadius(mouse_pos))
+        {
+            return kvp_coord_nodeptr.second->GetNodeId();
+        }
+    }
+    return -1;
+}
 
 
-//const std::vector<sf::CircleShape>& GameBoard::Get_TileImages() const
-//{
-//    return tile_images;
-//}
-//
-////...
+
 
 
 

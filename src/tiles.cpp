@@ -80,7 +80,6 @@ void Tile::GiveResources(Player* in_player,int in_rcount)
         {
             in_player->AddResourceCard(in_rcount,rs);
         }
-        printf("%d of %s added for %s\n",in_rcount,rs.EnumToString().c_str(),in_player->GetName().c_str());
 
     }
     
@@ -92,7 +91,7 @@ sf::CircleShape Tile::MakeTileImage()
     sf::CircleShape ret_tile(TILE_RADIUS,SHAPE_NODE_COUNT);   
     ret_tile.setOrigin({TILE_RADIUS,TILE_RADIUS});
     ret_tile.setFillColor(ColorByResource());
-    ret_tile.setPosition(pos.ScaledOrtoOrigoOffsetPos(1));
+    ret_tile.setPosition(pos.ScaledOrtoOrigoOffsetPos());
     //ret_tile.move({TILE_BULLSHIT_OFFSET_X,TILE_BULLSHIT_OFFSET_Y});
     return ret_tile;
 }
@@ -104,7 +103,7 @@ sf::Color Tile::ColorByResource()
         switch(tile_resources.begin()->Resourcetype)
         {
             case ResourceTypes::BRICK :
-                printf("returning brick");
+               
                 return BRICK_COLOR;
             case ResourceTypes::LUMBER :
                 return LUMBER_COLOR;

@@ -13,7 +13,7 @@
 
 enum class GameState
 {
-    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,Temp
+    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,FirstTurnSettlement,FirstTurnRoad,Placeholder
 };
 
 class EventManager
@@ -42,12 +42,15 @@ private:
 
 public:
 
+
+
     //OTC Constructor
     EventManager();
     EventManager(GameBoard*,int = 2,int = 10);
 
     void AdvanceCurrentState();
 
+    void DrawGB(sf::RenderWindow&);
 
     void Draw(sf::RenderWindow&);
 
@@ -65,6 +68,9 @@ public:
 
     void FirstTurn(Player*);
 
+    bool FirstTurnSettlement(Player*,int);
+    
+    
     //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
     //bool CheckAllCriteria(Settlement, int);
     //bool CheckAllCriteria(City,int);

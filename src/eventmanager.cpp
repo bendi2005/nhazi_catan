@@ -41,9 +41,8 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.draw(*firsttext);
             if(advance_perm)
             {
-                    
-                AdvanceCurrentState();
                 advance_perm = false;
+                AdvanceCurrentState();
             }
             break;    
         case GameState::PromptPlayerCount :
@@ -51,8 +50,8 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.draw(*firsttext);
             if(advance_perm)
             {   
-                AdvanceCurrentState();
                 advance_perm = false;
+                AdvanceCurrentState();
             }
             break;
         case GameState::PromptPlayerNames :
@@ -60,55 +59,67 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.draw(*firsttext);
             if(advance_perm)
             {
-                AdvanceCurrentState();
                 advance_perm = false;
+                AdvanceCurrentState();
             }
             break;
         case GameState::GameBoardGen :
-            window.clear(sf::Color::White);
-            for(auto tile_image : TileImages)
+            window.clear(sf::Color(102, 255, 204,100)); 
+            window.draw(*firsttext);
+            DrawGB(window);
+            if(advance_perm)
             {
-                window.draw(tile_image);
+                advance_perm = false;
+                AdvanceCurrentState();
             }
-            for(auto edge_image : EdgeImages)
-            {
-                window.draw(edge_image);
-            }
-            for(auto node_image : NodeImages)
-            {
-                window.draw(node_image);
-            }
-            AdvanceCurrentState();
             break;
-        case GameState::Temp :
-            window.clear(sf::Color::White);
-            
-            for(auto tile_image : TileImages)
+        case GameState::FirstTurnSettlement :
+            window.clear(sf::Color(102, 255, 204,100));
+            window.draw(*firsttext);
+            DrawGB(window);
+            if(advance_perm)
             {
-                printf("Tile Coords: %f %f\n",tile_image.getPosition().x,tile_image.getPosition().y);
-                window.draw(tile_image);
+                AdvanceCurrentState();
+                advance_perm = false;
             }
-            for(auto edge_image : EdgeImages)
-            {
-                window.draw(edge_image);
-            }
-            for(auto node_image : NodeImages)
-            {
-                printf("Node Coords: %f %f\n",node_image.getPosition().x,node_image.getPosition().y);
-                window.draw(node_image);
-            }
-            sf::CircleShape geci(10,50);
-            Coordinate temp(0,0);
-            geci.setPosition(temp.ScaledOrtoOrigoOffsetPos(1));
-            geci.setFillColor(sf::Color::Red);
-            window.draw(geci);
             break; 
+        case GameState::FirstTurnRoad :
+            window.clear(sf::Color(102, 255, 204,100));
+            window.draw(*firsttext);
+            DrawGB(window);
+            return;
+            
         //...
+
 
 
     }
     return;
 }
+
+void EventManager::DrawGB(sf::RenderWindow& window)
+{
+    TileImages.clear();
+    EdgeImages.clear();
+    NodeImages.clear();
+    GB->DrawTiles(&TileImages);
+    GB->DrawEdges(&EdgeImages);
+    GB->DrawNodes(&NodeImages);
+    for(auto tile_image : TileImages)
+    {
+        window.draw(tile_image);
+    }
+    for(auto edge_image : EdgeImages)
+    {
+        window.draw(edge_image);
+    }
+    for(auto node_image : NodeImages)
+    {
+        window.draw(node_image);
+    }
+}
+
+
 
 void EventManager::AdvanceCurrentState()
 {
@@ -127,9 +138,10 @@ void EventManager::AdvanceCurrentState()
             CurrentState = GameState::GameBoardGen;
             break;
         case GameState::GameBoardGen :
-            CurrentState = GameState::Temp;
+            CurrentState = GameState::FirstTurnSettlement;
             return;
-            
+        case GameState::FirstTurnSettlement :
+            CurrentState = GameState::FirstTurnRoad;
         //...
 
 
@@ -204,12 +216,31 @@ void EventManager::HandleEvent(const sf::Event& event)
             } 
             break;
         case GameState::GameBoardGen :
-            
             InitGameBoard();
+            firsttext->setString("GameBoard rendered: do anything to continue");
+            firsttext->setPosition(textboxpos);
             return;
-        case GameState::Temp :
+        case GameState::FirstTurnSettlement :
+        {
+            int cur_player = 0;
+            firsttext->setString("Click on the node you want to build into a settlement:");
+            firsttext->setPosition(textboxpos);
+            if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
+            {
+                int try_id = GB->SettlementInRadius(clicked->position);
+                printf("\nClicked on %d %d\n",clicked->position.x,clicked->position.y);
+                if(try_id != -1)
+                {
+                    if(FirstTurnSettlement(vec_players[cur_player],try_id))
+                    {
+                        advance_perm = true;           
+                    }
+                }
+            }
             return;
-            
+        }
+        case GameState::FirstTurnRoad :
+            return;       
     }
     return;
 }
@@ -232,6 +263,7 @@ bool EventManager::InitPlayer()
 {
     
     Player* p = new Player(inputbuffer);
+    GiveBonusResToPlayer(p);
     vec_players.push_back(p);    
     return (p->GetPlayerId() == player_count-1);
     
@@ -240,9 +272,7 @@ bool EventManager::InitPlayer()
 void EventManager::InitGameBoard()
 {
     GB = new GameBoard;
-    GB->DrawTiles(&TileImages);
-    GB->DrawEdges(&EdgeImages);
-    GB->DrawNodes(&NodeImages);
+    advance_perm = true;
 }
 
 void EventManager::GiveBonusResToPlayer(Player* in_player)
@@ -250,6 +280,19 @@ void EventManager::GiveBonusResToPlayer(Player* in_player)
     for(auto kvp_res_int : bonus_res)
     {
         in_player->AddResourceCard(kvp_res_int.second,kvp_res_int.first);
+    }
+}
+
+bool EventManager::FirstTurnSettlement(Player* in_player,int in_id)
+{
+    if(CallAllCritFunc(GB->GetFirstTurnSettlementCriteria(),GB->id_to_coord(in_id,Building::BuildingTypes::SETTLEMENT),in_player,Building::BuildingTypes::SETTLEMENT))
+    {
+        (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(in_id, Building::BuildingTypes::SETTLEMENT), in_player,Building::BuildingTypes::SETTLEMENT);
+        return true;
+    } else 
+    {
+        firsttext->setString("Please enter a valid option:");
+        return false;
     }
 }
 

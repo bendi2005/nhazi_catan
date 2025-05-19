@@ -41,9 +41,11 @@ public:
 
     sf::Vector2f OrtoPos();
     
-    sf::Vector2f ScaledOrtoPos(float);
+    sf::Vector2f ScaledOrtoOrigoOffsetPos();
 
-    sf::Vector2f ScaledOrtoOrigoOffsetPos(float);
+    bool InClickRadius(const sf::Vector2i);
+
+
 };
 //For adding two Coordinates together: adds x and y respectively
 Coordinate operator+(const Coordinate&,const Coordinate&);

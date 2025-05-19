@@ -35,14 +35,14 @@ constexpr int SETTLEMENT_PIECE_COUNT = 5;
 constexpr int CITY_PIECE_COUNT = 4;
 constexpr int ROAD_PIECE_COUNT = 15;
 
-constexpr float ORTO_U_LAMBDA = 1.73205f;
-constexpr float ORTO_U_MU = 0.0f;
-constexpr float ORTO_V_LAMBDA = 1.73205f / 2.0f;
-constexpr float ORTO_V_MU = 1.5f;
+constexpr float ORTO_U_LAMBDA = 0.0f;
+constexpr float ORTO_U_MU = 1/2.0f;
+constexpr float ORTO_V_LAMBDA = 1.73205f / 4.0f;
+constexpr float ORTO_V_MU = -1/4.0f;
 
 constexpr sf::Vector2f ORIGO{600,200};
 
-
+constexpr float CLICK_RADIUS = 10.0f;
 
 
 
@@ -50,7 +50,7 @@ constexpr sf::Vector2f ORIGO{600,200};
 constexpr float TILE_SIDELENGHT = 100.0f;
 //constexpr float TILE_RADIUS = 1.73205f * TILE_SIDELENGHT / 2;
 constexpr float TILE_RADIUS = TILE_SIDELENGHT;
-constexpr float TILE_SCALE = 1;
+
 constexpr float TILE_BULLSHIT_OFFSET_X = 2.5f;
 constexpr float TILE_BULLSHIT_OFFSET_Y = 2.5f;
 
@@ -70,8 +70,8 @@ constexpr float EDGE_THICKNESS = 5;
 
 constexpr float RAD_TO_DEG = 180.0f / 3.14159265f;
 
+constexpr sf::Vector2f textboxpos{800,25};
 
-constexpr float NODE_SCALE = 1;
 constexpr float NODE_SIZE = 20.0f;
 
 

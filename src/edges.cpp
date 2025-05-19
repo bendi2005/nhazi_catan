@@ -59,16 +59,41 @@ Building* Edge::GetEdgePointerBuilding()
 
 sf::RectangleShape Edge::MakeEdgeImage()
 {
-    sf::Vector2f dir = -(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE) - GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE));
+    sf::Vector2f dir = -(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos() - GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos());
     float len = sqrt(dir.x*dir.x + dir.y*dir.y);
     sf::RectangleShape ret_edge(sf::Vector2f{len,EDGE_THICKNESS});
 
-    ret_edge.setPosition(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE));
-    ret_edge.setFillColor(sf::Color::Magenta);
-    //todo tudod
+    ret_edge.setPosition(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos());
+    ret_edge.setFillColor(GetColorFromOwner());
+    
 
     float angle = atan2(dir.y,dir.x) * RAD_TO_DEG;
     ret_edge.setRotation(sf::degrees(angle));
+
+    
     return ret_edge;
 }
+
+sf::Color Edge::GetColorFromOwner()
+{
+    if(!owner_edge)
+    {
+        return sf::Color::White;
+    } else 
+    {
+        int hash = 0;
+
+        for (char c : owner_edge->GetName())
+        {
+            hash = (hash * 31) + static_cast<uint8_t>(c);
+        }
+
+        int r = (hash >> 0) & 0xFF;
+        int g = (hash >> 8) & 0xFF;
+        int b = (hash >> 16) & 0xFF;
+
+        return sf::Color(r,g,b,100);
+    }
+}
+
 

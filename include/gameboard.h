@@ -161,7 +161,7 @@ public:   //TODO mi privat mi publikus
 
     
     
-    
+    int SettlementInRadius(const sf::Vector2i);
     
 
 

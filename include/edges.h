@@ -68,4 +68,6 @@ public:
 
     sf::RectangleShape MakeEdgeImage();
 
+    sf::Color GetColorFromOwner();
+
 };
