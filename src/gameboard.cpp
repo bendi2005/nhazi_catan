@@ -1,6 +1,7 @@
 #include "../include/gameboard.h"
 #include <random>
 
+
 //OTC Constructor
 GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vector<int> in_preset_dicenum) : resource_types_for_tiles(in_preset_resource),dicenum_for_tiles(in_preset_dicenum)
 {
@@ -31,7 +32,7 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
         if(is_coastal && ((rand() % 10) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
         {
             //debug
-            Resource R(BRICK);
+            Resource R(ResourceTypes::BRICK);
             int rate = 2;
             
             iter->second->GetNodeN_modif(0)->SetHarbor(R,rate);
@@ -103,6 +104,7 @@ void GameBoard::GenerateLine(int in_line_num)
              
         //TODO random (?)
         Tile* tile_toadd = new Tile(this,cur.BigToSmall(),(resource_types_for_tiles[rstpindex++]),dicenum_for_tiles[dienumindex++]);
+        printf("\n %d %d\n",cur.x,cur.y);
         std::pair coord_tile_toadd = std::make_pair(cur,tile_toadd);
         Add_to_tilemap(coord_tile_toadd);        
     }
@@ -160,7 +162,55 @@ const std::map<Coordinate,Tile*>& GameBoard::Get_tilemap() const
 void GameBoard::Add_to_tilemap(const std::pair<Coordinate,Tile*> in_tile)
 {
     tilemap.insert(in_tile);
+    return;
 }
+
+void GameBoard::DrawTiles(std::vector<sf::CircleShape>* vec_toadd)
+{
+    
+    for(auto kvp_coord_tileptr : tilemap)
+    {
+        vec_toadd->push_back(kvp_coord_tileptr.second->MakeTileImage());
+    }
+    return;
+}
+
+void GameBoard::DrawEdges(std::vector<sf::RectangleShape>* vec_toadd)
+{
+    for(auto kvp_coord_edgeptr : edgemap)
+    {
+        vec_toadd->push_back(kvp_coord_edgeptr.second->MakeEdgeImage());
+    }
+    return;
+}
+
+void GameBoard::DrawNodes(std::vector<sf::CircleShape>* vec_toadd)
+{
+    for(int i = 0;i<NODE_COUNT;i++)
+    {
+        Node* cur_node = nullptr;
+        for(auto kvp_coord_nodeptr : nodemap)
+        {
+            if(kvp_coord_nodeptr.second->GetNodeId() == i)
+            {
+                cur_node = kvp_coord_nodeptr.second;
+            }
+        }
+        vec_toadd->push_back(cur_node->MakeNodeImage());
+    }
+    return;
+}
+
+
+
+//const std::vector<sf::CircleShape>& GameBoard::Get_TileImages() const
+//{
+//    return tile_images;
+//}
+//
+////...
+
+
 
 //felig teszt
 void GameBoard::PrintHarbor() const

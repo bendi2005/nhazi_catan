@@ -30,7 +30,7 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos
 
 
 //Getter for pos
-const Coordinate Node::GetNodePos() const
+Coordinate Node::GetNodePos() const
 {
     return pos;
 }
@@ -132,5 +132,17 @@ Building* Node::GetNodePointerBuilding()
 {
     return pointer_building_node;
 }
+
+sf::CircleShape Node::MakeNodeImage()
+{
+    sf::CircleShape node_ret(NODE_SIZE,50);
+    
+    node_ret.setFillColor(sf::Color::Cyan);
+    node_ret.setOrigin({NODE_SIZE,NODE_SIZE});
+    node_ret.setPosition(pos.ScaledOrtoOrigoOffsetPos(NODE_SCALE));
+
+    return node_ret;
+}
+
 
 

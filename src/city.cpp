@@ -1,5 +1,5 @@
 #include "../include/city.h"
-const std::map<Resource,int> City::Cost = {{ORE,3},{GRAIN,2}};
+const std::map<Resource,int> City::Cost = {{ResourceTypes::ORE,3},{ResourceTypes::GRAIN,2}};
 int City::city_count = 0;
 
 City::City(Player* in_player)

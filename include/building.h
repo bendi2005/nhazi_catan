@@ -10,7 +10,7 @@ private:
     
 public:
     //Used to pass around in EventManager to make switch cases work
-    enum BuildingTypes {SETTLEMENT, CITY, ROAD,EMPTY};
+    enum class BuildingTypes {SETTLEMENT, CITY, ROAD,EMPTY};
     
     //Pure virtual nature
     virtual ~Building() = default;

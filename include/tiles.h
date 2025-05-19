@@ -3,7 +3,7 @@
 #include "magic_const.h"
 
 #include "resource.h"
-#include "nodes.h"
+#include "nodes.h"  
 
 //necessary forward declaration
 class GameBoard;
@@ -30,6 +30,8 @@ private:
     void GenerateNodes(GameBoard*);
     void PutResourcesIntoNode(Node*);
  
+
+
 public:
     
     //OTC Constructor
@@ -43,6 +45,10 @@ public:
     //Getter for DieNum
     int GetDieNum() const;
     
+    sf::CircleShape MakeTileImage();
+
+    sf::Color ColorByResource();
+
     void GiveResources(Player*,int) ;
     
 };

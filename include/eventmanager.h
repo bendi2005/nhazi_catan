@@ -3,14 +3,17 @@
 #include <SFML/Graphics.hpp> 
 #include <vector>
 #include <string>
+
 #include <thread>
 #include <chrono>
 
-
+#include "building.h"
+#include "gameboard.h"
+#include "city.h"
 
 enum class GameState
 {
-    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,SetupPhase
+    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,Temp
 };
 
 class EventManager
@@ -24,7 +27,11 @@ private:
     bool advance_perm = false;
     std::string inputbuffer;
 
-
+    std::vector<sf::CircleShape> TileImages;
+    std::vector<sf::RectangleShape> EdgeImages;
+    std::vector<sf::CircleShape> NodeImages;
+    //...
+    
 
     std::vector<Player*> vec_players;
     int player_count;
@@ -75,7 +82,9 @@ public:
     char PromptWhat() const;
 
 
-    //Kerdes ez igy rendben van?
+    void InitGameBoard();
+
+    
 
 
     std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);

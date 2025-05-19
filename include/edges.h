@@ -66,4 +66,6 @@ public:
     //Getter for pointer_building_edge
     Building* GetEdgePointerBuilding();
 
+    sf::RectangleShape MakeEdgeImage();
+
 };

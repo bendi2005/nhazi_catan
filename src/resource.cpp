@@ -14,15 +14,15 @@ std::string Resource::EnumToString()
 {
     switch(Resourcetype)
     {
-        case BRICK :
+        case ResourceTypes::BRICK :
             return "Brick";
-        case LUMBER :
+        case ResourceTypes::LUMBER :
             return "Lumber";
-        case ORE :
+        case ResourceTypes::ORE :
             return "Ore";
-        case GRAIN :
+        case ResourceTypes::GRAIN :
             return "Grain";
-        case WOOL :
+        case ResourceTypes::WOOL :
             return "Wool";
     }
 }

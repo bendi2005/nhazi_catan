@@ -35,7 +35,7 @@ private:
     int edgecount;
     
     //preset
-    str_HarborInfo harborinfo = {false,BRICK,100};
+    str_HarborInfo harborinfo = {false,ResourceTypes::BRICK,100};
 
 
     
@@ -60,7 +60,7 @@ public:
     Node() = delete;
 
     //Getter for pos
-    const Coordinate GetNodePos() const;
+    Coordinate GetNodePos() const;
 
     //Getter for id
     int GetNodeId() const;
@@ -97,6 +97,6 @@ public:
 
     Building* GetNodePointerBuilding();
 
-
+    sf::CircleShape MakeNodeImage();
 
 };

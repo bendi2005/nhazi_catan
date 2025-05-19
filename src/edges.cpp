@@ -55,3 +55,20 @@ Building* Edge::GetEdgePointerBuilding()
 {
     return pointer_building_edge;
 }
+
+
+sf::RectangleShape Edge::MakeEdgeImage()
+{
+    sf::Vector2f dir = -(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE) - GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE));
+    float len = sqrt(dir.x*dir.x + dir.y*dir.y);
+    sf::RectangleShape ret_edge(sf::Vector2f{len,EDGE_THICKNESS});
+
+    ret_edge.setPosition(GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos(NODE_SCALE));
+    ret_edge.setFillColor(sf::Color::Magenta);
+    //todo tudod
+
+    float angle = atan2(dir.y,dir.x) * RAD_TO_DEG;
+    ret_edge.setRotation(sf::degrees(angle));
+    return ret_edge;
+}
+

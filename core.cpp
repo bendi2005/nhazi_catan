@@ -1,4 +1,3 @@
-
 #include "./include/eventmanager.h"
 
 int GameBoard::rstpindex = 0;

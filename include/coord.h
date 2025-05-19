@@ -1,6 +1,7 @@
 #pragma once 
-
+#include "../SFML-3.0.0/include/SFML/Graphics.hpp"
 #include "resource.h"
+#include "magic_const.h"
 class Coordinate
 {    
 private:
@@ -38,8 +39,11 @@ public:
     //Getter for Y
     int GetY() const;
 
+    sf::Vector2f OrtoPos();
     
-    
+    sf::Vector2f ScaledOrtoPos(float);
+
+    sf::Vector2f ScaledOrtoOrigoOffsetPos(float);
 };
 //For adding two Coordinates together: adds x and y respectively
 Coordinate operator+(const Coordinate&,const Coordinate&);

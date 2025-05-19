@@ -4,13 +4,15 @@
 #include <string>
 
 
-enum ResourceTypes
+enum class ResourceTypes
 {
     BRICK,
     LUMBER,
     ORE,
     GRAIN,
-    WOOL
+    WOOL,
+    DESERT
+
 };
 class Resource
 {

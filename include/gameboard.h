@@ -2,6 +2,7 @@
 #include "coord.h"
 #include "magic_const.h"
 
+
 #include "edges.h"
 #include "tiles.h" //contains nodes.h
 #include <time.h>
@@ -15,11 +16,11 @@
 #include <utility> //#include <map> might not include std::make_pair
 
 
-
-
+class Edge;
 class Node;
 class Tile;
-class Edge;
+
+
 class GameBoard 
 {
 private:
@@ -38,7 +39,12 @@ private:
     //Map of Tile's on the GameBoard
     std::map<Coordinate,Tile*> tilemap;
 
-    
+    std::vector<sf::CircleShape> tile_images;
+    std::vector<sf::CircleShape> node_images;
+    std::vector<sf::CircleShape> edge_images;
+
+
+
     //vector of sets of Resources for each tile: the nth (0-indexed) set is the set of resources for the nth tile
     std::vector<std::set<Resource>> resource_types_for_tiles;
     //vector of the Diece numbers for each tile: the nth (0-indexed) int is the die number for the nth tile
@@ -119,7 +125,20 @@ public:   //TODO mi privat mi publikus
     const std::map<Coordinate,Tile*>& Get_tilemap() const;
     void Add_to_tilemap(const std::pair<Coordinate,Tile*>);
 
+    //const std::vector<sf::CircleShape>& Get_TileImages() const;
+    //void Add_to_tileimages(const sf::CircleShape);
+//
+    //const std::vector<sf::CircleShape>& Get_NodeImages() const;
+    //void Add_to_nodeimages(const sf::CircleShape);
+//
+    //const std::vector<sf::CircleShape>& Get_EdgeImages() const;
+    //void Add_to_edgeimages(const sf::CircleShape);
 
+    void DrawTiles(std::vector<sf::CircleShape>*);
+    
+    void DrawEdges(std::vector<sf::RectangleShape>*);
+
+    void DrawNodes(std::vector<sf::CircleShape>*);
 
     void BuildSettlementFunction(Coordinate,Player*,Building::BuildingTypes);
     void UpgradeSettlementFunction(Coordinate, Player*,Building::BuildingTypes);
@@ -144,8 +163,10 @@ public:   //TODO mi privat mi publikus
     
     
     
+
+
     //OTC Constructor
-    GameBoard(std::vector<std::set<Resource>> = {{ORE}, {WOOL}, {LUMBER}, {GRAIN}, {BRICK}, {WOOL}, {BRICK}, {GRAIN}, {LUMBER}, {}, {LUMBER}, {ORE}, {LUMBER}, {ORE}, {GRAIN}, {WOOL}, {BRICK}, {GRAIN}, {WOOL}},std::vector<int> ={10,2,9,12,6,4,10,9,11,7,3,8,8,3,4,5,5,6,11});
+    GameBoard(std::vector<std::set<Resource>> = {{ResourceTypes::ORE}, {ResourceTypes::WOOL}, {ResourceTypes::LUMBER}, {ResourceTypes::GRAIN}, {ResourceTypes::BRICK}, {ResourceTypes::WOOL}, {ResourceTypes::BRICK}, {ResourceTypes::GRAIN}, {ResourceTypes::LUMBER}, {ResourceTypes::DESERT}, {ResourceTypes::LUMBER}, {ResourceTypes::ORE}, {ResourceTypes::LUMBER}, {ResourceTypes::ORE}, {ResourceTypes::GRAIN}, {ResourceTypes::WOOL}, {ResourceTypes::BRICK}, {ResourceTypes::GRAIN}, {ResourceTypes::WOOL}},std::vector<int> ={10,2,9,12,6,4,10,9,11,7,3,8,8,3,4,5,5,6,11});
 
     //felig teszt    
     void PrintHarbor() const;

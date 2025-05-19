@@ -3,6 +3,26 @@
 
 Coordinate::Coordinate(int in_x,int in_y) : x(in_x), y(in_y) {}
 
+sf::Vector2f Coordinate::OrtoPos()
+{
+   
+    float ex = TILE_SIDELENGHT* y *1.73205f/4;
+    float why = TILE_SIDELENGHT * (x/2.0 - y/4.0);
+
+    return sf::Vector2f{ex,why};
+}
+
+sf::Vector2f Coordinate::ScaledOrtoPos(float scale)
+{   
+    sf::Vector2f postoscale = OrtoPos();
+    return sf::Vector2f{postoscale.x*scale,postoscale.y*scale};
+}
+
+sf::Vector2f Coordinate::ScaledOrtoOrigoOffsetPos(float scale)
+{
+    sf::Vector2f postooffset = ScaledOrtoPos(scale);    
+    return sf::Vector2f{postooffset.x+ORIGO.x,postooffset.y+ORIGO.y};
+}
 
 
 

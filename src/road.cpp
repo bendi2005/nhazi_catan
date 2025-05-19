@@ -1,7 +1,7 @@
 #include "../include/road.h"
 int Road::road_count = 0;
 
-const std::map<Resource,int> Road::Cost = {{BRICK,1},{LUMBER,1}};
+const std::map<Resource,int> Road::Cost = {{ResourceTypes::BRICK,1},{ResourceTypes::LUMBER,1}};
 
 Road::Road(Player* in_player)
 {

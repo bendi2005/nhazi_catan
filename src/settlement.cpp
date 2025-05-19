@@ -1,7 +1,7 @@
 #include "../include/settlement.h"
 int Settlement::settlement_count = 0;
 
-const std::map<Resource,int> Settlement::Cost = {{BRICK,1},{LUMBER,1},{WOOL,1},{GRAIN,1}};
+const std::map<Resource,int> Settlement::Cost = {{ResourceTypes::BRICK,1},{ResourceTypes::LUMBER,1},{ResourceTypes::WOOL,1},{ResourceTypes::GRAIN,1}};
 
 
 Settlement::Settlement(Player* in_player)

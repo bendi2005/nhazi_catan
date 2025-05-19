@@ -4,6 +4,9 @@
 //OTC Constructor
 EventManager::EventManager()
 {
+    TileImages.reserve(TILE_COUNT);
+    //...
+
     CurrentState = GameState::Zero;
     player_count = 0;
     if(!(font.openFromFile("Ubuntu.ttf")))
@@ -11,7 +14,7 @@ EventManager::EventManager()
         printf("\nSomething wrong with font\n");
         return;
     }
-
+    
     firsttext = new sf::Text(font);
     firsttext->setString("Welcome to Catan! Press any key to continue...");
     firsttext->setCharacterSize(40);
@@ -60,12 +63,51 @@ void EventManager::Draw(sf::RenderWindow& window)
                 AdvanceCurrentState();
                 advance_perm = false;
             }
+            break;
+        case GameState::GameBoardGen :
+            window.clear(sf::Color::White);
+            for(auto tile_image : TileImages)
+            {
+                window.draw(tile_image);
+            }
+            for(auto edge_image : EdgeImages)
+            {
+                window.draw(edge_image);
+            }
+            for(auto node_image : NodeImages)
+            {
+                window.draw(node_image);
+            }
+            AdvanceCurrentState();
+            break;
+        case GameState::Temp :
+            window.clear(sf::Color::White);
             
-            
+            for(auto tile_image : TileImages)
+            {
+                printf("Tile Coords: %f %f\n",tile_image.getPosition().x,tile_image.getPosition().y);
+                window.draw(tile_image);
+            }
+            for(auto edge_image : EdgeImages)
+            {
+                window.draw(edge_image);
+            }
+            for(auto node_image : NodeImages)
+            {
+                printf("Node Coords: %f %f\n",node_image.getPosition().x,node_image.getPosition().y);
+                window.draw(node_image);
+            }
+            sf::CircleShape geci(10,50);
+            Coordinate temp(0,0);
+            geci.setPosition(temp.ScaledOrtoOrigoOffsetPos(1));
+            geci.setFillColor(sf::Color::Red);
+            window.draw(geci);
+            break; 
         //...
 
 
     }
+    return;
 }
 
 void EventManager::AdvanceCurrentState()
@@ -82,8 +124,12 @@ void EventManager::AdvanceCurrentState()
             CurrentState = GameState::PromptPlayerNames;
             break;
         case GameState::PromptPlayerNames :
-            CurrentState = GameState::SetupPhase;
+            CurrentState = GameState::GameBoardGen;
             break;
+        case GameState::GameBoardGen :
+            CurrentState = GameState::Temp;
+            return;
+            
         //...
 
 
@@ -156,11 +202,14 @@ void EventManager::HandleEvent(const sf::Event& event)
                 }
                 
             } 
+            break;
+        case GameState::GameBoardGen :
             
-            break;
-        case GameState::SetupPhase :
-            break;
-
+            InitGameBoard();
+            return;
+        case GameState::Temp :
+            return;
+            
     }
     return;
 }
@@ -184,9 +233,16 @@ bool EventManager::InitPlayer()
     
     Player* p = new Player(inputbuffer);
     vec_players.push_back(p);    
-    printf("mi a kurva anyam van: %d %d\n",p->GetPlayerId(),player_count-1);
     return (p->GetPlayerId() == player_count-1);
     
+}
+
+void EventManager::InitGameBoard()
+{
+    GB = new GameBoard;
+    GB->DrawTiles(&TileImages);
+    GB->DrawEdges(&EdgeImages);
+    GB->DrawNodes(&NodeImages);
 }
 
 void EventManager::GiveBonusResToPlayer(Player* in_player)
