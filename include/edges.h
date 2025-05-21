@@ -46,6 +46,8 @@ public:
 
     sf::Vector2f GetMidPoint();
 
+    bool InClickRadius(const sf::Vector2i);
+
     //Gets the nth (0-index) Node* of nodes_of_edge 
     Node* GetNodeN_modif(int);
 

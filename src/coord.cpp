@@ -20,10 +20,7 @@ sf::Vector2f Coordinate::ScaledOrtoOrigoOffsetPos()
 }
 
 
-bool Coordinate::InClickRadius(const sf::Vector2i click_pos)
-{
-    return (abs((ScaledOrtoOrigoOffsetPos().x-click_pos.x)) <= CLICK_RADIUS && (abs((ScaledOrtoOrigoOffsetPos().y-click_pos.y)) <= CLICK_RADIUS));
-}
+
 
 
 

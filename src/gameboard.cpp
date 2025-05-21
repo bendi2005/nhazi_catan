@@ -212,7 +212,7 @@ int GameBoard::SettlementInRadius(const sf::Vector2i mouse_pos)
 {
     for(auto kvp_coord_nodeptr : nodemap)
     {
-        if(kvp_coord_nodeptr.second->GetNodePos().InClickRadius(mouse_pos))
+        if(kvp_coord_nodeptr.second->InClickRadius(mouse_pos))
         {
             return kvp_coord_nodeptr.second->GetNodeId();
         }
@@ -224,13 +224,12 @@ int GameBoard::RoadInRadius(const sf::Vector2i mouse_pos)
 {
     for(auto kvp_coord_edge : edgemap)
     {
-        //Todo make a function thats inclickradius and takes in sf::Vector2f
-        ////if(kvp_coord_edge.second->getmi)
-        //{
-        //    return kvp_coord_edge.second->GetEdgeId();
-        //}
-    return -1;
+        if(kvp_coord_edge.second->InClickRadius(mouse_pos))
+        {
+            return kvp_coord_edge.second->GetEdgeId();
+        }
     }
+    return -1;
 }
 
 
@@ -467,9 +466,8 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 void GameBoard::DistributeResources()
 {
     //debug
-    //int sum = RollDice();
+    int sum = RollDice();
     
-    int sum = 10;
     
     for(auto kvp_coord_node : nodemap)
     {

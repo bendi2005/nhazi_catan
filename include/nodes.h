@@ -56,7 +56,7 @@ public:
     //OTC Constructor
     Node(Coordinate,GameBoard*);
     
-    //nem fog kelleni debug utan (???)
+    
     Node() = delete;
 
     //Getter for pos
@@ -70,7 +70,7 @@ public:
     
     sf::Color GetColorFromOwner();
     
-
+    bool InClickRadius(const sf::Vector2i);
 
 
 

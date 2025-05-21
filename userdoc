@@ -1,0 +1,49 @@
+Catan* User Documentation
+
+General Description:
+    2-9 Players play a game of Catan with some rules being changed, but the goal remaining the same: Earn 10 Victory points to win.
+
+The flow of the program:
+
+I.      After the welcome screen users can select to play on a preset board, a randomly generated board or the one from the input file
+II.     The User(s) will be prompted for a playercount (2-9) and after that each player will be prompted for their name.
+III.    The board will be initialized, alongside the player's resources, as the players begin the setup phase.
+IV.     After the setup phase has concluded the regular phase begins, where the turns actions go in the following way:
+    IV.a)   A roll of the two dice takes place, and the tiles rolled will distribute resources to those entitled to them.
+    IV.b)   The current player is entitled to make a Trade or skip to the next action,
+    IV.c)   The current player is entitled to Build or skip to the next action.
+    IV.d)   Victory points are tallied, and if someone has 10 they are declared the winner, otherwise the next player in the order begins their turn.
+V.      The winner player is displayed on the screen
+
+
+Inputs
+
+I.      To leave the welcome-screen comply with the on-screen request of pressing any key.
+II.     To select the type of board to play on left click on the preffered option.
+III.    To specify the player count enter the desired number in the range of 2-9.
+IV.     Type the name for each player in the order the users want to take turns.
+V.      To begin, move the mouse or press any key.
+VI.     To Build:
+    VI.a)   To (try) building on the Node you want, click the Node.
+    VI.b)   To (try) building on the Edge you want, click the midpoint of the Edge.
+    VI.c)   To (try) upgrading on the Node you want, click the Node.
+VII.    To trade: click the preffered method and the resource.
+VIII.   To exit: perform any of the standard exit-requests (alt+f4, clicking close icon)
+
+
+Outputs
+
+I.      The welcome screen is a simple text
+II.     The prompt for selecting the kind of gameboard is 3 buttons, with text labeling them
+III.    The prompt for selecting the player count is a simple text
+IV.     The prompt for entering the name of each player is a responsive (shows the characters as the user types,including backspace) text
+V.      The gameboard
+    V.a)    The Tiles are hexagons, their color correspoding to the type of resource(s) they hold, and a text labeling their die number
+    V.b)    The Nodes are circles, their color correspoding to their owner, and their outline wether or not they are a harbor
+    V.c)    The Edges are rectangle shapes, their color correspoding to their owner
+VI.     The Player's infomration is a text with their name, and the amount of resource cards they have, and the number of Victory points.
+
+Rules
+
+Found in gamerules file
+

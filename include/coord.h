@@ -43,9 +43,10 @@ public:
     
     sf::Vector2f ScaledOrtoOrigoOffsetPos();
 
-    bool InClickRadius(const sf::Vector2i);
+    
 
 
 };
 //For adding two Coordinates together: adds x and y respectively
 Coordinate operator+(const Coordinate&,const Coordinate&);
+

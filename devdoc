@@ -1,0 +1,88 @@
+Catan* Developer Documentation
+
+Overview
+I.  cpp files:
+        core.cpp (Main)
+        building.cpp
+        city.cpp
+        coord.cpp
+        edges.cpp
+        eventmanager.cpp
+        gameboard.cpp
+        nodes.cpp
+        player.cpp
+        resource.cpp
+        road.cpp
+        settlement.cpp
+        tiles.cpp
+II. header files:
+        building.h      (Abstract class)
+        city.h          (Building)
+        road.h          (Building)
+        settlement.h    (Building)
+        coord.h         (Handle coordinates, both "under the hood" and "real")
+        edges.h         (Handle how edges work on the GameBoard)
+        eventmanager.h  (Handle events, gamestate, and rendering)
+        gameboard.h     (Handles all tiles, nodes, edges and facilitates building)
+        magic_const.h   (Contains all value that can be considered "magic constants", to improve code readability)
+        nodes.h         (Handles how nodes work on the GameBoard)
+        player.h        (Handles the player's inventory, owned buildings, victory points)
+        resource.h      (Handles information regarding resources)
+        tiles.h         (Handles how tiles work on the GameBoard)
+        Graphics.hpp    (Included from SFML, used for making and rendering objects)
+
+SFML Rendering tldr:
+
+Its a 3 step process:
+I. clearing the screen (clear())
+II. filling a buffer with what to draw (draw()) on the next call of:
+III. display()
+
+So when I want to put something on the screen I clear it first, then call the necessary draw-functions which fill the buffer with the correct data to display, and then call display.
+Calling clear() and draw() only takes place in EventManager's designated draw functions, ensuring the 3 step process is always in correct order.
+Display doesnt take any arguments, so its in the main loop of the program, ensuring its always called properly.
+
+
+The flow of the program:
+I.      core.cpp is the main: inside that:
+            I.a) Open the window everything is going to be rendered in.
+            I.b) Initialize the EventManager
+II.     The while(window.isOpen()) loop is the "heart" of the program. It listens for the event based on the game state, renders the necessary prompts and the result(s) of them
+III.    Render the welcome screen
+IV.     Render the prompts for the type of GameBoard
+V.      Render the prompt for the  playercount
+VI.     Render the prompt the name of each player
+VII:    Initialize, and Render the GameBoard
+VIII:   Handle the Building, Trading choices, render the board in each state, and calculate victory points
+IX:     Render the Winner screen
+
+
+A Brief explanation of the classes (in depth details about their member-variables and functions are inside the code)
+
+EventManager: this class handles events, and is the "puppetmaster". The process:
+I.          "Listen" for the event and handle it with HandleEvent()
+II.         Fil draw buffer by calling calling the necessary draw functions
+III.        Advance game-state and player
+Process of building: this class handles the process of building: following W,W,P,B "system":
+(W)hat:     after the user clicks, determine if the user is trying to build a Settlement,Road or City.
+(W)here:    after the click the location is known.
+(P)ossible: based on the What and Where, call the corresponding criteria functions, to see if the build is possible
+(B)uild:    if its possible, call the corresponding building function to execute the action of the player
+
+
+GameBoard: this class handles the construction of the GameBoard, and buildings
+I.  Construction:
+    1. Generate a row of tiles, 3,4,5,4,3.
+    2. Inside each Tile, generate all Nodes (if needed)
+    3. Inside each Node, generate edges (if needed)
+    4. After this is generated, generate harbors
+II. Distributing resources: its this class's responsibility to roll 2 dice and distribute the resources from the correct tiles to their rightful owners
+III. Building This class has function pointers for the criteria and action of building a building.
+
+Building: This Abstract class is the parent of all building types, a building's properties:
+    1. Taking building piece from player's inventory
+    2. Taking resources from the player's inventory
+    3. Giving Victory points
+    4. Giving resources
+
+

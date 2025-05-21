@@ -14,7 +14,7 @@ EventManager::EventManager()
         printf("\nSomething wrong with font\n");
         return;
     }
-    
+
     firsttext = new sf::Text(font);
     firsttext->setString("Welcome to Catan! Press any key to continue...");
     firsttext->setCharacterSize(40);
@@ -24,7 +24,7 @@ EventManager::EventManager()
 
     cur_player = 0;
     once = false;
-    is_setup = false;
+    is_setup = true;
 }
 
 void EventManager::IncrementCurPlayer()
@@ -35,19 +35,25 @@ void EventManager::IncrementCurPlayer()
         {
             if(cur_player == 0) //are we back at the beginning
             {
-                is_setup = true;
+                is_setup = false;
+                return;
+            } else 
+            {
+                cur_player--;   
+                return;
             }
         } else  //havent iterated through once
         {
             if(cur_player == player_count-1) //are we at the end
             {
                 once = true;
+                return;
             } else 
             {
                 cur_player++;
+                return;
             }
         }
-
     } else  //not setup phase
     {
         cur_player = (cur_player + 1) % player_count;
@@ -120,6 +126,12 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.clear(sf::Color(102, 255, 204,100));
             window.draw(*firsttext);
             DrawGB(window);
+            if(advance_perm)
+            {
+                
+                AdvanceCurrentState();
+                advance_perm = false;
+            }
             return;
         case GameState::Placeholder :
             window.clear(sf::Color(102, 255, 204,100));
@@ -184,6 +196,7 @@ void EventManager::AdvanceCurrentState()
             IncrementCurPlayer();
             if(is_setup)
             {
+                printf("\nGoing back to settlements\n");
                 CurrentState = GameState::FirstTurnSettlement;
             } else 
             {
@@ -289,7 +302,7 @@ void EventManager::HandleEvent(const sf::Event& event)
             return;
         
         case GameState::FirstTurnRoad :
-            firsttext->setString("Click on the Edge you want to build into a road:");
+            firsttext->setString("Click on the middle of the Edge you want to build into a road:");
             firsttext->setPosition(textboxpos);
             if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
             {

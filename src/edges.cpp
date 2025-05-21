@@ -71,16 +71,25 @@ sf::RectangleShape Edge::MakeEdgeImage()
 
     float angle = atan2(dir.y,dir.x) * RAD_TO_DEG;
     ret_edge.setRotation(sf::degrees(angle));
-
+   
     
     return ret_edge;
 }
+
+
 
 
 sf::Vector2f Edge::GetMidPoint()
 {
     return {((GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos().x+GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos().x)/2.0f), ((GetNodeN_modif(0)->GetNodePos().ScaledOrtoOrigoOffsetPos().y+GetNodeN_modif(1)->GetNodePos().ScaledOrtoOrigoOffsetPos().y)/2.0f)};
 }
+
+
+bool Edge::InClickRadius(const sf::Vector2i mouse_pos)
+{
+    return (abs(GetMidPoint().x-mouse_pos.x) <= CLICK_RADIUS && abs(GetMidPoint().y-mouse_pos.y) <= CLICK_RADIUS);
+}
+
 
 sf::Color Edge::GetColorFromOwner()
 {

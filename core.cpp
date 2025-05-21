@@ -5,7 +5,7 @@ int GameBoard::dienumindex = 0;
 int main()
 {
 
-    sf::RenderWindow window(sf::VideoMode({1800,1100}),"Catan");
+    sf::RenderWindow window(sf::VideoMode({INDOW_SIZE_WIDTH,WINDOW_SIZE_HEIGHT}),"Catan");
     
     EventManager evman;
     

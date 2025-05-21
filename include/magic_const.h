@@ -35,14 +35,18 @@ constexpr int SETTLEMENT_PIECE_COUNT = 5;
 constexpr int CITY_PIECE_COUNT = 4;
 constexpr int ROAD_PIECE_COUNT = 15;
 
+constexpr unsigned int INDOW_SIZE_WIDTH = 1800.0f;
+constexpr unsigned int WINDOW_SIZE_HEIGHT = 1100.0f;
+
+
 constexpr float ORTO_U_LAMBDA = 0.0f;
 constexpr float ORTO_U_MU = 1/2.0f;
 constexpr float ORTO_V_LAMBDA = 1.73205f / 4.0f;
 constexpr float ORTO_V_MU = -1/4.0f;
 
-constexpr sf::Vector2f ORIGO{600,200};
+constexpr sf::Vector2f ORIGO{600.0f,200.0f};
 
-constexpr float CLICK_RADIUS = 10.0f;
+constexpr float CLICK_RADIUS = 15.0f;
 
 
 

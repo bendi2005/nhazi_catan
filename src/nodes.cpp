@@ -28,6 +28,12 @@ Node::Node(Coordinate in_coord,GameBoard* in_p_GB) : node_id(next_node_id++),pos
     }
 }   
 
+bool Node::InClickRadius(const sf::Vector2i click_pos)
+{
+    return ((abs(pos.ScaledOrtoOrigoOffsetPos().x-click_pos.x)) <= CLICK_RADIUS && (abs(pos.ScaledOrtoOrigoOffsetPos().y-click_pos.y)) <= CLICK_RADIUS);
+}
+
+
 
 //Getter for pos
 Coordinate Node::GetNodePos() const
