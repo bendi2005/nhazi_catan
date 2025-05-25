@@ -2,7 +2,7 @@
 
 
 //OTC Constructor
-EventManager::EventManager()
+EventManager::EventManager() : bonus_res{{ResourceTypes::BRICK,4},{ResourceTypes::LUMBER,4},{ResourceTypes::WOOL,2},{ResourceTypes::GRAIN,2}}
 {
     TileImages.reserve(TILE_COUNT);
     //...
@@ -106,6 +106,7 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.clear(sf::Color(102, 255, 204,100)); 
             window.draw(*firsttext);
             DrawGB(window);
+            DrawPlayerInfo(window);
             if(advance_perm)
             {
                 advance_perm = false;
@@ -116,6 +117,7 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.clear(sf::Color(102, 255, 204,100));
             window.draw(*firsttext);
             DrawGB(window);
+            DrawPlayerInfo(window);
             if(advance_perm)
             {
                 AdvanceCurrentState();
@@ -126,6 +128,7 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.clear(sf::Color(102, 255, 204,100));
             window.draw(*firsttext);
             DrawGB(window);
+            DrawPlayerInfo(window);
             if(advance_perm)
             {
                 
@@ -137,10 +140,9 @@ void EventManager::Draw(sf::RenderWindow& window)
             window.clear(sf::Color(102, 255, 204,100));
             window.draw(*firsttext);
             DrawGB(window);
+            DrawPlayerInfo(window);
             return;
         //...
-
-
 
     }
     return;
@@ -168,7 +170,19 @@ void EventManager::DrawGB(sf::RenderWindow& window)
     }
 }
 
+void EventManager::DrawPlayerInfo(sf::RenderWindow& window)
+{
 
+    for(int i = 0;i<player_count;i++)
+    {
+        sf::Text* temp = new sf::Text(font);
+        temp->setPosition({BASE_PLAYER_INFO_WIDTH,BASE_PLAYER_INFO_HEIGHT+i*PLAYER_INFO_HEIGHT_SCALE});
+        temp->setFillColor(sf::Color::Red);
+        temp->setCharacterSize(20);
+        temp->setString(vec_players[i]->PlayerInfoString());
+        window.draw(*temp);
+    }
+}
 
 void EventManager::AdvanceCurrentState()
 {

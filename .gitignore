@@ -2,3 +2,4 @@ misc/
 obj/
 .vscode/
 temp
+.clangd

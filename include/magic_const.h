@@ -78,5 +78,7 @@ constexpr sf::Vector2f textboxpos{800,25};
 
 constexpr float NODE_SIZE = 20.0f;
 
-
+constexpr float BASE_PLAYER_INFO_WIDTH =  1250.0f;
+constexpr float BASE_PLAYER_INFO_HEIGHT =  150.0f;
+constexpr float PLAYER_INFO_HEIGHT_SCALE = 50.0f;
 

@@ -14,12 +14,12 @@ Player::Player(std::string in_name) : player_id(next_player_id++), player_name(i
     //init resource cards
     for(int i = 0;i<RESOURCE_COUNT;i++)
     {
-        inventory.resource_cards.insert(std::make_pair(Resource((ResourceTypes)i),0));
+        //inventory.resource_cards.insert(std::make_pair(Resource((ResourceTypes)i),0));
         
         //separate into 3 lines if doesnt work
-        //Resource R((ResourceTypes)i);
-        //std::pair<Resource,int> temp_pair = std::make_pair(R,0);
-        //inventory.resource_cards.insert(temp_pair);
+        Resource R((ResourceTypes)i);
+        std::pair<Resource,int> temp_pair = std::make_pair(R,0);
+        inventory.resource_cards.insert(temp_pair);
     }
 }
 
@@ -58,6 +58,30 @@ std::vector<Edge*> Player::GetOwnedEdges(GameBoard* in_pGB)
         }
     }
     return ret_vec;
+}
+
+std::string Player::PlayerInfoString()
+{
+    std::string valuestring;
+    valuestring = player_name + " ";
+    for(int i = 0;i<RESOURCE_COUNT;i++)
+    {
+        Resource temp = static_cast<ResourceTypes>(i);
+        valuestring.append(temp.EnumToString());
+        valuestring += ": "; 
+        valuestring += std::to_string(inventory.resource_cards.at(temp));
+        valuestring += "  ";
+    }
+    valuestring += "\n";
+    valuestring += "Settlements Pieces: ";
+    valuestring += std::to_string(inventory.settlements_available);
+    valuestring += "  ";
+    valuestring += "City Pieces: ";
+    valuestring += std::to_string(inventory.cities_available);
+    valuestring += "  ";
+    valuestring += "Road Pieces: ";
+    valuestring += std::to_string(inventory.roads_available);
+    return valuestring;
 }
 
 

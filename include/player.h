@@ -35,6 +35,8 @@ public:
 static void ClearNextId();
 
 
+std::string PlayerInfoString();
+
 
 //OTC Constructor, sets up inventory
 Player(std::string);

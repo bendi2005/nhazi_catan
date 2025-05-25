@@ -70,7 +70,8 @@ public:
     int Where(char);
 
 
-
+    void DrawPlayerInfo(sf::RenderWindow&);
+    
     
     bool FirstTurnSettlement(Player*,int);
     
