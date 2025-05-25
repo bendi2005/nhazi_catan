@@ -276,6 +276,7 @@ void EventManager::HandleEvent(const sf::Event& event)
                     firsttext->setString(inputbuffer);
                 }
                 
+                
             } 
             break;
         case GameState::GameBoardGen :
