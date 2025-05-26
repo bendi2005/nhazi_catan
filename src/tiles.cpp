@@ -89,12 +89,25 @@ void Tile::GiveResources(Player* in_player,int in_rcount)
 sf::CircleShape Tile::MakeTileImage()
 {
     sf::CircleShape ret_tile(TILE_RADIUS,SHAPE_NODE_COUNT);   
-    ret_tile.setOrigin({TILE_RADIUS,TILE_RADIUS});
     ret_tile.setFillColor(ColorByResource());
+    ret_tile.setOrigin({TILE_RADIUS,TILE_RADIUS});
     ret_tile.setPosition(pos.ScaledOrtoOrigoOffsetPos());
     //ret_tile.move({TILE_BULLSHIT_OFFSET_X,TILE_BULLSHIT_OFFSET_Y});
     return ret_tile;
 }
+
+sf::Text Tile::MakeTileNumberText()
+{
+    sf::Font font;
+    sf::Text ret_text(font); 
+    ret_text.setOrigin({DIE_NUMBER_SIZE/2,DIE_NUMBER_SIZE/2});
+    ret_text.setPosition(pos.ScaledOrtoOrigoOffsetPos());
+    ret_text.setFillColor(sf::Color::Red);
+    ret_text.setCharacterSize(DIE_NUMBER_SIZE);
+    ret_text.setString(std::to_string(dienum));
+    return ret_text;
+}
+
 
 sf::Color Tile::ColorByResource()
 {

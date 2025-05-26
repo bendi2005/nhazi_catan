@@ -134,7 +134,7 @@ public:   //TODO mi privat mi publikus
     //const std::vector<sf::CircleShape>& Get_EdgeImages() const;
     //void Add_to_edgeimages(const sf::CircleShape);
 
-    void DrawTiles(std::vector<sf::CircleShape>*);
+    void DrawTiles(std::vector<std::pair<sf::CircleShape,sf::Text>>*);
     
     void DrawEdges(std::vector<sf::RectangleShape>*);
 
@@ -178,7 +178,7 @@ public:   //TODO mi privat mi publikus
 
     int RollDice() const;
 
-    void DistributeResources();
+    int DistributeResources();
 
 };
 

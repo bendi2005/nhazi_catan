@@ -14,7 +14,7 @@
 
 enum class GameState
 {
-    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,FirstTurnSettlement,FirstTurnRoad,Placeholder
+    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,FirstTurnSettlement,FirstTurnRoad,RollDicePrompt,RollDice,Placeholder
 };
 
 class EventManager
@@ -28,7 +28,7 @@ private:
     bool advance_perm = false;
     std::string inputbuffer;
 
-    std::vector<sf::CircleShape> TileImages;
+    std::vector<std::pair<sf::CircleShape,sf::Text>> TileImages;
     std::vector<sf::RectangleShape> EdgeImages;
     std::vector<sf::CircleShape> NodeImages;
     //...
@@ -77,7 +77,8 @@ public:
     
     bool FirstTurnRoad(Player*, int);
 
-    
+    void RegularTurnDraw(sf::RenderWindow&);
+
     //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
     //bool CheckAllCriteria(Settlement, int);
     //bool CheckAllCriteria(City,int);

@@ -67,20 +67,9 @@ std::string Player::PlayerInfoString()
     for(int i = 0;i<RESOURCE_COUNT;i++)
     {
         Resource temp = static_cast<ResourceTypes>(i);
-        valuestring.append(temp.EnumToString());
-        valuestring += ": "; 
-        valuestring += std::to_string(inventory.resource_cards.at(temp));
-        valuestring += "  ";
+        valuestring += (temp).EnumToString() + ": " + std::to_string(inventory.resource_cards.at(temp)) + " "; 
     }
-    valuestring += "\n";
-    valuestring += "Settlements Pieces: ";
-    valuestring += std::to_string(inventory.settlements_available);
-    valuestring += "  ";
-    valuestring += "City Pieces: ";
-    valuestring += std::to_string(inventory.cities_available);
-    valuestring += "  ";
-    valuestring += "Road Pieces: ";
-    valuestring += std::to_string(inventory.roads_available);
+    valuestring += "\n Settlement Pieces: " + std::to_string(inventory.settlements_available) + " City Pieces: " + std::to_string(inventory.cities_available) + " Road Pieces: " + std::to_string(inventory.roads_available);
     return valuestring;
 }
 

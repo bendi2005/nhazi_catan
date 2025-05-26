@@ -164,12 +164,12 @@ void GameBoard::Add_to_tilemap(const std::pair<Coordinate,Tile*> in_tile)
     return;
 }
 
-void GameBoard::DrawTiles(std::vector<sf::CircleShape>* vec_toadd)
+void GameBoard::DrawTiles(std::vector<std::pair<sf::CircleShape,sf::Text>>* vec_toadd)
 {
     
     for(auto kvp_coord_tileptr : tilemap)
     {
-        vec_toadd->push_back(kvp_coord_tileptr.second->MakeTileImage());
+        vec_toadd->push_back(std::make_pair(kvp_coord_tileptr.second->MakeTileImage(),kvp_coord_tileptr.second->MakeTileNumberText()));
     }
     return;
 }
@@ -463,29 +463,26 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 }
 
 
-void GameBoard::DistributeResources()
+int GameBoard::DistributeResources()
 {
     //debug
-    int sum = RollDice();
+    //int sum = RollDice();
+    int sum = 10;
     
-    
+    printf("\ndistrib\n");
     for(auto kvp_coord_node : nodemap)
     {
         for(auto element_tile : kvp_coord_node.second->GetTilesOfNode())
         {
-                    
-            //if(kvp_coord_node.second->GetNodeOwner() != nullptr && element_tile->GetDieNum() == sum)
-            //debug
+
             if(kvp_coord_node.second->GetNodeOwner() != nullptr && element_tile->GetDieNum() == sum)
             {   
-                
                 element_tile->GiveResources(kvp_coord_node.second->GetNodeOwner(),kvp_coord_node.second->GetNodePointerBuilding()->ProduceResourceCount());
             }
         }
 
     }
-
-
+    return sum;
 }
 
 

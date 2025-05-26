@@ -46,6 +46,8 @@ public:
     int GetDieNum() const;
     
     sf::CircleShape MakeTileImage();
+    sf::Text MakeTileNumberText();
+
 
     sf::Color ColorByResource();
 

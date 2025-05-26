@@ -103,47 +103,39 @@ void EventManager::Draw(sf::RenderWindow& window)
             }
             break;
         case GameState::GameBoardGen :
-            window.clear(sf::Color(102, 255, 204,100)); 
-            window.draw(*firsttext);
-            DrawGB(window);
-            DrawPlayerInfo(window);
-            if(advance_perm)
-            {
-                advance_perm = false;
-                AdvanceCurrentState();
-            }
-            break;
+            RegularTurnDraw(window);
+            return;
         case GameState::FirstTurnSettlement :
-            window.clear(sf::Color(102, 255, 204,100));
-            window.draw(*firsttext);
-            DrawGB(window);
-            DrawPlayerInfo(window);
-            if(advance_perm)
-            {
-                AdvanceCurrentState();
-                advance_perm = false;
-            }
-            break; 
+            RegularTurnDraw(window); 
+            return;
         case GameState::FirstTurnRoad :
-            window.clear(sf::Color(102, 255, 204,100));
-            window.draw(*firsttext);
-            DrawGB(window);
-            DrawPlayerInfo(window);
-            if(advance_perm)
-            {
-                
-                AdvanceCurrentState();
-                advance_perm = false;
-            }
+            RegularTurnDraw(window);
+            return;
+        case GameState::RollDicePrompt :
+            RegularTurnDraw(window);
+        return;
+        case GameState::RollDice :
+            RegularTurnDraw(window);
             return;
         case GameState::Placeholder :
-            window.clear(sf::Color(102, 255, 204,100));
-            window.draw(*firsttext);
-            DrawGB(window);
-            DrawPlayerInfo(window);
+            RegularTurnDraw(window);
             return;
         //...
+            
+    }
+    return;
+}
 
+void EventManager::RegularTurnDraw(sf::RenderWindow& window)
+{
+    window.clear(sf::Color(102, 255, 204,100));
+    window.draw(*firsttext);
+    DrawGB(window);
+    DrawPlayerInfo(window);
+    if(advance_perm)
+    {
+        AdvanceCurrentState();
+        advance_perm = false;
     }
     return;
 }
@@ -158,7 +150,9 @@ void EventManager::DrawGB(sf::RenderWindow& window)
     GB->DrawNodes(&NodeImages);
     for(auto tile_image : TileImages)
     {
-        window.draw(tile_image);
+        window.draw(tile_image.first);
+        tile_image.second.setFont(font);
+        window.draw(tile_image.second);
     }
     for(auto edge_image : EdgeImages)
     {
@@ -214,9 +208,14 @@ void EventManager::AdvanceCurrentState()
                 CurrentState = GameState::FirstTurnSettlement;
             } else 
             {
-                CurrentState = GameState::Placeholder;
+                CurrentState = GameState::RollDicePrompt;
             }
             return;
+        case GameState::RollDicePrompt :
+            CurrentState = GameState::RollDice;
+            return;
+        case GameState::RollDice :
+            CurrentState = GameState::Placeholder;
         case GameState::Placeholder :
             return;            
         //...
@@ -330,7 +329,27 @@ void EventManager::HandleEvent(const sf::Event& event)
                     }
                 }
             }
-            return;      
+            return;
+        case GameState::RollDicePrompt :
+            firsttext->setString("Press R to roll dice");
+            firsttext->setPosition(textboxpos);
+            if(const auto* pressed = event.getIf<sf::Event::KeyReleased>())
+            {
+                if(pressed->code == sf::Keyboard::Key::R)
+                {
+                    advance_perm = true;
+                }
+            }
+            return;
+        case GameState::RollDice :
+            firsttext->setString("Rolled: " + std::to_string(GB->DistributeResources()) + " press any to continue");
+            firsttext->setPosition(textboxpos);
+            advance_perm = true;
+            return;
+        case GameState::Placeholder :
+            return;
+
+
     }
     return;
 }
