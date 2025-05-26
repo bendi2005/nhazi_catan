@@ -29,12 +29,10 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
         
         }
         
-        if(is_coastal && ((rand() % 10) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
+        if(is_coastal && ((rand() % 9) == 0)) //TODO ide egy random feltetel hogy mikor es milyen resource + rate
         {
-            //debug
-            Resource R(ResourceTypes::BRICK);
-            int rate = 2;
-            
+            Resource R(static_cast<ResourceTypes>(rand()%5));
+            int rate = HARBOR_RATE;
             iter->second->GetNodeN_modif(0)->SetHarbor(R,rate);
             iter->second->GetNodeN_modif(1)->SetHarbor(R,rate);
         }
@@ -246,6 +244,25 @@ void GameBoard::PrintHarbor() const
             printf("Harbor at Node x: %d y: %d\n",node.second->GetNodePos().GetX(),node.second->GetNodePos().GetY());
         }
     }
+}
+
+sf::Color GameBoard::GeneralColorByResource(Resource in_resource)
+{
+    switch(in_resource.Resourcetype)
+        {
+            case ResourceTypes::BRICK :
+                return BRICK_COLOR;
+            case ResourceTypes::LUMBER :
+                return LUMBER_COLOR;
+            case ResourceTypes::WOOL :
+                return WOOL_COLOR;
+            case ResourceTypes::GRAIN :
+                return GRAIN_COLOR;
+            case ResourceTypes::ORE :
+                return ORE_COLOR;
+            case ResourceTypes::DESERT :
+                return DESERT_COLOR;
+        }
 }
 
 

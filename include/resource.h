@@ -15,10 +15,9 @@ enum class ResourceTypes
 
 };
 class Resource
-{
+{    
 public:
 ResourceTypes Resourcetype;
-
 
 Resource() = delete;
 

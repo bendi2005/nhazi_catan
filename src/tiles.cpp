@@ -113,21 +113,7 @@ sf::Color Tile::ColorByResource()
 {
     if(tile_resources.size() == 1)
     {
-        switch(tile_resources.begin()->Resourcetype)
-        {
-            case ResourceTypes::BRICK :
-                return BRICK_COLOR;
-            case ResourceTypes::LUMBER :
-                return LUMBER_COLOR;
-            case ResourceTypes::WOOL :
-                return WOOL_COLOR;
-            case ResourceTypes::GRAIN :
-                return GRAIN_COLOR;
-            case ResourceTypes::ORE :
-                return ORE_COLOR;
-            case ResourceTypes::DESERT :
-                return DESERT_COLOR;
-        }
+        return p_GB->GeneralColorByResource(tile_resources.begin()->Resourcetype);
     } else 
     {
         return MULTIRESOURCE_COLOR;

@@ -14,7 +14,16 @@
 
 enum class GameState
 {
-    Zero,WelcomeScreen,PromptPlayerCount,PromptPlayerNames,GameBoardGen,FirstTurnSettlement,FirstTurnRoad,RollDicePrompt,RollDice,Placeholder
+    Zero,
+    WelcomeScreen,
+    PromptPlayerCount,
+    PromptPlayerNames,
+    GameBoardGen,
+    FirstTurnSettlement,
+    FirstTurnRoad,
+    RollDicePrompt,
+    RollDice,
+    Placeholder
 };
 
 class EventManager

@@ -98,18 +98,7 @@ sf::Color Edge::GetColorFromOwner()
         return sf::Color(204, 102, 153,255);
     } else 
     {
-        int hash = 0;
-
-        for (char c : owner_edge->GetName())
-        {
-            hash = (hash * 31) + static_cast<uint8_t>(c);
-        }
-
-        int r = (hash >> 0) & 0xFF;
-        int g = (hash >> 8) & 0xFF;
-        int b = (hash >> 16) & 0xFF;
-
-        return sf::Color(r,g,b,255);
+        return(PLAYER_COLORS[owner_edge->GetPlayerId()]);
     }
 }
 

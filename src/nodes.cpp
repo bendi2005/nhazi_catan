@@ -146,18 +146,7 @@ sf::Color Node::GetColorFromOwner()
         return sf::Color::White;
     } else 
     {
-        int hash = 0;
-
-        for (char c : owner_node->GetName())
-        {
-            hash = (hash * 31) + static_cast<uint8_t>(c);
-        }
-
-        int r = (hash >> 0) & 0xFF;
-        int g = (hash >> 8) & 0xFF;
-        int b = (hash >> 16) & 0xFF;
-
-        return sf::Color(r,g,b,255);
+        return PLAYER_COLORS[owner_node->GetPlayerId()];
     }
 }
 
@@ -168,6 +157,12 @@ sf::CircleShape Node::MakeNodeImage()
     node_ret.setOrigin({NODE_SIZE,NODE_SIZE});
     node_ret.setPosition(pos.ScaledOrtoOrigoOffsetPos());
     node_ret.setFillColor(GetColorFromOwner());
+    if(this->IsHarbor())
+    {   
+        node_ret.setOutlineThickness(4);
+        node_ret.setOutlineColor(p_GB->GeneralColorByResource(harborinfo.harbor_resource_type));
+    }
+    
     return node_ret;
 }
 

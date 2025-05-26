@@ -7,6 +7,7 @@ EventManager::EventManager() : bonus_res{{ResourceTypes::BRICK,4},{ResourceTypes
     TileImages.reserve(TILE_COUNT);
     //...
 
+    //ezt meg lehetne csinalni remember
     CurrentState = GameState::Zero;
     player_count = 0;
     if(!(font.openFromFile("Ubuntu.ttf")))
@@ -113,7 +114,7 @@ void EventManager::Draw(sf::RenderWindow& window)
             return;
         case GameState::RollDicePrompt :
             RegularTurnDraw(window);
-        return;
+            return;
         case GameState::RollDice :
             RegularTurnDraw(window);
             return;
@@ -128,7 +129,7 @@ void EventManager::Draw(sf::RenderWindow& window)
 
 void EventManager::RegularTurnDraw(sf::RenderWindow& window)
 {
-    window.clear(sf::Color(102, 255, 204,100));
+    window.clear(BACKGROUND_COLOR);
     window.draw(*firsttext);
     DrawGB(window);
     DrawPlayerInfo(window);

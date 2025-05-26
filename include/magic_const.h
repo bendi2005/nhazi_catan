@@ -35,6 +35,10 @@ constexpr int SETTLEMENT_PIECE_COUNT = 5;
 constexpr int CITY_PIECE_COUNT = 4;
 constexpr int ROAD_PIECE_COUNT = 15;
 
+constexpr int HARBOR_RATE = 2;
+
+
+
 constexpr unsigned int INDOW_SIZE_WIDTH = 1800.0f;
 constexpr unsigned int WINDOW_SIZE_HEIGHT = 1100.0f;
 
@@ -45,6 +49,7 @@ constexpr float ORTO_V_LAMBDA = 1.73205f / 4.0f;
 constexpr float ORTO_V_MU = -1/4.0f;
 
 constexpr sf::Vector2f ORIGO{600.0f,200.0f};
+
 
 constexpr float CLICK_RADIUS = 15.0f;
 
@@ -58,14 +63,20 @@ constexpr float TILE_RADIUS = TILE_SIDELENGHT;
 constexpr float TILE_BULLSHIT_OFFSET_X = 2.5f;
 constexpr float TILE_BULLSHIT_OFFSET_Y = 2.5f;
 
+constexpr sf::Color BACKGROUND_COLOR    (102, 204, 255, 100);
 
-constexpr sf::Color BRICK_COLOR         (253, 129, 0, 100);
-constexpr sf::Color LUMBER_COLOR        (34, 139, 34, 100);   
-constexpr sf::Color WOOL_COLOR          (144, 238, 144, 100);   
-constexpr sf::Color GRAIN_COLOR         (255, 215, 0, 100);   
-constexpr sf::Color ORE_COLOR           (105, 105, 105, 100);   
-constexpr sf::Color DESERT_COLOR        (237, 201, 175, 100);   
+constexpr sf::Color BRICK_COLOR         (255, 80, 0, 150);
+constexpr sf::Color LUMBER_COLOR        (0, 128, 0, 150);
+constexpr sf::Color WOOL_COLOR          (60, 255, 110, 150);
+constexpr sf::Color GRAIN_COLOR         (255, 225, 0, 150);
+constexpr sf::Color ORE_COLOR           (80, 80, 80, 150);
+constexpr sf::Color DESERT_COLOR        (245, 190, 140, 150);
+
 constexpr sf::Color MULTIRESOURCE_COLOR (0, 150, 255, 100);
+
+constexpr std::array<sf::Color, 9> PLAYER_COLORS = { sf::Color(0,0,255), sf::Color(255,0,255), sf::Color(0,255,255), sf::Color(153, 0, 153), sf::Color(255, 255, 0), sf::Color(0,0,0), sf::Color(180,255,0), sf::Color(255,140,0), sf::Color(255,50,50) };
+
+
 
 
 

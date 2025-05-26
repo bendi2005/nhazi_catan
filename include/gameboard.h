@@ -173,6 +173,9 @@ public:   //TODO mi privat mi publikus
     void PrintHarbor() const;
 
 
+    sf::Color GeneralColorByResource(Resource);
+
+
     //converter
     const Coordinate id_to_coord(int,Building::BuildingTypes) const;
 
