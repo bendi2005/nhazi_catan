@@ -5,7 +5,8 @@ SFML_LIB := -L$(SFML_DIR)/lib
 SFML_LIBS := -lsfml-graphics -lsfml-window -lsfml-system
 
 CXX := g++
-CXXFLAGS := -Wall -DMEMTRACE $(SFML_INCLUDE) # -Werror
+CXXFLAGS := -Wall -DMEMTRACE $(SFML_INCLUDE) -g # Added -g for debug symbols
+LDFLAGS := $(SFML_LIB) $(SFML_LIBS)
 
 SRC_DIRS := . include src 
 OBJ_DIR := obj
@@ -23,7 +24,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(SFML_LIB) -o $@ $^ $(SFML_LIBS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
@@ -38,3 +39,44 @@ clean:
 
 run: $(TARGET)
 	./$(TARGET)
+
+
+# === VALGRIND TARGETS ===
+valgrind: $(TARGET)
+	valgrind --leak-check=full \
+	         --show-leak-kinds=all \
+	         --track-origins=yes \
+	         --verbose \
+	         --log-file=valgrind-out.txt \
+	         --error-exitcode=1 \
+	         ./$(TARGET) $(ARGS)
+	@echo "Valgrind output saved to valgrind-out.txt"
+
+# For stuck programs - adds timeout and shows progress
+valgrind-timeout: $(TARGET)
+	timeout 30s valgrind --leak-check=full \
+	         --show-leak-kinds=all \
+	         --track-origins=yes \
+	         --verbose \
+	         --log-file=valgrind-out.txt \
+	         --error-exitcode=1 \
+	         ./$(TARGET) $(ARGS) || \
+	         (echo "Program timed out or failed"; exit 0)
+	@echo "Valgrind output saved to valgrind-out.txt"
+
+# Quick check without full details
+valgrind-quick: $(TARGET)
+	valgrind --leak-check=summary \
+	         --show-leak-kinds=definite \
+	         --log-file=valgrind-quick.txt \
+	         ./$(TARGET) $(ARGS)
+	@echo "Quick check output saved to valgrind-quick.txt"
+
+# === DEBUGGING HELPERS ===
+# Run with gdb for debugging hangs
+debug-hang: $(TARGET)
+	gdb -ex run --args ./$(TARGET) $(ARGS)
+
+# Run with strace to see system calls
+strace: $(TARGET)
+	strace -f -o strace-out.txt ./$(TARGET) $(ARGS)

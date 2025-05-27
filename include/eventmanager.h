@@ -25,9 +25,7 @@ enum class GameState
 		RollDice,
 		AfterDiceRoll,
 		RegularTurnBuild,
-		Placeholder
-
-		
+        GameWon,
 };
 
 class EventManager
@@ -37,7 +35,8 @@ private:
     GameState CurrentState;
     sf::Text* firsttext;
     sf::Font font;
-    
+    sf::Text* playername;
+
     bool advance_perm = false;
     std::string inputbuffer;
 
@@ -46,7 +45,7 @@ private:
     std::vector<sf::CircleShape> NodeImages;
     //...
     
-
+    
     std::vector<Player*> vec_players;
     int player_count;
     int max_turncount;
@@ -58,6 +57,7 @@ private:
     int cur_player;
     bool once;
     bool is_setup;
+    Player* p_winner = nullptr;
 public:
 
 
@@ -127,6 +127,9 @@ public:
 
     bool CallAllCritFunc(const std::vector<GameBoard::CritFunction>&,Coordinate,Player*,Building::BuildingTypes) const;
 
+    Player* IsWinner();
+
+    std::string WinnerText(Player*);
 
 };
 

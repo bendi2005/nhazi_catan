@@ -18,10 +18,15 @@ EventManager::EventManager() : bonus_res{{ResourceTypes::BRICK,4},{ResourceTypes
 
     firsttext = new sf::Text(font);
     firsttext->setString("Welcome to Catan! Press any key to continue...");
-    firsttext->setCharacterSize(40);
+    firsttext->setCharacterSize(TEXTSIZE);
 
     firsttext->setFillColor(sf::Color::White);
     firsttext->setPosition({550,400});
+
+    playername = new sf::Text(font);
+    playername->setCharacterSize(TEXTSIZE);
+    playername->setFillColor(sf::Color::White);
+    playername->setPosition(NAME_CUR_PLAYER_POS);
 
     cur_player = 0;
     once = false;
@@ -57,6 +62,7 @@ void EventManager::IncrementCurPlayer()
     } else  //not setup phase
     {
         cur_player = (cur_player + 1) % player_count;
+        
         return;
     }
 }
@@ -112,12 +118,11 @@ void EventManager::Draw(sf::RenderWindow& window)
             
         case GameState::RegularTurnBuild :
             RegularTurnDraw(window);
-            
-        case GameState::Placeholder :
+        case GameState::GameWon :
             RegularTurnDraw(window);
             return;
         //...
-            
+
     }
     return;
 }
@@ -135,6 +140,8 @@ void EventManager::RegularTurnDraw(sf::RenderWindow& window)
 {
     window.clear(BACKGROUND_COLOR);
     window.draw(*firsttext);
+    playername->setString("Turn of: " + vec_players[cur_player]->GetName());
+    window.draw(*playername);
     DrawGB(window);
     DrawPlayerInfo(window);
     if(advance_perm)
@@ -209,7 +216,6 @@ void EventManager::AdvanceCurrentState()
             IncrementCurPlayer();
             if(is_setup)
             {
-                printf("\nGoing back to settlements\n");
                 CurrentState = GameState::FirstTurnSettlement;
             } else 
             {
@@ -225,10 +231,25 @@ void EventManager::AdvanceCurrentState()
         case GameState::AfterDiceRoll :
             CurrentState = GameState::RegularTurnBuild;
         case GameState::RegularTurnBuild :
-            IncrementCurPlayer();
+            if(auto* winner = IsWinner())
+            {
+                p_winner = winner;
+                CurrentState = GameState::GameWon;
+                return;
+            } else if(cur_player == player_count)
+            {
+                IncrementCurPlayer();
+                CurrentState = GameState::RollDicePrompt;
+                return;
+            } else 
+            {
+                IncrementCurPlayer();
+                return;
+            }
             return;
-        case GameState::Placeholder :
-            return;            
+        case GameState::GameWon :
+            
+            return;
         //...
 
 
@@ -237,6 +258,10 @@ void EventManager::AdvanceCurrentState()
     }
 }
 
+std::string EventManager::WinnerText(Player* in_player)
+{
+    return in_player->GetName() + " has won!";
+}
 
 void EventManager::HandleEvent(const sf::Event& event)
 {
@@ -303,13 +328,13 @@ void EventManager::HandleEvent(const sf::Event& event)
         case GameState::GameBoardGen :
         {    InitGameBoard();
             firsttext->setString("GameBoard rendered: do anything to continue");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             return;
         }
         case GameState::FirstTurnSettlement :
         
             firsttext->setString("Click on the Node you want to build into a settlement:");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
             {
                 int try_id = GB->SettlementInRadius(clicked->position);
@@ -325,7 +350,7 @@ void EventManager::HandleEvent(const sf::Event& event)
         
         case GameState::FirstTurnRoad :
             firsttext->setString("Click on the middle of the Edge you want to build into a road:");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             if(const auto* clicked = event.getIf<sf::Event::MouseButtonPressed>())
             {
                 int try_id = GB->RoadInRadius(clicked->position);
@@ -340,33 +365,36 @@ void EventManager::HandleEvent(const sf::Event& event)
             return;
         case GameState::RollDicePrompt :
             firsttext->setString("Press R to roll dice");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             if(const auto* pressed = event.getIf<sf::Event::KeyPressed>())
             {
                 if(pressed->code == sf::Keyboard::Key::R)
                 {
+                    turn_roll = GB->DistributeResources();
                     advance_perm = true;
                 }
             }
             return;
         case GameState::RollDice :
-            turn_roll = GB->DistributeResources();
+            
+            std::this_thread::sleep_for(std::chrono::milliseconds(220));
             firsttext->setString("Rolled: " + std::to_string(turn_roll) + " press any to continue");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             if(const auto* keypressed = event.getIf<sf::Event::KeyPressed>())
             advance_perm = true;
             return;
         case GameState::AfterDiceRoll :
             firsttext->setString("Rolled: " + std::to_string(turn_roll) + " press any to continue");
-            firsttext->setPosition(textboxpos);
+            firsttext->setPosition(TEXTBOX_POS);
             std::this_thread::sleep_for(std::chrono::milliseconds(220));
             if(const auto* keypressed = event.getIf<sf::Event::KeyPressed>())
             {
                 advance_perm = true;
             }
-		case GameState::RegularTurnBuild :
+	case GameState::RegularTurnBuild :
+
 			firsttext->setString("Click on an empty Node to Build on it\nCLick on an empty Edge to build a road on it\nClick on a Settlement to upgrade it ot a City\nOr go to the [N]ext player");
-			firsttext->setPosition(textboxpos);
+			firsttext->setPosition(TEXTBOX_POS);
 			if(const auto* mouseclicked = event.getIf<sf::Event::MouseButtonPressed>())
 			{
                     //Settlement
@@ -390,12 +418,31 @@ void EventManager::HandleEvent(const sf::Event& event)
 					}
 			}
 			return;
-        case GameState::Placeholder :
+        case GameState::GameWon : 
+            firsttext->setString(WinnerText(p_winner));
             return;
-
-
     }
     return;
+}
+
+Player* EventManager::IsWinner()
+{
+    for(auto* p : vec_players)
+    {
+        int svp = 0;
+        for(auto* on : p->GetOwnedNodes(GB))
+        {
+            if(on->GetNodePointerBuilding())
+            {
+                svp += on->GetNodePointerBuilding()->GetVictoryPoints();
+            }
+        } 
+        if(svp >= VICTORY_POINT_NEEDED_FOR_WIN)
+        {
+            return p;
+        }      
+    }
+    return nullptr;
 }
 
 void EventManager::PromptPlayerCount()
@@ -462,20 +509,6 @@ void EventManager::RegularTurnSettlement(Player* in_player,int in_id)
     }
 }
 
-
-//void EventManager::RegularTurnSettlement(Player* in_player,int in_id)
-//{
-//    if((CallAllCritFunc(GB->GetSettlementCriteriaFunction(),GB->id_to_coord(in_id,Building::BuildingTypes::SETTLEMENT),in_player,Building::BuildingTypes::SETTLEMENT)) && CanAfford(in_player,Building::BuildingTypes::SETTLEMENT))
-//    {
-//        (GB->*(GB->GetSettlementBuildFunction()))(GB->id_to_coord(in_id,Building::BuildingTypes::SETTLEMENT),in_player,Building::BuildingTypes::SETTLEMENT);
-//        return;
-//    }   else 
-//    {
-//        firsttext->setString("Cant build Node");
-//        return;
-//    }
-//}
-
 void EventManager::RegularTurnRoad(Player* in_player,int in_id)
 {
     if((CallAllCritFunc(GB->GetRoadCriteriaFunction(),GB->id_to_coord(in_id,Building::BuildingTypes::ROAD),in_player,Building::BuildingTypes::ROAD)) && CanAfford(in_player,Building::BuildingTypes::ROAD))
@@ -534,11 +567,11 @@ bool EventManager::CanAfford(Player* in_player,Building::BuildingTypes btype)
     switch(btype)
     {
         case Building::BuildingTypes::SETTLEMENT :
-            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::BRICK)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::LUMBER)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::WOOL)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::GRAIN)) >= 1);
+            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::BRICK)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::LUMBER)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::WOOL)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::GRAIN)) >= 1) && in_player->GetInventory().settlements_available >= 1;
         case Building::BuildingTypes::ROAD :
-            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::BRICK)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::LUMBER)) >= 1);
+            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::BRICK)) >= 1) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::LUMBER)) >= 1) && in_player->GetInventory().roads_available >= 1;
         case Building::BuildingTypes::CITY :
-            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::ORE)) >= 3) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::GRAIN)) >= 2);  
+            return (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::ORE)) >= 3) && (in_player->GetInventory().resource_cards.at(Resource(ResourceTypes::GRAIN)) >= 2 )&& in_player->GetInventory().cities_available >= 1;
     }
 }
 

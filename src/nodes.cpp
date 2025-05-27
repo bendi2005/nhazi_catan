@@ -156,7 +156,13 @@ sf::CircleShape Node::MakeNodeImage()
     
     node_ret.setOrigin({NODE_SIZE,NODE_SIZE});
     node_ret.setPosition(pos.ScaledOrtoOrigoOffsetPos());
-    node_ret.setFillColor(GetColorFromOwner());
+    if(GetNodePointerBuilding() &&GetNodePointerBuilding()->GetBuildingType() == Building::BuildingTypes::CITY)
+    {
+        node_ret.setFillColor(sf::Color(255, 204, 204));
+    } else 
+    {
+        node_ret.setFillColor(GetColorFromOwner());
+    }
     if(this->IsHarbor())
     {   
         node_ret.setOutlineThickness(4);

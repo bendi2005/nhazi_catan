@@ -108,6 +108,23 @@ void GameBoard::GenerateLine(int in_line_num)
 }
 
 
+GameBoard::~GameBoard()
+{
+    for(auto t : tilemap)
+    {
+        delete t.second;
+    }
+    for(auto n : nodemap)
+    {
+        delete n.second;
+    }
+    for(auto e : edgemap)
+    {
+        delete e.second;
+    }
+    
+}
+
 //Rolls 2 dice and returns their sum
 int GameBoard::RollDice() const
 {
@@ -355,7 +372,7 @@ bool GameBoard::Crit_Edge_Connected(Coordinate in_coord,Player* in_player) const
 //Checks if node is owned by player trying to upgrade
 bool GameBoard::Crit_isNodeUpgradeAble(Coordinate in_coord,Player* in_player) const
 {
-    return nodemap.at(in_coord)->GetNodeOwner() == in_player;
+    return (nodemap.at(in_coord)->GetNodeOwner() == in_player) && nodemap.at(in_coord)->GetNodePointerBuilding()->GetBuildingType() != Building::BuildingTypes::CITY;
 }
 
 
@@ -482,11 +499,8 @@ const Coordinate GameBoard::id_to_coord(int in_id,Building::BuildingTypes in_typ
 
 int GameBoard::DistributeResources()
 {
-    //debug
-    //int sum = RollDice();
-    int sum = 10;
+    int sum = RollDice();
     
-    printf("\ndistrib\n");
     for(auto kvp_coord_node : nodemap)
     {
         for(auto element_tile : kvp_coord_node.second->GetTilesOfNode())

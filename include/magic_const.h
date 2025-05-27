@@ -29,6 +29,7 @@ constexpr int VICTORY_POINT_VALUE_SETTLEMENT = 1;
 constexpr int VICTORY_POINT_VALUE_CITY = 2;
 constexpr int VICTORY_POINT_VALUE_ROAD = 0;
 
+constexpr int VICTORY_POINT_NEEDED_FOR_WIN = 4;
 
 
 constexpr int SETTLEMENT_PIECE_COUNT = 5;
@@ -85,7 +86,9 @@ constexpr float EDGE_THICKNESS = 5;
 
 constexpr float RAD_TO_DEG = 180.0f / 3.14159265f;
 
-constexpr sf::Vector2f textboxpos{800,25};
+constexpr sf::Vector2f TEXTBOX_POS{1100,750};
+constexpr unsigned int TEXTSIZE =  25.0f;
+constexpr sf::Vector2f NAME_CUR_PLAYER_POS{1400.0f,550.0f};
 
 constexpr float NODE_SIZE = 20.0f;
 

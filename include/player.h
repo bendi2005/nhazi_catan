@@ -41,7 +41,7 @@ std::string PlayerInfoString();
 //OTC Constructor, sets up inventory
 Player(std::string);
 
-
+~Player();
 //Getters for owned Nodes and Edgess (returns a vector of pointers to them)
 
 std::vector<Node*> GetOwnedNodes(GameBoard*);

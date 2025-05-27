@@ -8,7 +8,7 @@ Road::Road(Player* in_player)
     inc_building_count();
     take_building_piece(in_player);
     take_building_resource(in_player);
-    printf("Road built by: %s\n",in_player->GetName().c_str());
+
 }
 
 void Road::take_building_piece(Player* in_player)

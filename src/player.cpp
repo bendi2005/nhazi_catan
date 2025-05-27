@@ -18,10 +18,11 @@ Player::Player(std::string in_name) : player_id(next_player_id++), player_name(i
         
         //separate into 3 lines if doesnt work
         Resource R((ResourceTypes)i);
-        std::pair<Resource,int> temp_pair = std::make_pair(R,10);
+        std::pair<Resource,int> temp_pair = std::make_pair(R,0);
         inventory.resource_cards.insert(temp_pair);
     }
 }
+
 
 void Player::ClearNextId()
 {
@@ -80,9 +81,7 @@ std::string Player::PlayerInfoString()
 
 void Player::AddResourceCard(int n,Resource in_r)
 {
-    //debug
-    printf("Added %d of %s to %s\n",n,in_r.EnumToString().c_str(),GetName().c_str());
-
+    
     inventory.resource_cards.at(in_r) += n;
 }
 

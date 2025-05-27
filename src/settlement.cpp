@@ -10,7 +10,6 @@ Settlement::Settlement(Player* in_player)
     take_building_piece(in_player);
     take_building_resource(in_player);
 
-    printf("Settlement built. by: %s\n",in_player->GetName().c_str());
 }
 
 void Settlement::inc_building_count()
