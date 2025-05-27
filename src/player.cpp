@@ -18,7 +18,7 @@ Player::Player(std::string in_name) : player_id(next_player_id++), player_name(i
         
         //separate into 3 lines if doesnt work
         Resource R((ResourceTypes)i);
-        std::pair<Resource,int> temp_pair = std::make_pair(R,0);
+        std::pair<Resource,int> temp_pair = std::make_pair(R,10);
         inventory.resource_cards.insert(temp_pair);
     }
 }
@@ -28,7 +28,10 @@ void Player::ClearNextId()
     next_player_id = 0;
 }
 
-
+Inventory Player::GetInventory()
+{
+    return inventory;
+}
 
 std::vector<Node*> Player::GetOwnedNodes(GameBoard* in_pGB)
 {

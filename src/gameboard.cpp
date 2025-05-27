@@ -43,7 +43,7 @@ GameBoard::GameBoard(std::vector<std::set<Resource>> in_preset_resource,std::vec
 
 void GameBoard::InitFuncStuff()
 {
-    SettlementCriteria = {(&GameBoard::Crit_isFreeEdge),(&GameBoard::Crit_Distance),(&GameBoard::Crit_Node_Connected)};
+    SettlementCriteria = {&GameBoard::Crit_isFreeNode,&GameBoard::Crit_Distance,&GameBoard::Crit_Node_Connected};
     CityCriteria = {&GameBoard::Crit_isNodeUpgradeAble};
     RoadCriteria = {&GameBoard::Crit_isFreeEdge,&GameBoard::Crit_Edge_Connected};
     FirstTurnSettlementCriteria = {&GameBoard::Crit_Distance,&GameBoard::Crit_isFreeNode};

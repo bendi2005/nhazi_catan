@@ -14,16 +14,20 @@
 
 enum class GameState
 {
-    Zero,
-    WelcomeScreen,
-    PromptPlayerCount,
-    PromptPlayerNames,
-    GameBoardGen,
-    FirstTurnSettlement,
-    FirstTurnRoad,
-    RollDicePrompt,
-    RollDice,
-    Placeholder
+		Zero,
+		WelcomeScreen,
+		PromptPlayerCount,
+		PromptPlayerNames,
+		GameBoardGen,
+		FirstTurnSettlement,
+		FirstTurnRoad,
+		RollDicePrompt,
+		RollDice,
+		AfterDiceRoll,
+		RegularTurnBuild,
+		Placeholder
+
+		
 };
 
 class EventManager
@@ -50,6 +54,7 @@ private:
     const std::map<Resource,int> bonus_res;
     void GiveBonusResToPlayer(Player*);
 
+    int turn_roll;
     int cur_player;
     bool once;
     bool is_setup;
@@ -83,16 +88,17 @@ public:
     
     
     bool FirstTurnSettlement(Player*,int);
-    
+
     bool FirstTurnRoad(Player*, int);
 
     void RegularTurnDraw(sf::RenderWindow&);
 
-    //Itt a switch case helyet ez igy nez ki OOP modon szerintem:
-    //bool CheckAllCriteria(Settlement, int);
-    //bool CheckAllCriteria(City,int);
-    //bool CheckAllCriteria(Road,int);
+    void RegularTurnSettlement(Player*,int);
 
+    void RegularTurnRoad(Player*,int);
+
+    void RegularTurnCity(Player*,int);
+    
     Settlement pass_Setl();
     City pass_City();
     Road pass_Road();
@@ -109,6 +115,9 @@ public:
 
     void IncrementCurPlayer();
 
+    void CheckAndAdvance();
+
+    bool CanAfford(Player*,Building::BuildingTypes);
 
     std::map<Resource,int> GetBuildingCost(Building::BuildingTypes);
 

@@ -59,6 +59,8 @@ void TakeSettlementPiece();
 void TakeCityPiece();
 void TakeRoadPiece();
 
+Inventory GetInventory();
+
 //Give back when upgrading to city
 void GiveBackSettlementPiece();
 
